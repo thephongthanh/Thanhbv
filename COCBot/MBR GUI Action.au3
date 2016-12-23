@@ -48,6 +48,9 @@ Func BotStart()
 	readConfig()
 	applyConfig(False) ; bot window redraw stays disabled!
 
+	;Reset Telegram message
+	NotifyGetLastMessageFromTelegram()
+
 	If BitAND($AndroidSupportFeature, 1 + 2) = 0 And $ichkBackground = 1 Then
 		GUICtrlSetState($chkBackground, $GUI_UNCHECKED)
 		chkBackground() ; Invoke Event manually
@@ -94,6 +97,7 @@ Func BotStart()
 		EndIf
 		If Not $RunState Then Return
 		If $hWndActive = $HWnD And ($AndroidBackgroundLaunched = True Or AndroidControlAvailable())  Then ; Really?
+			AutoHide()
 			Initiate() ; Initiate and run bot
 		Else
 			SetLog("Cannot use " & $Android & ", please check log", $COLOR_ERROR)

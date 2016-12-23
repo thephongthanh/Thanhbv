@@ -174,7 +174,7 @@ Func AttackReport()
 	SetLog("Stars earned: " & $starsearned)
 
 	Local $AtkLogTxt
-	$AtkLogTxt = String($nCurProfile) & "|" & _NowTime(4) & "|"
+	$AtkLogTxt = String($nCurProfile) & "|" & _NowTime(4) & "|"  ; adding Acc No. in Attack Log - SwitchAcc - DEMEN
 	$AtkLogTxt &= StringFormat("%5d", $iTrophyCurrent) & "|"
 	$AtkLogTxt &= StringFormat("%6d", $SearchCount) & "|"
 	$AtkLogTxt &= StringFormat("%7d", $iGoldLast) & "|"

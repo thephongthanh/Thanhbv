@@ -629,6 +629,7 @@ Func saveConfig() ;Saves the controls settings to the config
 	$itxtWall09ST = GUICtrlRead($txtWall09ST)
 	$itxtWall10ST = GUICtrlRead($txtWall10ST)
 	$itxtWall11ST = GUICtrlRead($txtWall11ST)
+	$itxtWall12ST = GUICtrlRead($txtWall12ST)
 
 	If GUICtrlRead($chkSaveWallBldr) = $GUI_CHECKED Then
 		$iSaveWallBldr = 1
@@ -739,6 +740,11 @@ Func saveConfig() ;Saves the controls settings to the config
 			$debugDisableVillageCentering = 1
 		Else
 			$debugDisableVillageCentering = 0
+		EndIf
+		If GUICtrlRead($chkDebugDeadbaseImage) = $GUI_CHECKED Then
+			$debugDeadbaseImage = 1
+		Else
+			$debugDeadbaseImage = 0
 		EndIf
 		If GUICtrlRead($chkDebugOcr) = $GUI_CHECKED Then
 			$debugOcr = 1
@@ -1099,11 +1105,6 @@ Func saveConfig() ;Saves the controls settings to the config
 	Else
 		$iChkSmartAttack[$DB][2] = 0
 	EndIf
-	If GUICtrlRead($cmbDeployDB) = $GUI_CHECKED Then
-		$icmbDeployDB = 1
-	Else
-		$icmbDeployDB = 0
-	EndIf
 
 	If GUICtrlRead($chkAttackTH) = $GUI_CHECKED Then
 		$chkATH = 1
@@ -1142,11 +1143,6 @@ Func saveConfig() ;Saves the controls settings to the config
 		$iChkSmartAttack[$LB][2] = 1
 	Else
 		$iChkSmartAttack[$LB][2] = 0
-	EndIf
-	If GUICtrlRead($cmbDeployAB) = $GUI_CHECKED Then
-		$icmbDeployAB = 1
-	Else
-		$icmbDeployAB = 0
 	EndIf
 
 	; attackcsv gui -> variables--------------------------------------------------------
@@ -2245,6 +2241,7 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWriteS($config, "Walls", "Wall09", $itxtWall09ST)
 	IniWriteS($config, "Walls", "Wall10", $itxtWall10ST)
 	IniWriteS($config, "Walls", "Wall11", $itxtWall11ST)
+	IniWriteS($config, "Walls", "Wall12", $itxtWall12ST)
 
 	For $iz = 0 To UBound($aUpgrades, 1) - 1 ; Save Upgrades data
 		IniWrite($building, "upgrade", "xupgrade" & $iz, $aUpgrades[$iz][0])
@@ -2494,6 +2491,7 @@ Func saveConfig() ;Saves the controls settings to the config
 		IniWriteS($config, "debug", "debugsetlog", $DebugSetlog)
 		IniWriteS($config, "debug", "disablezoomout", $debugDisableZoomout)
 		IniWriteS($config, "debug", "disablevillagecentering", $debugDisableVillageCentering)
+		IniWriteS($config, "debug", "debugdeadbaseimage", $debugDeadbaseImage)
 		IniWriteS($config, "debug", "debugocr", $debugOcr)
 		IniWriteS($config, "debug", "debugimagesave", $DebugImageSave)
 		IniWriteS($config, "debug", "debugbuildingpos", $debugBuildingPos)
@@ -2737,19 +2735,9 @@ Func saveConfig() ;Saves the controls settings to the config
 		IniWriteS($config, "troop", "QuickTrain3", 0)
 	EndIf
 
-	If GUICtrlRead($hRadio_Army12) = $GUI_CHECKED Then
-		IniWriteS($config, "troop", "QuickTrain12", 1)
-	Else
-		IniWriteS($config, "troop", "QuickTrain12", 0)
-	EndIf
-
-	If GUICtrlRead($hRadio_Army123) = $GUI_CHECKED Then
-		IniWriteS($config, "troop", "QuickTrain123", 1)
-	Else
-		IniWriteS($config, "troop", "QuickTrain123", 0)
-	EndIf
-
-	; SmartZap - Added by DocOC team
+;==============================================================
+; SmartZap - Added by DocOC team
+;==============================================================
 	If GUICtrlRead($chkSmartLightSpell) = $GUI_CHECKED Then
 		IniWrite($config, "SmartZap", "UseSmartZap", 1)
 	Else
@@ -2777,131 +2765,12 @@ Func saveConfig() ;Saves the controls settings to the config
 	EndIf
 	IniWrite($config, "SmartZap", "MinDE", GUICtrlRead($txtMinDark))
 	IniWrite($config, "SmartZap", "ExpectedDE", GUICtrlRead($txtExpectedDE))
+;==============================================================
+; SmartZap - Added by DocOC team
+;==============================================================
 
-	; Profile Switch Settings
-	If GUICtrlRead($chkGoldSwitchMax) = $GUI_CHECKED Then
-		IniWrite($config, "profiles", "chkGoldSwitchMax", 1)
-	Else
-		IniWrite($config, "profiles", "chkGoldSwitchMax", 0)
-	EndIf
-	IniWrite($config, "profiles", "cmbGoldMaxProfile", _GUICtrlComboBox_GetCurSel($cmbGoldMaxProfile))
-	IniWrite($config, "profiles", "txtMaxGoldAmount", GUICtrlRead($txtMaxGoldAmount))
-
-	If GUICtrlRead($chkGoldSwitchMin) = $GUI_CHECKED Then
-		IniWrite($config, "profiles", "chkGoldSwitchMin", 1)
-	Else
-		IniWrite($config, "profiles", "chkGoldSwitchMin", 0)
-	EndIf
-	IniWrite($config, "profiles", "cmbGoldMinProfile", _GUICtrlComboBox_GetCurSel($cmbGoldMinProfile))
-	IniWrite($config, "profiles", "txtMinGoldAmount", GUICtrlRead($txtMinGoldAmount))
-
-	If GUICtrlRead($chkElixirSwitchMax) = $GUI_CHECKED Then
-		IniWrite($config, "profiles", "chkElixirSwitchMax", 1)
-	Else
-		IniWrite($config, "profiles", "chkElixirSwitchMax", 0)
-	EndIf
-	IniWrite($config, "profiles", "cmbElixirMaxProfile", _GUICtrlComboBox_GetCurSel($cmbElixirMaxProfile))
-	IniWrite($config, "profiles", "txtMaxElixirAmount", GUICtrlRead($txtMaxElixirAmount))
-
-	If GUICtrlRead($chkElixirSwitchMin) = $GUI_CHECKED Then
-		IniWrite($config, "profiles", "chkElixirSwitchMin", 1)
-	Else
-		IniWrite($config, "profiles", "chkElixirSwitchMin", 0)
-	EndIf
-	IniWrite($config, "profiles", "cmbElixirMinProfile", _GUICtrlComboBox_GetCurSel($cmbElixirMinProfile))
-	IniWrite($config, "profiles", "txtMinElixirAmount", GUICtrlRead($txtMinElixirAmount))
-
-	If GUICtrlRead($chkDESwitchMax) = $GUI_CHECKED Then
-		IniWrite($config, "profiles", "chkDESwitchMax", 1)
-	Else
-		IniWrite($config, "profiles", "chkDESwitchMax", 0)
-	EndIf
-	IniWrite($config, "profiles", "cmbDEMaxProfile", _GUICtrlComboBox_GetCurSel($cmbDEMaxProfile))
-	IniWrite($config, "profiles", "txtMaxDEAmount", GUICtrlRead($txtMaxDEAmount))
-
-	If GUICtrlRead($chkDESwitchMin) = $GUI_CHECKED Then
-		IniWrite($config, "profiles", "chkDESwitchMin", 1)
-	Else
-		IniWrite($config, "profiles", "chkDESwitchMin", 0)
-	EndIf
-	IniWrite($config, "profiles", "cmbDEMinProfile", _GUICtrlComboBox_GetCurSel($cmbDEMinProfile))
-	IniWrite($config, "profiles", "txtMinDEAmount", GUICtrlRead($txtMinDEAmount))
-
-	If GUICtrlRead($chkTrophySwitchMax) = $GUI_CHECKED Then
-		IniWrite($config, "profiles", "chkTrophySwitchMax", 1)
-	Else
-		IniWrite($config, "profiles", "chkTrophySwitchMax", 0)
-	EndIf
-	IniWrite($config, "profiles", "cmbTrophyMaxProfile", _GUICtrlComboBox_GetCurSel($cmbTrophyMaxProfile))
-	IniWrite($config, "profiles", "txtMaxTrophyAmount", GUICtrlRead($txtMaxTrophyAmount))
-
-	If GUICtrlRead($chkTrophySwitchMin) = $GUI_CHECKED Then
-		IniWrite($config, "profiles", "chkTrophySwitchMin", 1)
-	Else
-		IniWrite($config, "profiles", "chkTrophySwitchMin", 0)
-	EndIf
-	IniWrite($config, "profiles", "cmbTrophyMinProfile", _GUICtrlComboBox_GetCurSel($cmbTrophyMinProfile))
-	IniWrite($config, "profiles", "txtMinTrophyAmount", GUICtrlRead($txtMinTrophyAmount))
-
-	; Config save for SwitchAcc Mode - DEMEN
-	If GUICtrlRead($radActiveProfile) = $GUI_CHECKED Then														; 1 = Active, 2 = Donate, 3 = Idle
-		IniWrite($config, "Switch Account", "Profile Type", 1)
-		IniWrite($profile, "Profile Type", _GUICtrlCombobox_GetCurSel($cmbProfile)+1, 1)
-	ElseIf GUICtrlRead($radDonateProfile) = $GUI_CHECKED Then
-		IniWrite($config, "Switch Account", "Profile Type", 2)
-		IniWrite($profile, "Profile Type", _GUICtrlCombobox_GetCurSel($cmbProfile)+1, 2)
-	Else
-		IniWrite($config, "Switch Account", "Profile Type", 3)
-		IniWrite($profile, "Profile Type", _GUICtrlCombobox_GetCurSel($cmbProfile)+1, 3)
-	EndIf
-
-	IniWrite($config, "Switch Account", "Match Profile Acc", _GUICtrlCombobox_GetCurSel($cmbMatchProfileAcc))	 ; 0 = No Acc (idle), 1 = Acc 1, 2 = Acc 2, etc.
-
-	If GUICtrlRead($chkSwitchAcc) = $GUI_CHECKED Then
-		IniWrite($profile, "Switch Account", "Enable", 1)
-	Else
-		IniWrite($profile, "Switch Account", "Enable", 0)
-	EndIf
-
-	If GUICtrlRead($chkTrain) = $GUI_CHECKED Then
-		IniWrite($profile, "Switch Account", "Train", 1)
-	Else
-		IniWrite($profile, "Switch Account", "Train", 0)
-	EndIf
-
-	IniWrite($profile, "Switch Account", "Total Coc Account", _GUICtrlCombobox_GetCurSel($cmbTotalAccount))	; 0 = AutoDetect, 1 = 1 Acc, 2 = 2 Acc, etc.
-
-	If GUICtrlRead($radSmartSwitch) = $GUI_CHECKED Then
-		IniWrite($profile, "Switch Account", "Smart Switch", 1)
-	Else
-		IniWrite($profile, "Switch Account", "Smart Switch", 0)
-	EndIf
-
-	If GUICtrlRead($chkUseTrainingClose) = $GUI_CHECKED Then
-		If GUICtrlRead($radCloseCoC) = $GUI_CHECKED Then
-			IniWrite($profile, "Switch Account", "Sleep Combo", 1)		; Sleep Combo = 1 => Close CoC
-		Else
-			IniWrite($profile, "Switch Account", "Sleep Combo", 2)		; Sleep Combo = 2 => Close Android
-		EndIf
-	Else
-		IniWrite($profile, "Switch Account", "Sleep Combo", 0)
-	EndIf
-
-	For $i = 1 to 6
-		IniWriteS($profile, "Acc Location", "yAccNo." & $i, $aAccPosY[$i-1])
-	Next
-
-	; CSV Deployment Speed Mod
-	IniWriteS($config, "attack", "CSVSpeedDB", $isldSelectedCSVSpeed[$DB])
-	IniWriteS($config, "attack", "CSVSpeedAB", $isldSelectedCSVSpeed[$LB])
-
-	; Check Collectors Outside
-	If GUICtrlRead($chkDBMeetCollOutside) = $GUI_CHECKED Then
-		IniWriteS($config, "search", "DBMeetCollOutside", 1)
-	Else
-		IniWriteS($config, "search", "DBMeetCollOutside", 0)
-	EndIf
-	IniWriteS($config, "search", "DBMinCollOutsidePercent", GUICtrlRead($txtDBMinCollOutsidePercent))
+	; Adding Config Save - Added By NguyenAnhHD
+	#include "..\..\functions\NguyenAnhHD Mod's\Config - Mod\Config save - Mod.au3"
 
 	If $hFile <> -1 Then FileClose($hFile)
 

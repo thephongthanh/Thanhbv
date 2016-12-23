@@ -1,0 +1,56 @@
+NOTE  |100% Acr 16 Giant By Nguyễn Anh
+NOTE  |
+NOTE  |_Bên Dưới Có Phần "SCV Deployment Speed"
+NOTE  |
+NOTE  |_Các Bạn Chỉnh : MAX Speed Để thả Arch "Nhanh" nhé!
+NOTE  |
+NOTE  |_Thả Nhanh Không Thì Rớt Cup!
+
+      |EXTR. GOLD |EXTR.ELIXIR|EXTR. DARK |DEPO. GOLD |DEPO.ELIXIR|DEPO. DARK |TOWNHALL   |FORCED SIDE |
+SIDE  |0          |0          |0          |0          |0          |0          |0          |            |
+
+      |VECTOR_____|SIDE_______|DROP_POINTS|ADDTILES___|VERSUS_____|RANDOMX_PX_|RANDOMY_PX_|___________|
+MAKE  |A          |FRONT-RIGHT|15         |1          |INT-EXT    |2          |2          |           |
+MAKE  |B          |FRONT-LEFT |15         |1          |INT-EXT    |2          |2          |           |
+MAKE  |C          |RIGHT-FRONT|15         |1          |INT-EXT    |2          |2          |           |
+MAKE  |D          |LEFT-FRONT |15         |1          |INT-EXT    |2          |2          |           |
+MAKE  |E          |BACK-RIGHT |15         |1          |INT-EXT    |2          |2          |           |
+MAKE  |F          |BACK-LEFT  |15         |1          |INT-EXT    |2          |2          |           |
+MAKE  |G          |RIGHT-BACK |15         |1          |INT-EXT    |2          |2          |           |
+MAKE  |H          |LEFT-BACK  |15         |1          |INT-EXT    |2          |2          |           |
+
+      |VECTOR_____|SIDE_______|DROP_POINTS|ADDTILES___|VERSUS_____|RANDOMX_PX_|RANDOMY_PX_|___________|
+MAKE  |I          |FRONT-RIGHT|10         |10          |INT-EXT    |2          |2         |           |
+MAKE  |K          |FRONT-LEFT |10         |10          |INT-EXT    |2          |2         |           |
+MAKE  |L          |RIGHT-FRONT|10         |10          |INT-EXT    |2          |2         |           |
+MAKE  |M          |LEFT-FRONT |10         |10          |INT-EXT    |2          |2         |           |
+MAKE  |N          |BACK-RIGHT |10         |10          |INT-EXT    |2          |2         |           |
+MAKE  |O          |BACK-LEFT  |10         |10          |INT-EXT    |2          |2         |           |
+MAKE  |P          |RIGHT-BACK |10         |10          |INT-EXT    |2          |2         |           |
+MAKE  |Q          |LEFT-BACK  |10         |10          |INT-EXT    |2          |2         |           |
+
+      |VECTOR_____|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|___________|
+DROP  |A-B-C-D    |5          |1          |giant      |0          |0          |0          |           |
+DROP  |A-B-C-D    |5          |1          |giant      |0          |0          |0          |           |
+DROP  |E-F-G-H    |5          |1          |giant      |0          |0          |0          |           |
+DROP  |E-F-G-H    |5          |1          |giant      |0          |0          |0          |           |
+DROP  |E-F-G-H    |5          |1          |giant      |0          |0          |0          |           |
+DROP  |A-B-C-D    |5          |1          |giant      |0          |0          |0          |           |
+
+WAIT  |300        |           |           |           |           |           |           |           |
+
+
+      |VECTOR_____|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|___________|
+DROP  |I-K-L-M    |1-10       |10         |arch       |0          |0          |0          |           |
+DROP  |I-K-L-M    |1-10       |10         |arch       |0          |0          |0          |           |
+DROP  |N-O-P-Q    |1-10       |10         |arch       |0          |0          |0          |           |
+DROP  |N-O-P-Q    |1-10       |10         |arch       |0          |0          |0          |           |
+DROP  |I-K-L-M    |1-10       |10         |arch       |0          |0          |0          |           |
+DROP  |N-O-P-Q    |1-10       |10         |arch       |0          |0          |0          |           |
+
+DROP  |A          |3          |1          |castle     |30         |30-70      |500        |           |
+DROP  |A          |3          |1          |king       |30         |30-70      |500        |           |
+DROP  |A          |3          |1          |queen      |30         |30-70      |500        |           |
+DROP  |A          |3          |1          |Warden     |30         |30-70      |100        |           |
+
+RECALC|           |           |           |           |           |           |           |           |Recalculate remaining troops and then launch...

@@ -734,6 +734,8 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 		Else
 			GUICtrlSetData(Eval("txtNum" & $TroopName[$T]), 0)
 		EndIf
+		GUICtrlSetData(Eval("txtLev" & $TroopName[$T]), Eval("itxtLev" & $TroopName[$T]))
+		LevUpDown($TroopName[$T], False)
 	Next
 	For $S = 0 To UBound($SpellName) - 1
 		If BitAND(Eval($SpellName[$S] & "Comp") <> 0, Eval("itxtLev" & $SpellName[$S]) <> 0) Then
@@ -741,6 +743,8 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 		Else
 			GUICtrlSetData(Eval("txtNum" & $SpellName[$S]), 0)
 		EndIf
+		GUICtrlSetData(Eval("txtLev" & $SpellName[$S]), Eval("itxtLev" & $SpellName[$S]))
+		LevUpDown($SpellName[$S], False)
 	Next
 
 	GUICtrlSetData($txtFullTroop, $fulltroop)
@@ -876,6 +880,7 @@ Func applyConfig($bRedrawAtExit = True) ;Applies the data from config to the con
 	GUICtrlSetData($txtWall09ST, $itxtWall09ST)
 	GUICtrlSetData($txtWall10ST, $itxtWall10ST)
 	GUICtrlSetData($txtWall11ST, $itxtWall11ST)
+	GUICtrlSetData($txtWall12ST, $itxtWall12ST)
 
 	_GUICtrlComboBox_SetCurSel($cmbWalls, $icmbWalls)
 	Switch $iUseStorage
@@ -2012,6 +2017,7 @@ chkskipDonateNearFulLTroopsEnable()
 	GUICtrlSetData($txtWall09ST, $itxtWall09ST)
 	GUICtrlSetData($txtWall10ST, $itxtWall10ST)
 	GUICtrlSetData($txtWall11ST, $itxtWall11ST)
+	GUICtrlSetData($txtWall12ST, $itxtWall12ST)
 
 	GUICtrlSetData($txtUpgrMinGold, $itxtUpgrMinGold)
 	GUICtrlSetData($txtUpgrMinElixir, $itxtUpgrMinElixir)
@@ -2134,6 +2140,11 @@ chkskipDonateNearFulLTroopsEnable()
 		GUICtrlSetState($chkDebugDisableVillageCentering, $GUI_CHECKED)
 	Else
 		GUICtrlSetState($chkDebugDisableVillageCentering, $GUI_UNCHECKED)
+	EndIf
+	If $debugDeadbaseImage = 1 Then
+		GUICtrlSetState($chkDebugDeadbaseImage, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkDebugDeadbaseImage, $GUI_UNCHECKED)
 	EndIf
 	If $debugOcr = 1 Then
 		GUICtrlSetState($chkDebugOcr, $GUI_CHECKED)
@@ -2578,12 +2589,6 @@ chkskipDonateNearFulLTroopsEnable()
 	Else
 		GUICtrlSetState($chkAttackNearDarkElixirDrillDB, $GUI_UNCHECKED)
 	EndIf
-	If $icmbDeployDB = 1 Then
-		GUICtrlSetState($cmbDeployDB, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($cmbDeployDB, $GUI_UNCHECKED)
-	EndIf
-	cmbDeployDB()
 ;~ 	If $chkATH = 1 Then
 ;~ 		GUICtrlSetState($chkAttackTH, $GUI_CHECKED)
 ;~ 	Else
@@ -2621,12 +2626,6 @@ chkskipDonateNearFulLTroopsEnable()
 	Else
 		GUICtrlSetState($chkAttackNearDarkElixirDrillAB, $GUI_UNCHECKED)
 	EndIf
-	If $icmbDeployAB = 1 Then
-		GUICtrlSetState($cmbDeployAB, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($cmbDeployAB, $GUI_UNCHECKED)
-	EndIf
-	cmbDeployAB()
 
 	; attackcsv---------------------------------------------------------------------------
 	PopulateComboScriptsFilesDB()
@@ -2803,6 +2802,7 @@ chkskipDonateNearFulLTroopsEnable()
 	GUICtrlSetData($txtTSArmyCamps2, $iEnableAfterArmyCamps2)
 
 	;Train Radio/QuickTrain
+
 	If $iRadio_Army1 = 1 Then
 		GUICtrlSetState($hRadio_Army1, $GUI_CHECKED)
 	Else
@@ -2821,19 +2821,10 @@ chkskipDonateNearFulLTroopsEnable()
 		GUICtrlSetState($hRadio_Army3, $GUI_UNCHECKED)
 	EndIf
 
-	If $iRadio_Army12 = 1 Then
-		GUICtrlSetState($hRadio_Army12, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($hRadio_Army12, $GUI_UNCHECKED)
-	EndIf
-
-	If $iRadio_Army123 = 1 Then
-		GUICtrlSetState($hRadio_Army123, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($hRadio_Army123, $GUI_UNCHECKED)
-	EndIf
-
+	;==============================================================
 	; SmartZap - Added by DocOC team
+	;==============================================================
+
 	If $ichkSmartZap = 1 Then
 		GUICtrlSetState($chkSmartLightSpell, $GUI_CHECKED)
 		GUICtrlSetState($chkSmartZapDB, $GUI_ENABLE)
@@ -2872,140 +2863,27 @@ chkskipDonateNearFulLTroopsEnable()
 	GUICtrlSetData($txtMinDark, $itxtMinDE)
 	GUICtrlSetData($txtExpectedDE, $itxtExpectedDE)
 
-	; Profile Switch
-	If $ichkGoldSwitchMax = 1 Then
-		GUICtrlSetState($chkGoldSwitchMax, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkGoldSwitchMax, $GUI_UNCHECKED)
-	EndIf
-	_GUICtrlComboBox_SetCurSel($cmbGoldMaxProfile, $icmbGoldMaxProfile)
-	GUICtrlSetData($txtMaxGoldAmount, $itxtMaxGoldAmount)
-	If $ichkGoldSwitchMin = 1 Then
-		GUICtrlSetState($chkGoldSwitchMin, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkGoldSwitchMin, $GUI_UNCHECKED)
-	EndIf
-	_GUICtrlComboBox_SetCurSel($cmbGoldMinProfile, $icmbGoldMinProfile)
-	GUICtrlSetData($txtMinGoldAmount, $itxtMinGoldAmount)
+	;==============================================================
+	; SmartZap - Added by DocOC team
+	;==============================================================
 
-	If $ichkElixirSwitchMax = 1 Then
-		GUICtrlSetState($chkElixirSwitchMax, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkElixirSwitchMax, $GUI_UNCHECKED)
-	EndIf
-	_GUICtrlComboBox_SetCurSel($cmbElixirMaxProfile, $icmbElixirMaxProfile)
-	GUICtrlSetData($txtMaxElixirAmount, $itxtMaxElixirAmount)
-	If $ichkElixirSwitchMin = 1 Then
-		GUICtrlSetState($chkElixirSwitchMin, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkElixirSwitchMin, $GUI_UNCHECKED)
-	EndIf
-	_GUICtrlComboBox_SetCurSel($cmbElixirMinProfile, $icmbElixirMinProfile)
-	GUICtrlSetData($txtMinElixirAmount, $itxtMinElixirAmount)
-
-	If $ichkDESwitchMax = 1 Then
-		GUICtrlSetState($chkDESwitchMax, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkDESwitchMax, $GUI_UNCHECKED)
-	EndIf
-	_GUICtrlComboBox_SetCurSel($cmbDEMaxProfile, $icmbDEMaxProfile)
-	GUICtrlSetData($txtMaxDEAmount, $itxtMaxDEAmount)
-	If $ichkDESwitchMin = 1 Then
-		GUICtrlSetState($chkDESwitchMin, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkDESwitchMin, $GUI_UNCHECKED)
-	EndIf
-	_GUICtrlComboBox_SetCurSel($cmbDEMinProfile, $icmbDEMinProfile)
-	GUICtrlSetData($txtMinDEAmount, $itxtMinDEAmount)
-
-	If $ichkTrophySwitchMax = 1 Then
-		GUICtrlSetState($chkTrophySwitchMax, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkTrophySwitchMax, $GUI_UNCHECKED)
-	EndIf
-	_GUICtrlComboBox_SetCurSel($cmbTrophyMaxProfile, $icmbTrophyMaxProfile)
-	GUICtrlSetData($txtMaxTrophyAmount, $itxtMaxTrophyAmount)
-	If $ichkTrophySwitchMin = 1 Then
-		GUICtrlSetState($chkTrophySwitchMin, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkTrophySwitchMin, $GUI_UNCHECKED)
-	EndIf
-	_GUICtrlComboBox_SetCurSel($cmbTrophyMinProfile, $icmbTrophyMinProfile)
-	GUICtrlSetData($txtMinTrophyAmount, $itxtMinTrophyAmount)
-
-	; Config Apply for SwitchAcc Mode - DEMEN
-	Switch $ProfileType
-	Case 1
-		GUICtrlSetState($radActiveProfile, $GUI_CHECKED)
-	Case 2
-		GUICtrlSetState($radDonateProfile, $GUI_CHECKED)
-	Case 3
-		GUICtrlSetState($radIdleProfile, $GUI_CHECKED)
-	EndSwitch
-
-	_GUICtrlCombobox_SetCurSel($cmbMatchProfileAcc, $MatchProfileAcc)
-
-	If $ichkSwitchAcc = 1 Then
-		GUICtrlSetState($chkSwitchAcc, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkSwitchAcc, $GUI_UNCHECKED)
-	EndIf
-
-	If $ichkTrain = 1 Then
-		GUICtrlSetState($chkTrain, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkTrain, $GUI_UNCHECKED)
-	EndIf
-
-	If $ichkSmartSwitch = 1 Then
-		GUICtrlSetState($radSmartSwitch, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($radNormalSwitch, $GUI_CHECKED)
-	EndIf
-
-	chkSwitchAcc()
-
-	_GUICtrlCombobox_SetCurSel($cmbTotalAccount, $icmbTotalCoCAcc)	; 0 = AutoDetect
-
-	If $ichkCloseTraining >= 1 Then
-		GUICtrlSetState($chkUseTrainingClose, $GUI_CHECKED)
-		If $ichkCloseTraining = 1 Then
-			GUICtrlSetState($radCloseCoC, $GUI_CHECKED)
-		Else
-			GUICtrlSetState($radCloseAndroid, $GUI_CHECKED)
-		EndIf
-	Else
-		GUICtrlSetState($chkUseTrainingClose, $GUI_UNCHECKED)
-	EndIf
-
-	; CSV Deployment Speed Mod
-	GUICtrlSetData($sldSelectedSpeedDB, $isldSelectedCSVSpeed[$DB])
-	GUICtrlSetData($sldSelectedSpeedAB, $isldSelectedCSVSpeed[$LB])
-	sldSelectedSpeedDB()
-	sldSelectedSpeedAB()
-
-	; Check Collectors Outside
-	If $ichkDBMeetCollOutside = 1 Then
-		GUICtrlSetState($chkDBMeetCollOutside, $GUI_CHECKED)
-	Else
-		GUICtrlSetState($chkDBMeetCollOutside, $GUI_UNCHECKED)
-	EndIf
-	chkDBMeetCollOutside()
-	GUICtrlSetData($txtDBMinCollOutsidePercent, $iDBMinCollOutsidePercent)
+	; Adding Config Apply - Added By NguyenAnhHD
+	#include "..\..\functions\NguyenAnhHD Mod's\Config - Mod\Config apply - Mod.au3"
 
 	; Reenabling window redraw - Keep this last....
 
 	IF $iGUIEnabled = 0 Then
-		For $T = 0 To (UBound($TroopName) - 1)
-			Assign("itxtLev" & $TroopName[$T], Eval("itxtLev" & $TroopName[$T]) - 1)
-			Call("Lev" & $TroopName[$T])
-			If Eval("itxtLev" & $TroopName[$T]) < 0 Then Assign("itxtLev" & $TroopName[$T], 0)
-		Next
-		For $S = 0 To (UBound($SpellName) - 1)
-			Assign("itxtLev" & $SpellName[$S], Eval("itxtLev" & $SpellName[$S]) - 1)
-			Call("Lev" & $SpellName[$S])
-			If Eval("itxtLev" & $SpellName[$S]) < 0 Then Assign("itxtLev" & $SpellName[$S], 0)
-		Next
+		lblTotalCount2()
+		; For $T = 0 To (UBound($TroopName) - 1)
+			; Assign("itxtLev" & $TroopName[$T], Eval("itxtLev" & $TroopName[$T]) - 1)
+			; Call("Lev" & $TroopName[$T])
+			; If Eval("itxtLev" & $TroopName[$T]) < 0 Then Assign("itxtLev" & $TroopName[$T], 0)
+		; Next
+		; For $S = 0 To (UBound($SpellName) - 1)
+			; Assign("itxtLev" & $SpellName[$S], Eval("itxtLev" & $SpellName[$S]) - 1)
+			; Call("Lev" & $SpellName[$S])
+			; If Eval("itxtLev" & $SpellName[$S]) < 0 Then Assign("itxtLev" & $SpellName[$S], 0)
+		; Next
 			$iGUIEnabled = 1
 	EndIf
 	If $bRedrawAtExit Then SetRedrawBotWindow(True)

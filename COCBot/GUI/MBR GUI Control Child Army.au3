@@ -15,7 +15,7 @@
 
 Func chkUseQTrain()
 	If GUICtrlRead($hChk_UseQTrain) = $GUI_CHECKED Then
-		_GUI_Value_STATE("ENABLE", $hRadio_Army1 & "#" & $hRadio_Army2 & "#" & $hRadio_Army3 & "#" & $hRadio_Army12 & "#" & $hRadio_Army123)
+		_GUI_Value_STATE("ENABLE", $hRadio_Army1 & "#" & $hRadio_Army2 & "#" & $hRadio_Army3 & "#" & $hRadio_Army12 & "#" & $hRadio_Army123) ;	Adding Quicktrain combo - Demen
 		_GUI_Value_STATE("DISABLE", $grpTrainTroops)
 		_GUI_Value_STATE("DISABLE", $grpCookSpell)
 		GUICtrlSetData($lblTotalCountCamp, " 0s")
@@ -25,7 +25,7 @@ Func chkUseQTrain()
 		GUICtrlSetData($lblElixirCostSpell, "0")
 		GUICtrlSetData($lblDarkCostSpell, "0")
 	Else
-		_GUI_Value_STATE("DISABLE", $hRadio_Army1 & "#" & $hRadio_Army2 & "#" & $hRadio_Army3 & "#" & $hRadio_Army12 & "#" & $hRadio_Army123)
+		_GUI_Value_STATE("DISABLE", $hRadio_Army1 & "#" & $hRadio_Army2 & "#" & $hRadio_Army3 & "#" & $hRadio_Army12 & "#" & $hRadio_Army123) ;	Adding Quicktrain combo - Demen
 		_GUI_Value_STATE("ENABLE", $grpTrainTroops)
 		_GUI_Value_STATE("ENABLE", $grpCookSpell)
 		lblTotalCount()
@@ -111,7 +111,8 @@ Func lblTotalCount2()
 	Local $NbrOfDarkBarrack = 2 ;For the moment fix to 2 until fine detect level of each Barrack
 	For $i = 0 To UBound($TroopName) - 1
 		Local $NbrOfTroop = GUICtrlRead(Eval("txtNum" & $TroopName[$i]))
-		If $NbrOfTroop > 0 Then
+		Local $LevOfTroop = Eval("itxtLev" & $TroopName[$i])
+		If $NbrOfTroop > 0 And $LevOfTroop > 0 Then
 			If $TroopType[$i] = "e" Then
 				If IsInt($NbrOfTroop / $NbrOfBarrack) = 1 then
 					$TotalTotalTimeTroop += ($NbrOfTroop / $NbrOfBarrack) * $TroopTimes[$i]
@@ -829,15 +830,75 @@ Func IsUseCustomDarkTroopOrder()
 	If $debugsetlogTrain = 1 Then Setlog("Custom dark train order used...", $COLOR_DEBUG) ;Debug
 	Return True
 EndFunc   ;==>IsUseCustomDarkTroopOrder
-#CE
-Func LevUpDown($SelTroopSpell)
+ #CE
+;==============================================================
+; SmartZap - Added by DocOC team
+;==============================================================
+Func chkSmartLightSpell()
+	If GUICtrlRead($chkSmartLightSpell) = $GUI_CHECKED Then
+		GUICtrlSetState($chkSmartZapDB, $GUI_ENABLE)
+		GUICtrlSetState($chkSmartZapSaveHeroes, $GUI_ENABLE)
+		GUICtrlSetState($txtMinDark, $GUI_ENABLE)
+		GUICtrlSetState($chkNoobZap, $GUI_ENABLE)
+		$ichkSmartZap = 1
+	Else
+		GUICtrlSetState($chkSmartZapDB, $GUI_DISABLE)
+		GUICtrlSetState($chkSmartZapSaveHeroes, $GUI_DISABLE)
+		GUICtrlSetState($txtMinDark, $GUI_DISABLE)
+		GUICtrlSetState($chkNoobZap, $GUI_DISABLE)
+		$ichkSmartZap = 0
+	EndIf
+EndFunc   ;==>chkSmartLightSpell
+
+Func chkNoobZap()
+	If GUICtrlRead($chkNoobZap) = $GUI_CHECKED Then
+		GUICtrlSetState($txtExpectedDE, $GUI_ENABLE)
+		$ichkNoobZap = 1
+	Else
+		GUICtrlSetState($txtExpectedDE, $GUI_DISABLE)
+		$ichkNoobZap = 0
+	EndIf
+EndFunc   ;==>chkDumbZap
+
+Func chkSmartZapDB()
+    If GUICtrlRead($chkSmartZapDB) = $GUI_CHECKED Then
+        $ichkSmartZapDB = 1
+    Else
+        $ichkSmartZapDB = 0
+    EndIf
+EndFunc   ;==>chkSmartZapDB
+
+Func chkSmartZapSaveHeroes()
+    If GUICtrlRead($chkSmartZapSaveHeroes) = $GUI_CHECKED Then
+        $ichkSmartZapSaveHeroes = 1
+    Else
+        $ichkSmartZapSaveHeroes = 0
+    EndIf
+EndFunc   ;==>chkSmartZapSaveHeroes
+
+Func txtMinDark()
+	$itxtMinDE = GUICtrlRead($txtMinDark)
+EndFunc   ;==>txtMinDark
+
+Func txtExpectedDE()
+	$itxtExpectedDE = GUICtrlRead($txtExpectedDE)
+EndFunc   ;==>TxtExpectedDE
+;==========================END=================================
+;			 SmartZap - Added by DocOC team
+;==============================================================
+
+Func LevUpDown($SelTroopSpell, $NoChangeLev = True)
 	Local $MaxLev = UBound(Eval("Lev" & $SelTroopSpell & "Cost"), 1)
 	Local $LevColor = $COLOR_WHITE
 	Local $TempLev
-	If _IsPressed("10") Or _IsPressed("02") Then
-		$TempLev = Eval("itxtLev" & $SelTroopSpell) - 1
+	If $NoChangeLev Then
+		If _IsPressed("10") Or _IsPressed("02") Then
+			$TempLev = Eval("itxtLev" & $SelTroopSpell) - 1
+		Else
+			$TempLev = Eval("itxtLev" & $SelTroopSpell) + 1
+		EndIf
 	Else
-		$TempLev = Eval("itxtLev" & $SelTroopSpell) + 1
+		$TempLev = Eval("itxtLev" & $SelTroopSpell)
 	EndIf
 	If $TempLev > $MaxLev - 1 Or $TempLev = 0 Then
 		$TempLev = 0

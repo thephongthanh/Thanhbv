@@ -99,6 +99,9 @@
 #include "functions\Attack\Troops\SelectDropTroop.au3"
 #include "functions\Attack\Troops\SetSleep.au3"
 
+#include "functions\Attack\SmartZap\drillSearch.au3"
+#include "functions\Attack\SmartZap\smartZap.au3"
+
 #include "functions\CreateArmy\_TrainMoveBtn.au3"
 #include "functions\CreateArmy\BarracksStatus.au3"
 #include "functions\CreateArmy\CheckFullArmy.au3"
@@ -287,16 +290,5 @@
 #include "functions\Other\Api.au3"
 #include "functions\Other\ApiClient.au3"
 
-; SmartZap
-#include "functions\Mod\SmartZap\drillSearch.au3"
-#include "functions\Mod\SmartZap\smartZap.au3"
-
-; Switch Profile
-#include "functions\Village\ProfileSwitch.au3"
-
-; SwitchAcc - DEMEN
-#include "functions\Mod\Switch Accounts\SwitchAcc.au3"
-#include "functions\Mod\Switch Accounts\UpdateStats - Mod.au3"
-
-; Check Collector Outside
-#include "functions\Mod\CollectorsOutside\AreCollectorsOutside.au3"
+; MBR Functions Mod's - Added By NguyenAnhHD
+#include "functions\NguyenAnhHD Mod's\GUI - Mod\MBR Functions - Mod.au3"

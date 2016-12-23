@@ -93,7 +93,7 @@ GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 If $AndroidAdbScreencap = True Then chkBackground() ; update background mode GUI
 
-$pic2arrow = GUICtrlCreateIcon($pIconLib, $eIcn2Arrow, $x + 195, $y + 10, 48, 48)
+$pic2arrow = GUICtrlCreateIcon($pIconLib, $eIcn2Arrow, $x + 190, $y + 10, 48, 48)
 
 $lblVersion = GUICtrlCreateLabel($sBotVersion, 200, $y + 60, 60, 17, $SS_CENTER)
 	GUICtrlSetColor(-1, $COLOR_MEDGRAY)
@@ -108,19 +108,19 @@ $arrowright = GUICtrlCreateIcon($pIconLib, $eIcnArrowRight, $x + 247 + 198, $y +
 Local $x = 295, $y = $y_bottom + 20
 $grpVillage = GUICtrlCreateGroup(GetTranslated(603,32, "Village"), $x - 20, $y - 20, 180, 85)
 	$lblResultGoldNow = GUICtrlCreateLabel("", $x - 5, $y + 2, 60, 15, $SS_RIGHT)
-	$lblResultGoldHourNow = GUICtrlCreateLabel("", $x, $y + 2, 50, 15, $SS_RIGHT)
+	$lblResultGoldHourNow = GUICtrlCreateLabel("", $x, $y + 2, 60, 15, $SS_RIGHT)
 		GUICtrlSetState(-1, $GUI_HIDE)
 	$picResultGoldNow = GUICtrlCreateIcon ($pIconLib, $eIcnGold, $x + 60, $y, 16, 16)
 		GUICtrlSetState(-1, $GUI_HIDE)
 	$picResultGoldTemp = GUICtrlCreateIcon ($pIconLib, $eIcnGold, $x - 5, $y, 16, 16)
 	$lblResultElixirNow = GUICtrlCreateLabel("", $x - 5, $y + 22, 60, 15, $SS_RIGHT)
-	$lblResultElixirHourNow = GUICtrlCreateLabel("", $x, $y + 22, 50, 15, $SS_RIGHT)
+	$lblResultElixirHourNow = GUICtrlCreateLabel("", $x, $y + 22, 60, 15, $SS_RIGHT)
 		GUICtrlSetState(-1, $GUI_HIDE)
 	$picResultElixirNow = GUICtrlCreateIcon ($pIconLib, $eIcnElixir, $x + 60, $y + 20, 16, 16)
 		GUICtrlSetState(-1, $GUI_HIDE)
 	$picResultElixirTemp = GUICtrlCreateIcon ($pIconLib, $eIcnElixir, $x - 5, $y + 20, 16, 16)
 	$lblResultDENow = GUICtrlCreateLabel("", $x, $y + 42, 55, 15, $SS_RIGHT)
-	$lblResultDEHourNow = GUICtrlCreateLabel("", $x - 5, $y + 42, 55, 15, $SS_RIGHT)
+	$lblResultDEHourNow = GUICtrlCreateLabel("", $x - 5, $y + 42, 60, 15, $SS_RIGHT)
 		GUICtrlSetState(-1, $GUI_HIDE)
 	$picResultDENow = GUICtrlCreateIcon ($pIconLib, $eIcnDark, $x + 60, $y + 40, 16, 16)
 		GUICtrlSetState(-1, $GUI_HIDE)

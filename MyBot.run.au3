@@ -1,4 +1,4 @@
-; #FUNCTION# ====================================================================================================================
+﻿; #FUNCTION# ====================================================================================================================
 ; Name ..........: MBR Bot
 ; Description ...: This file contens the Sequence that runs all MBR Bot
 ; Author ........:  (2014)
@@ -19,8 +19,8 @@
 #pragma compile(Icon, "Images\MyBot.ico")
 #pragma compile(FileDescription, Clash of Clans Bot - A Free Clash of Clans bot - https://mybot.run)
 #pragma compile(ProductName, My Bot)
-#pragma compile(ProductVersion, 6.4)
-#pragma compile(FileVersion, 6.4.1)
+#pragma compile(ProductVersion, 6.5)
+#pragma compile(FileVersion, 6.5)
 #pragma compile(LegalCopyright, © https://mybot.run)
 #pragma compile(Out, MyBot.run.exe) ; Required
 
@@ -35,10 +35,10 @@ ProcessSetPriority(@AutoItPID, $PROCESS_ABOVENORMAL)
 Global $iBotLaunchTime = 0
 Local $hBotLaunchTime = TimerInit()
 
-Global $sBotVersion = "v6.4" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it is also use on Checkversion()
-Global $sModversion = "v1.0" ;<== Just Change This to Version Number
+Global $sBotVersion = "v6.5" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it is also use on Checkversion()
+Global $sModversion = "v1.1" ;<== Just Change This to Version Number
 Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/26474-new-mybot-v622v641-mod-nguyenanhhd-v532v10-update-1812/" ;<== Our Website Link Or Link Download
-Global $sModDownloadUrl = "https://github.com/NguyenAnhHD/MyBot-v6.2-Mod/releases"
+Global $sModDownloadUrl = "https://github.com/NguyenAnhHD/MyBot-v6.5-Mod/releases"
 
 Global $sBotTitle = "My Bot " & $sBotVersion & " MOD NguyenAnhHD " & $sModversion & "_S " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 
@@ -202,7 +202,9 @@ $iGUIEnabled = 1
 
 ;~ InitializeVariables();initialize variables used in extrawindows
 CheckVersion() ; check latest version on mybot.run site
-btnUpdateProfile() ; SwitchAcc - DEMEN
+
+;~ Update profile to write config for SwitchAcc Mode - DEMEN
+btnUpdateProfile()
 
 ;~ Remember time in Milliseconds bot launched
 $iBotLaunchTime = TimerDiff($hBotLaunchTime)
@@ -281,7 +283,6 @@ Func runBot() ;Bot that runs everything in order
 			If $Restart = True Then ContinueLoop
 			If _Sleep($iDelayRunBot3) Then Return
 			VillageReport()
-			ProfileSwitch()
 			If $OutOfGold = 1 And (Number($iGoldCurrent) >= Number($itxtRestartGold)) Then ; check if enough gold to begin searching again
 				$OutOfGold = 0 ; reset out of gold flag
 				Setlog("Switching back to normal after no gold to search ...", $COLOR_SUCCESS)
@@ -435,10 +436,10 @@ Func Idle() ;Sequence that runs until Full Army
 		If $CommandStop = -1 Then SetLog("====== Waiting for full army ======", $COLOR_SUCCESS)
 		Local $hTimer = TimerInit()
 		Local $iReHere = 0
-		PrepareDonateCC()
+		;PrepareDonateCC()
 
 		;If $iSkipDonateNearFulLTroopsEnable = 1 Then getArmyCapacity(true,true)
-		If $bDonate = True Then
+		If $bActiveDonate = True Then
 			Local $aHeroResult = CheckArmyCamp(True, True, True)
 			While $iReHere < 7
 				$iReHere += 1
@@ -696,14 +697,14 @@ Func _RunFunction($action)
 			NotifyReport()
 			_Sleep($iDelayRunBot3)
 		Case "DonateCC"
-			If $bDonate = True Then
+			If $bActiveDonate = True Then
 				;If $iSkipDonateNearFulLTroopsEnable = 1 and $FirstStart = False Then getArmyCapacity(True, True)
 				If SkipDonateNearFullTroops(True) = False Then DonateCC()
 				If _Sleep($iDelayRunBot1) = False Then checkMainScreen(False)
 			EndIF
 		Case "DonateCC,Train"
 			If $iSkipDonateNearFulLTroopsEnable = 1 and $FirstStart = true Then getArmyCapacity(True, True)
-			If $bDonate = True Then
+			If $bActiveDonate = True Then
 				If SkipDonateNearFullTroops(True) = False Then DonateCC()
 			EndIF
 			If _Sleep($iDelayRunBot1) = False Then checkMainScreen(False)

@@ -354,6 +354,8 @@ $hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 ;-->TAB Gain
+; Adding GUI Profile Stats for SwitchAcc Mode - Demen
+#include "..\functions\NguyenAnhHD Mod's\GUI - Mod\MBR GUI Design - Stats.au3"
 
 ;TAB Misc
 $hGUI_STATS_TAB_ITEM2 = GUICtrlCreateTabItem(GetTranslated(600,39,"Misc"))
@@ -615,90 +617,6 @@ $hGUI_STATS_TAB_ITEM2 = GUICtrlCreateTabItem(GetTranslated(600,39,"Misc"))
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 ;--> TAB Misc
-
-;TAB Profile Stats - SwitchAcc Mode - DEMEN
-$hGUI_STATS_TAB_ITEM4 = GUICtrlCreateTabItem("Profile Stats")
-
-
-Local $xStart = 25, $yStart = 45
-$x = $xStart
-$y = $yStart
-
-Global $aGoldTotalAcc[8], $aElixirTotalAcc[8], $aDarkTotalAcc[8], $aAttackedCountAcc[8], $aSkippedVillageCountAcc[8]
-Global $aGoldCurrentAcc[8], $aElixirCurrentAcc[8], $aGoldCurrentAcc[8],$aDarkCurrentAcc[8], $aTrophyCurrentAcc[8], $aGemAmountAcc[8], $aFreeBuilderCountAcc[8], $aTotalBuilderCountAcc[8]
-Global $lblGoldLootAcc[8], $lblElixirLootAcc[8], $lblDarkLootAcc[8], $lblHourlyStatsGoldAcc[8], $lblHourlyStatsElixirAcc[8], $lblHourlyStatsDarkAcc[8]
-Global $grpVillageAcc[8], $lblResultGoldNowAcc[8], $lblResultElixirNowAcc[8], $lblResultDENowAcc[8], $lblResultTrophyNowAcc[8], $lblResultBuilderNowAcc[8], $lblResultGemNowAcc[8]
-Global $aStartHide[8]
-
-$grpProfileStats = GUICtrlCreateGroup("Gain stats per Profile", $x - 22, $y - 15, 427, 330)
-	For $i = 0 To 3
-		$x = $xStart - 60
-		$y = $yStart
-
-		$grpVillageAcc[$i] = GUICtrlCreateGroup(GetTranslated(603,32, "Village"), $x + 70, $y + $i * 80, 170, 73)
-			$y += 17
-			$picResultGoldNowAcc = GUICtrlCreateIcon ($pIconLib, $eIcnGold, $x + 140, $y + $i * 80, 16, 16)
-				$lblResultGoldNowAcc[$i] = GUICtrlCreateLabel("", $x + 75, $y + 1 + $i * 80, 60, 17, $SS_RIGHT)
-			$picResultTrophyNowAcc = GUICtrlCreateIcon ($pIconLib, $eIcnTrophy, $x + 220, $y + $i * 80, 16, 16)
-				$lblResultTrophyNowAcc[$i] = GUICtrlCreateLabel("", $x + 155, $y + 1 + $i * 80, 60, 17, $SS_RIGHT)
-			$y += 17
-			$picResultElixirNowAcc = GUICtrlCreateIcon ($pIconLib, $eIcnElixir, $x + 140, $y + $i * 80, 16, 16)
-				$lblResultElixirNowAcc[$i] = GUICtrlCreateLabel("", $x + 75, $y + 1 + $i * 80, 60, 17, $SS_RIGHT)
-			$picResultBuilderNowAcc = GUICtrlCreateIcon ($pIconLib, $eIcnBuilder, $x + 220, $y + $i * 80, 16, 16)
-				$lblResultBuilderNowAcc[$i] = GUICtrlCreateLabel("", $x + 155, $y + 1 + $i * 80, 60, 17, $SS_RIGHT)
-			$y += 17
-			$picResultDENowAcc = GUICtrlCreateIcon ($pIconLib, $eIcnDark, $x + 140, $y + $i * 80, 16, 16)
-				$lblResultDENowAcc[$i] = GUICtrlCreateLabel("", $x + 75, $y + 1 + $i * 80, 60, 17, $SS_RIGHT)
-			$picResultGemNowAcc = GUICtrlCreateIcon ($pIconLib, $eIcnGem, $x + 220, $y + $i * 80, 16, 16)
-				$lblResultGemNowAcc[$i] = GUICtrlCreateLabel("", $x + 155, $y + 1 + $i * 80, 60, 17, $SS_RIGHT)
-		GUICtrlCreateGroup("", -99, -99, 1, 1)
-
-		$x += 180
-		$y = $yStart
-		$aStartHide[$i] = GUICtrlCreateDummy()
-		$grpTotalLootAcc = GUICtrlCreateGroup(GetTranslated(632,20, "Total Gain"), $x + 70, $y + $i * 80 , 90, 73)
-			$y += 17
-			$picGoldLootAcc = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 140, $y + $i * 80, 16, 16)
-				$lblGoldLootAcc[$i] = GUICtrlCreateLabel("", $x + 75, $y + 1 + $i * 80, 60, 17, $SS_RIGHT)
-				$txtTip = GetTranslated(632,21, "The total amount of Gold you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
-				GUICtrlSetTip(-1, $txtTip)
-			$y += 17
-			$picElixirLootAcc = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 140, $y + $i * 80, 16, 16)
-				$lblElixirLootAcc[$i] = GUICtrlCreateLabel("", $x + 75, $y + 1 + $i * 80, 60, 17, $SS_RIGHT)
-				$txtTip = GetTranslated(632,23, "The total amount of Elixir you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
-				GUICtrlSetTip(-1, $txtTip)
-			$y += 17
-			$picDarkLootAcc = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 140, $y + $i * 80, 16, 16)
-				$lblDarkLootAcc[$i] = GUICtrlCreateLabel("", $x + 75, $y + 1 + $i * 80, 60, 17, $SS_RIGHT)
-				$txtTip = GetTranslated(632,24, "The total amount of Dark Elixir you gained or lost while the Bot is running.") & @CRLF & GetTranslated(632,22, "(This includes manual spending of resources on upgrade of buildings)")
-				GUICtrlSetTip(-1, $txtTip)
-		GUICtrlCreateGroup("", -99, -99, 1, 1)
-
-		$x += 100
-		$y = $yStart
-		$grpHourlyStatsAcc = GUICtrlCreateGroup(GetTranslated(632,26, "Gain per Hour"), $x + 70, $y + $i * 80 , 90, 73)
-			$y += 17
-			$picGoldLootAcc = GUICtrlCreateIcon($pIconLib, $eIcnGold, $x + 140, $y + $i * 80, 16, 16)
-				$lblHourlyStatsGoldAcc[$i] = GUICtrlCreateLabel("", $x + 75, $y + 1 + $i * 80, 60, 17, $SS_RIGHT)
-				$txtTip = GetTranslated(632,27, "Gold gain per hour")
-				GUICtrlSetTip(-1, $txtTip)
-			$y += 17
-			$picElixirLootAcc = GUICtrlCreateIcon($pIconLib, $eIcnElixir, $x + 140, $y + $i * 80, 16, 16)
-				$lblHourlyStatsElixirAcc[$i] = GUICtrlCreateLabel("", $x + 75, $y + 1 + $i * 80, 60, 17, $SS_RIGHT)
-				$txtTip = GetTranslated(632,28, "Elixir gain per hour")
-				GUICtrlSetTip(-1, $txtTip)
-			$y += 17
-			$picDarkLootAcc = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 140, $y + $i * 80, 16, 16)
-				$lblHourlyStatsDarkAcc[$i] = GUICtrlCreateLabel("", $x + 75, $y + 1 + $i * 80, 60, 17, $SS_RIGHT)
-				$txtTip = GetTranslated(632,29, "Dark Elixir gain per hour")
-				GUICtrlSetTip(-1, $txtTip)
-		GUICtrlCreateGroup("", -99, -99, 1, 1)
-
-	Next
-
-GUICtrlCreateGroup("", -99, -99, 1, 1)
-;-->TAB Gain Separate - Stats Per Profile - SwitchAcc Mode - DEMEN
-
 ;TAB Attacks
 $hGUI_STATS_TAB_ITEM3 = GUICtrlCreateTabItem(GetTranslated(600,40,"Attacks"))
 	Local $xStart = 25, $yStart = 45
@@ -1018,6 +936,162 @@ $hGUI_STATS_TAB_ITEM3 = GUICtrlCreateTabItem(GetTranslated(600,40,"Attacks"))
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 ;--> TAB Attacks
+;TAB Attacks
+$hGUI_STATS_TAB_ITEM4 = GUICtrlCreateTabItem(GetTranslated(600, 55,"Donations"))
+
+Local $x = 5, $y = 25, $z = 33
+
+$grpElxTr = GUICtrlCreateGroup(GetTranslated(632,118,"Troops"), $x, $y, 425, 240, BitOR($GUI_SS_DEFAULT_GROUP,$BS_CENTER))
+
+$x -= 12
+$y += 20
+$z += 20
+
+	GUICtrlCreateIcon($pIconLib, $eIcnBarbarian, $x + 60, $y, 32, 32)
+	$lblDonQ[1] = GUICtrlCreateLabel("0", $x + 20, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+	GUICtrlCreateIcon($pIconLib, $eIcnArcher, $x + 140, $y, 32, 32)
+	$lblDonQ[2] = GUICtrlCreateLabel("0", $x + 100, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+	GUICtrlCreateIcon($pIconLib, $eIcnGiant, $x + 220, $y, 32, 32)
+	$lblDonQ[3] = GUICtrlCreateLabel("0", $x + 180, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+	GUICtrlCreateIcon($pIconLib, $eIcnGoblin, $x + 300, $y, 32, 32)
+	$lblDonQ[4] = GUICtrlCreateLabel("0", $x + 260, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+	GUICtrlCreateIcon($pIconLib, $eIcnWallBreaker, $x + 380, $y, 32, 32)
+	$lblDonQ[5] = GUICtrlCreateLabel("0", $x + 340, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+$y += 35
+$z += 35
+
+	GUICtrlCreateIcon($pIconLib, $eIcnBalloon, $x + 60, $y, 32, 32)
+	$lblDonQ[6] = GUICtrlCreateLabel("0", $x + 20, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+	GUICtrlCreateIcon($pIconLib, $eIcnWizard, $x + 140, $y, 32, 32)
+	$lblDonQ[7] = GUICtrlCreateLabel("0", $x + 100, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+	GUICtrlCreateIcon($pIconLib, $eIcnHealer, $x + 220, $y, 32, 32)
+	$lblDonQ[8] = GUICtrlCreateLabel("0", $x + 180, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+	GUICtrlCreateIcon($pIconLib, $eIcnDragon, $x + 300, $y, 32, 32)
+	$lblDonQ[9] = GUICtrlCreateLabel("0", $x + 260, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+	GUICtrlCreateIcon($pIconLib, $eIcnPekka, $x + 380, $y, 32, 32)
+	$lblDonQ[10] = GUICtrlCreateLabel("0", $x + 340, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+$y += 35
+$z += 35
+
+	GUICtrlCreateIcon($pIconLib, $eIcnBabyDragon, $x + 60, $y, 32, 32)
+	$lblDonQ[11] = GUICtrlCreateLabel("0", $x + 20, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+	GUICtrlCreateIcon($pIconLib, $eIcnMiner, $x + 140, $y, 32, 32)
+	$lblDonQ[12] = GUICtrlCreateLabel("0", $x + 100, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+$y += 40
+$z += 40
+
+	GUICtrlCreateIcon($pIconLib, $eIcnMinion, $x + 60, $y, 32, 32)
+	$lblDonQ[13] = GUICtrlCreateLabel("0", $x + 20, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+	GUICtrlCreateIcon($pIconLib, $eIcnHogRider, $x + 140, $y, 32, 32)
+	$lblDonQ[14] = GUICtrlCreateLabel("0", $x + 100, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+	GUICtrlCreateIcon($pIconLib, $eIcnValkyrie, $x + 220, $y, 32, 32)
+	$lblDonQ[15] = GUICtrlCreateLabel("0", $x + 180, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+	GUICtrlCreateIcon($pIconLib, $eIcnGolem, $x + 300, $y, 32, 32)
+	$lblDonQ[16] = GUICtrlCreateLabel("0", $x + 260, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+	GUICtrlCreateIcon($pIconLib, $eIcnWitch, $x + 380, $y, 32, 32)
+	$lblDonQ[17] = GUICtrlCreateLabel("0", $x + 340, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+$y += 35
+$z += 35
+
+	GUICtrlCreateIcon($pIconLib, $eIcnLavaHound, $x + 60, $y, 32, 32)
+	$lblDonQ[18] = GUICtrlCreateLabel("0", $x + 20, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+	GUICtrlCreateIcon($pIconLib, $eIcnBowler, $x + 140, $y, 32, 32)
+	$lblDonQ[19] = GUICtrlCreateLabel("0", $x + 100, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+$x += 12
+$y += 40
+
+	$lblTotalTroopsQ = GUICtrlCreateLabel(GetTranslated(632,120,"Total Donated") & " : 0", $x + 5, $y, 230, 27, $SS_CENTER)
+	GUICtrlSetFont(-1, 12, 800, 0, "Arial Black")
+	GUICtrlSetColor(-1, 0xFFFFFF)
+	GUICtrlSetBkColor(-1, 0x808080)
+
+	$lblTotalTroopsXP = GUICtrlCreateLabel(GetTranslated(632,121,"XP Won") & " : 0", $x + 240, $y, 180, 27, $SS_CENTER)
+	GUICtrlSetFont(-1, 12, 800, 0, "Arial Black")
+	GUICtrlSetColor(-1, 0xFFFFFF)
+	GUICtrlSetBkColor(-1, 0x808080)
+
+GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+Local $x = 5, $y = 265, $z = 273
+
+$grpDElxTrSp = GUICtrlCreateGroup(GetTranslated(632,119,"Spells"), $x, $y, 425, 95, BitOR($GUI_SS_DEFAULT_GROUP,$BS_CENTER))
+
+$x -= 12
+$x += 40
+$y += 20
+$z += 20
+
+	GUICtrlCreateIcon($pIconLib, $eIcnPoisonSpell, $x + 60, $y, 32, 32)
+	$lblDonQ[20] = GUICtrlCreateLabel("0", $x + 20, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+	GUICtrlCreateIcon($pIconLib, $eIcnEarthQuakeSpell, $x + 140, $y, 32, 32)
+	$lblDonQ[21] = GUICtrlCreateLabel("0", $x + 100, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+	GUICtrlCreateIcon($pIconLib, $eIcnHasteSpell, $x + 220, $y, 32, 32)
+	$lblDonQ[22] = GUICtrlCreateLabel("0", $x + 180, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+	GUICtrlCreateIcon($pIconLib, $eIcnSkeletonSpell, $x + 300, $y, 32, 32)
+	$lblDonQ[23] = GUICtrlCreateLabel("0", $x + 260, $z, 35, 20, $SS_RIGHT)
+	GUICtrlSetFont(-1, 11, 800, 0, "Arial")
+
+$x -= 40
+$x += 12
+$y += 40
+
+	$lblTotalSpellsQ = GUICtrlCreateLabel(GetTranslated(632,120,"Total Donated") & " : 0", $x + 5, $y, 230, 27, $SS_CENTER)
+	GUICtrlSetFont(-1, 12, 800, 0, "Arial Black")
+	GUICtrlSetColor(-1, 0xFFFFFF)
+	GUICtrlSetBkColor(-1, 0x808080)
+
+	$lblTotalSpellsXP = GUICtrlCreateLabel(GetTranslated(632,121,"XP Won") & " : 0", $x + 240, $y, 180, 27, $SS_CENTER)
+	GUICtrlSetFont(-1, 12, 800, 0, "Arial Black")
+	GUICtrlSetColor(-1, 0xFFFFFF)
+	GUICtrlSetBkColor(-1, 0x808080)
+
+GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+;--> TAB Don Stats
 
 GUICtrlCreateTabItem("")
 ;GUISetState()

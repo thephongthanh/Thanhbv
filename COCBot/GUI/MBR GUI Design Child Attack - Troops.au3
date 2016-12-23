@@ -59,7 +59,7 @@ $hRadio_Army12 = GUICtrlCreateRadio("Army 12", $x + 285, $y + 20, 54, 15)
 GUICtrlSetState(-1, $GUI_DISABLE)
 $hRadio_Army123 = GUICtrlCreateRadio("Army 123", $x + 345, $y + 20, 60, 15)
 GUICtrlSetState(-1, $GUI_DISABLE)
-	;$LblRemovecamp = GUICtrlCreateLabel(GetTranslated(621, 41, "Remove Army"), $x + 350, $y + 20, -1, 15, $SS_LEFT)
+	;$LblRemovecamp = GUICtrlCreateLabel(GetTranslated(621, 41, "Remove Army"), $x + 335, $y + 20, -1, 15, $SS_LEFT)
 	$icnRemovecamp = GUICtrlCreateIcon($pIconLib, $eIcnResetButton, $x + 405, $y + 17, 24, 24)
 	GUICtrlSetOnEvent(-1, "Removecamp")
 
@@ -900,7 +900,7 @@ $chkCloseWaitEnable = GUICtrlCreateCheckbox(GetTranslated(641, 3, "Close While T
 $txtTip = GetTranslated(641, 4, "Option will exit CoC game for time required to complete TROOP training when SHIELD IS ACTIVE") & @CRLF & _
 		GetTranslated(641, 5, "Close for Spell creation will be enabled when 'Wait for Spells' is selected on Search tabs") & @CRLF & _
 		GetTranslated(641, 6, "Close for Hero healing will be enabled when 'Wait for Heroes' is enabled on Search tabs")
-GUICtrlSetState(-1, $GUI_CHECKED)
+GUICtrlSetState(-1, $GUI_UNCHECKED)
 _GUICtrlSetTip(-1, $txtTip)
 GUICtrlSetOnEvent(-1, "chkCloseWaitEnable")
 $y += 28

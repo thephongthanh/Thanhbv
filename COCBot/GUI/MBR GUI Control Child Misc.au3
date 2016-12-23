@@ -31,7 +31,7 @@ Func cmbProfile()
 	btnUpdateProfile()			;- Refreshing setting of all profiles in SwitchAcc Mode - DEMEN
 
 EndFunc   ;==>cmbProfile
-#cs
+
 Func btnAddConfirm()
 	Switch @GUI_CtrlId
 		Case $btnAdd
@@ -145,7 +145,6 @@ Func btnRenameConfirm()
 			SetLog("If you are seeing this log message there is something wrong.", $COLOR_ERROR)
 	EndSwitch
 EndFunc   ;==>btnRenameConfirm
-#ce
 Func cmbBotCond()
 	If _GUICtrlComboBox_GetCurSel($cmbBotCond) = 15 Then
 		If _GUICtrlComboBox_GetCurSel($cmbHoursStop) = 0 Then _GUICtrlComboBox_SetCurSel($cmbHoursStop, 1)

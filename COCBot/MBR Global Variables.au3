@@ -381,7 +381,6 @@ Global $sPreset = @ScriptDir & "\Strategies"
 Global $aTxtLogInitText[0][6] = [[]]
 Global $hTxtLogTimer = TimerInit() ; Timer Handle of last log
 Global $iTxtLogTimerTimeout = 500 ; Refresh log only every configured Milliseconds
-Global $profileString
 
 Global $hTimer_SetTime = 0
 Global $hTimer_PBRemoteControlInterval = 0
@@ -512,7 +511,7 @@ Global Enum $eIcnArcher = 1, $eIcnDonArcher, $eIcnBalloon, $eIcnDonBalloon, $eIc
 		$eWall04, $eWall05, $eWall06, $eWall07, $eWall08, $eWall09, $eWall10, $eWall11, _
 		$eIcnPBNotify, $eIcnCCTroops, $eIcnCCSpells, $eIcnSpellsGroup, _
 		$eBahasaIND, $eChinese_S, $eChinese_T, $eEnglish, $eFrench, $eGerman, $eItalian, $ePersian, $eRussian, $eSpanish, $eTurkish, $eMissingLangIcon, _
-		$eIcnReload2, $eIcnProfile2, $eIcnModNguyenAnh
+		$eWall12, $ePortuguese
 
 Global $eIcnDonBlank = $eIcnDonBlacklist
 Global $eIcnOptions = $eIcnDonBlacklist
@@ -774,7 +773,7 @@ Global Enum $eBarb, $eArch, $eGiant, $eGobl, $eWall, $eBall, $eWiza, $eHeal, $eD
 	$eLSpell, $eHSpell, $eRSpell, $eJSpell, $eFSpell, $eCSpell, $ePSpell, $eESpell, $eHaSpell, $eSkSpell
 ;wall
 Global $WallCost = 0
-Global $WallCosts[7] = [30000, 75000, 200000, 500000, 1000000, 3000000, 4000000]
+Global $WallCosts[8] = [30000, 75000, 200000, 500000, 1000000, 2000000, 3000000, 4000000]
 Global $WallX = 0, $WallY = 0
 Global $Wall[8]
 Global $iMaxNbWall = 4
@@ -941,8 +940,9 @@ Global $DonatePixel
 Global $iClanLevel
 Global $LastBarrackTrainDonatedTroop = 1
 Global $LastDarkBarrackTrainDonatedTroop = 1
-Global $bDonate = -1	; -1 means not set yet
-Global $bDonateTrain = -1	; -1 means not set yet
+Global $bActiveDonate = -1	; -1 means not set yet
+;Global $bDonate = -1	; -1 means not set yet
+;Global $bDonateTrain = -1	; -1 means not set yet
 
 Global $sTxtRequest = ""
 Global $ichkDonateAllBarbarians, $ichkDonateBarbarians, $sTxtDonateBarbarians, $sTxtBlacklistBarbarians, $aDonBarbarians, $aBlkBarbarians
@@ -1044,8 +1044,6 @@ $iCmbWaveDelay[$MA] = 4
 $iChkRandomspeedatk[$DB] = 1
 $iChkRandomspeedatk[$LB] = 1
 $iChkRandomspeedatk[$MA] = 1
-$icmbDeployAB = 0
-$icmbDeployDB = 0
 
 Global $iTimeTroops = 0
 Global $iTimeGiant = 120
@@ -1082,7 +1080,7 @@ Global $bTrainEnabled = True
 
 Global $bDonationEnabled = True
 Global $sSkipDonateNearFulLTroopsPercentual = 90
-Global $iSkipDonateNearFulLTroopsEnable = 1
+Global $iSkipDonateNearFulLTroopsEnable = 0
 
 Global $UseTimeStop = -1
 Global $TimeToStop = -1
@@ -1362,12 +1360,9 @@ Global $iMakeScreenshotNow = False
 
 
 Global $lastversion = "" ;latest version from GIT
-Global $lastModversion = "" ;latest version from GIT
 Global $lastmessage = "" ;message for last version
-Global $lastModmessage = "" ;message for last version
 Global $ichkVersion = 1
 Global $oldversmessage = "" ;warning message for old bot
-Global $oldModversmessage = "" ;warning message for old bot
 
 ;BarracksStatus
 Global $numBarracks = 0
@@ -1477,6 +1472,7 @@ Global $MinorObstacle = False
 ;Languages
 Global Const $dirLanguages = @ScriptDir & "\Languages\"
 Global $sLanguage = "English"
+Global $sLanguageDisp = "English"
 Global $aLanguageFile[1][2]; undimmed language file array [FileName][DisplayName]
 Global Const $sDefaultLanguage = "English"
 Global $aLanguage[1][1] ;undimmed language array
@@ -1663,14 +1659,14 @@ Global $THSnipeBeforeDBTiles = 0 , $THSnipeBeforeLBTiles = 0
 Global $THSnipeBeforeDBScript = 0 , $THSnipeBeforeLBScript = 0
 
 ; Close game while train
-Global $ichkCloseWaitTrain = 1, $ichkCloseWaitSpell, $ichkCloseWaitHero, $ibtnCloseWaitStop = 0, $ibtnCloseWaitStopRandom, $ibtnCloseWaitExact, $ibtnCloseWaitRandom, $icmbCloseWaitRdmPercent, $ichkCloseWaitEnable = 1
+Global $ichkCloseWaitTrain = 1, $ichkCloseWaitSpell, $ichkCloseWaitHero, $ibtnCloseWaitStop = 0, $ibtnCloseWaitStopRandom, $ibtnCloseWaitExact, $ibtnCloseWaitRandom, $icmbCloseWaitRdmPercent, $ichkCloseWaitEnable = 0
 Global $icmbMinimumTimeClose = 2, $lblCloseWaitingTroops, $ilblSymbolWaiting, $ilblWaitingInMinutes
 Global $aTimeTrain[3] = [0, 0, 0] ; [Troop remaining time], [Spells remaining time], [Hero remaining time - when possible]
 Global $iCCRemainTime = 0  ; Time remaining until can request CC again
 
 ;Walls
 Global $iNbrOfWallsUpped = 0
-Global $itxtWall04ST=0, $itxtWall05ST=0, $itxtWall06ST=0, $itxtWall07ST=0, $itxtWall08ST=0, $itxtWall09ST=0, $itxtWall10ST=0, $itxtWall11ST=0
+Global $itxtWall04ST=0, $itxtWall05ST=0, $itxtWall06ST=0, $itxtWall07ST=0, $itxtWall08ST=0, $itxtWall09ST=0, $itxtWall10ST=0, $itxtWall11ST=0, $itxtWall12ST=0
 
 ;Collectors
 Global $chkLvl6Enabled = 1
@@ -1733,27 +1729,27 @@ Global $IMGLOCTHRDISTANCE
 ;QuickTrain Radio Buttons
 
 Global $ichkUseQTrain = 0
-Global $iRadio_Army1, $iRadio_Army2, $iRadio_Army3, $iRadio_Army12, $iRadio_Army123
+Global $iRadio_Army1, $iRadio_Army2, $iRadio_Army3
 ;---------------------------------------------------------------
 ; SmartZap GUI variables
 ;---------------------------------------------------------------
-	Global $ichkSmartZap = 0
-	Global $ichkSmartZapDB = 1
-	Global $ichkSmartZapSaveHeroes = 1
-	Global $itxtMinDE = 250
-	; NoobZap
-	Global $ichkNoobZap = 0
-	Global $itxtExpectedDE = 95
-	; SmartZap stats
-	Global $smartZapGain = 0
-	Global $numLSpellsUsed = 0
-	Global $iOldsmartZapGain = 0, $iOldNumLTSpellsUsed = 0
-	; SmartZap Array to hold Total Amount of DE available from Drill at each level (1-6)
-	Global Const $drillLevelHold[6] = [120, 225, 405, 630, 960, 1350]
-	; SmartZap Array to hold Amount of DE available to steal from Drills at each level (1-6)
-	Global Const $drillLevelSteal[6] = [59, 102, 172, 251, 343, 479]
-	; Debug SmartZap
-	Global $DebugSmartZap = 0
+Global $ichkSmartZap = 0
+Global $ichkSmartZapDB = 1
+Global $ichkSmartZapSaveHeroes = 1
+Global $itxtMinDE = 250
+; NoobZap
+Global $ichkNoobZap = 0
+Global $itxtExpectedDE = 120
+; SmartZap stats
+Global $smartZapGain = 0
+Global $numLSpellsUsed = 0
+Global $iOldsmartZapGain = 0, $iOldNumLTSpellsUsed = 0
+; SmartZap Array to hold Total Amount of DE available from Drill at each level (1-6)
+Global Const $drillLevelHold[6] = [120, 225, 405, 630, 960, 1350]
+; SmartZap Array to hold Amount of DE available to steal from Drills at each level (1-6)
+Global Const $drillLevelSteal[6] = [59, 102, 172, 251, 343, 479]
+; Debug SmartZap
+Global $DebugSmartZap = 0
 ;---------------------------------------------------------------
 ;End Smart Zap Globals
 ;---------------------------------------------------------------
@@ -1786,9 +1782,9 @@ Global $LevPekkCost[6] = [0, 28000, 32000, 36000, 40000, 45000]
 Global $LevBabyDCost[5] = [0, 15000, 16000, 17000, 18000]
 Global $LevMineCost[5] = [0, 4200, 4800, 5400, 6000]
 Global $LevMiniCost[8] = [0, 6, 7, 8, 9, 10, 11, 12]
-Global $LevHogsCost[7] = [0, 40, 45, 52, 58, 65, 90]
+Global $LevHogsCost[8] = [0, 40, 45, 52, 58, 65, 90, 115]
 Global $LevValkCost[6] = [0, 70, 100, 130, 160, 190]
-Global $LevGoleCost[6] = [0, 450, 525, 600, 675, 750]
+Global $LevGoleCost[7] = [0, 450, 525, 600, 675, 750, 825]
 Global $LevWitcCost[4] = [0, 250, 350, 450]
 Global $LevLavaCost[5] = [0, 390, 450, 510, 570]
 Global $LevBowlCost[4] = [0, 130, 150, 170]
@@ -1802,7 +1798,7 @@ Global $LevRSpellCost[6] = [0, 23000, 25000, 27000, 30000, 33000]
 Global $LevJSpellCost[4] = [0, 23000, 27000, 31000]
 Global $LevFSpellCost[6] = [0, 26000, 29000, 31000, 33000, 35000]
 Global $LevCSpellCost[5] = [0, 38000, 40000, 42000, 44000]
-Global $LevPSpellCost[5] = [0, 95, 110, 125, 140]
+Global $LevPSpellCost[6] = [0, 95, 110, 125, 140, 155]
 Global $LevESpellCost[5] = [0, 125, 140, 160, 180]
 Global $LevHaSpellCost[5] = [0, 80, 85, 60, 95]
 Global $LevSkSpellCost[5] = [0, 110, 120, 130, 140]
@@ -1820,85 +1816,13 @@ Global $topelixirloot = 0
 Global $topdarkloot = 0
 Global $topTrophyloot = 0
 
-; Profile Switch
-Global $ichkGoldSwitchMax, $itxtMaxGoldAmount, $icmbGoldMaxProfile, $ichkGoldSwitchMin, $itxtMinGoldAmount, $icmbGoldMinProfile
-Global $ichkElixirSwitchMax, $itxtMaxElixirAmount, $icmbElixirMaxProfile, $ichkElixirSwitchMin, $itxtMinElixirAmount, $icmbElixirMinProfile
-Global $ichkDESwitchMax, $itxtMaxDEAmount, $icmbDEMaxProfile, $ichkDESwitchMin, $itxtMinDEAmount, $icmbDEMinProfile
-Global $ichkTrophySwitchMax, $itxtMaxTrophyAmount, $icmbTrophyMaxProfile, $ichkTrophySwitchMin, $itxtMinTrophyAmount, $icmbTrophyMinProfile
+; Donate Stats
+Global $TroopsDonQ[24] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Global $TroopsDonXP[24] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Global $lblDonQ[24] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-;Variables for SwitchAcc Mode - DEMEN
-Global $profile = $sProfilePath & "\Profile.ini"
-Global $aconfig[8]
-Global $ichkSwitchAcc = 0
-Global $ichkTrain = 0
-
-Global $icmbTotalCoCAcc		; 1 = 1 account, 2 = 2 accounts
-Global $nTotalCoCAcc = 6
-Global $ichkSmartSwitch = 1
-
-Global $ichkCloseTraining = 0
-
-Global $nCurProfile = 1
-Global $ProfileList
-Global $nTotalProfile = 1
-
-Global $ProfileType			; Type of the Current Profile, 1 = active, 2 = donate, 3 = idle
-Global $aProfileType[8]		; Type of the all Profiles, 1 = active, 2 = donate, 3 = idle
-
-Global $MatchProfileAcc		; Account match with Current Profile
-Global $aMatchProfileAcc[8]	; Accounts match with All Profiles
-
-Global $DonateSwitchCounter = 0
-
-Global $bReMatchAcc = False
-
-Global $aTimerStart[8]
-Global $aTimerEnd[8]
-Global $aRemainTrainTime[8]
-Global $aUpdateRemainTrainTime[8]
-Global $nNexProfile
-Global $nMinRemainTrain
-
-Global $aCCRemainTime[8]
-Global $aUpdateCCRemainTime[8]
-Global $nMinCCRemain
-Global $nNexProfileReqCC
-
-Global $aAccPosY[6]
-
-; CSV Deployment Speed Mod
-Global $isldSelectedCSVSpeed[$iModeCount], $iCSVSpeeds[19]
-$isldSelectedCSVSpeed[$DB] = 4
-$isldSelectedCSVSpeed[$LB] = 4
-$iCSVSpeeds[0] = .1
-$iCSVSpeeds[1] = .25
-$iCSVSpeeds[2] = .5
-$iCSVSpeeds[3] = .75
-$iCSVSpeeds[4] = 1
-$iCSVSpeeds[5] = 1.25
-$iCSVSpeeds[6] = 1.5
-$iCSVSpeeds[7] = 1.75
-$iCSVSpeeds[8] = 2
-$iCSVSpeeds[9] = 2.25
-$iCSVSpeeds[10] = 2.5
-$iCSVSpeeds[11] = 2.75
-$iCSVSpeeds[12] = 3
-$iCSVSpeeds[13] = 5
-$iCSVSpeeds[14] = 8
-$iCSVSpeeds[15] = 10
-$iCSVSpeeds[16] = 20
-$iCSVSpeeds[17] = 50
-$iCSVSpeeds[18] = 99
-
-#region Check Collectors Outside
-; collectors outside filter
-Global $ichkDBMeetCollOutside, $iDBMinCollOutsidePercent, $iCollOutsidePercent ; check later if $iCollOutsidePercent obsolete
-
-; constants
-Global Const $THEllipseWidth = 200, $THEllipseHeigth = 150, $CollectorsEllipseWidth = 130, $CollectorsEllipseHeigth = 97.5
-Global Const $centerX = 430, $centerY = 335 ; check later if $THEllipseWidth, $THEllipseHeigth obsolete
-Global $hBitmapFirst
-#endregion
+; MBR Global Variables - Added By NguyenAnhHD
+#include "functions\NguyenAnhHD Mod's\GUI - Mod\MBR Global Variables - Mod.au3"	;	Mod's Added By NguyenAnhHD
 
 ;=== No variables below ! ================================================
 

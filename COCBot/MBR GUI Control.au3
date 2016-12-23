@@ -40,14 +40,14 @@ Global $aTxtBlacklistControlsSpell = [$txtBlacklistPoisonSpells, $txtBlacklistEa
 Global $aLblBtnControls = [$lblBtnBarbarians, $lblBtnArchers, $lblBtnGiants, $lblBtnGoblins, $lblBtnWallBreakers, $lblBtnBalloons, $lblBtnWizards, $lblBtnHealers, $lblBtnDragons, $lblBtnPekkas, $lblBtnBabyDragons, $lblBtnMiners, $lblBtnMinions, $lblBtnHogRiders, $lblBtnValkyries, $lblBtnGolems, $lblBtnWitches, $lblBtnLavaHounds, $lblBtnBowlers, $lblBtnCustomA, $lblBtnCustomB]
 Global $aLblBtnControlsSpell = [$lblBtnPoisonSpells, $lblBtnEarthQuakeSpells, $lblBtnHasteSpells, $lblBtnSkeletonSpells]
 
-Global $aMainTabItems = [$tabMain, $tabGeneral, $tabVillage, $tabAttack, $tabBot, $tabMOD, $tabAboutUs]
+Global $aMainTabItems = [$tabMain, $tabGeneral, $tabVillage, $tabAttack, $tabBot, $tabAboutUs]
 
 Global $aTabControlsVillage = [$hGUI_VILLAGE_TAB, $hGUI_VILLAGE_TAB_ITEM1, $hGUI_VILLAGE_TAB_ITEM2, $hGUI_VILLAGE_TAB_ITEM3, $hGUI_VILLAGE_TAB_ITEM4, $hGUI_VILLAGE_TAB_ITEM5]
 Global $aTabControlsDonate = [$hGUI_DONATE_TAB, $hGUI_DONATE_TAB_ITEM1, $hGUI_DONATE_TAB_ITEM2, $hGUI_DONATE_TAB_ITEM3]
 Global $aTabControlsUpgrade = [$hGUI_UPGRADE_TAB, $hGUI_UPGRADE_TAB_ITEM1, $hGUI_UPGRADE_TAB_ITEM2, $hGUI_UPGRADE_TAB_ITEM3, $hGUI_UPGRADE_TAB_ITEM4]
 Global $aTabControlsNotify = [$hGUI_NOTIFY_TAB, $hGUI_NOTIFY_TAB_ITEM2, $hGUI_NOTIFY_TAB_ITEM6]
 
-Global $aTabControlsAttack = [$hGUI_ATTACK_TAB, $hGUI_ATTACK_TAB_ITEM1, $hGUI_ATTACK_TAB_ITEM2, $hGUI_ATTACK_TAB_ITEM3]
+Global $aTabControlsAttack = [$hGUI_ATTACK_TAB, $hGUI_ATTACK_TAB_ITEM1, $hGUI_ATTACK_TAB_ITEM2, $hGUI_ATTACK_TAB_ITEM3, $hGUI_ATTACK_TAB_ITEM4]
 Global $aTabControlsArmy = [$hGUI_ARMY_TAB, $hGUI_ARMY_TAB_ITEM1, $hGUI_ARMY_TAB_ITEM2, $hGUI_ARMY_TAB_ITEM3, $hGUI_ARMY_TAB_ITEM4]
 Global $aTabControlsSearch = [$hGUI_SEARCH_TAB, $hGUI_SEARCH_TAB_ITEM1, $hGUI_SEARCH_TAB_ITEM2, $hGUI_SEARCH_TAB_ITEM3, $hGUI_SEARCH_TAB_ITEM4, $hGUI_SEARCH_TAB_ITEM5]
 Global $aTabControlsDeadbase = [$hGUI_DEADBASE_TAB, $hGUI_DEADBASE_TAB_ITEM1, $hGUI_DEADBASE_TAB_ITEM2, $hGUI_DEADBASE_TAB_ITEM3, $hGUI_DEADBASE_TAB_ITEM4]
@@ -56,12 +56,10 @@ Global $aTabControlsTHSnipe = [$hGUI_THSNIPE_TAB, $hGUI_THSNIPE_TAB_ITEM1, $hGUI
 Global $aTabControlsAttackOptions = [$hGUI_AttackOption_TAB, $hGUI_AttackOption_TAB_ITEM1, $hGUI_AttackOption_TAB_ITEM2, $hGUI_AttackOption_TAB_ITEM3,  $hGUI_AttackOption_TAB_ITEM4]
 Global $aTabControlsStrategies = [$hGUI_STRATEGIES_TAB, $hGUI_STRATEGIES_TAB_ITEM1, $hGUI_STRATEGIES_TAB_ITEM2]
 
-Global $aTabControlsBot = [$hGUI_BOT_TAB, $hGUI_BOT_TAB_ITEM1, $hGUI_BOT_TAB_ITEM2, $hGUI_BOT_TAB_ITEM3, $hGUI_BOT_TAB_ITEM4]
-Global $aTabControlsMOD = [$hGUI_MOD_TAB, $hGUI_MOD_TAB_ITEM1, $hGUI_MOD_TAB_ITEM2]
-Global $aTabControlsModOptions2 = [$hGUI_ModOptions2_TAB, $hGUI_ModOptions2_TAB_ITEM1, $hGUI_ModOptions2_TAB_ITEM2]
-Global $aTabControlsStats = [$hGUI_STATS_TAB, $hGUI_STATS_TAB_ITEM1, $hGUI_STATS_TAB_ITEM2, $hGUI_STATS_TAB_ITEM3, $hGUI_STATS_TAB_ITEM4]
+Global $aTabControlsBot = [$hGUI_BOT_TAB, $hGUI_BOT_TAB_ITEM1, $hGUI_BOT_TAB_ITEM2, $hGUI_BOT_TAB_ITEM3, $hGUI_BOT_TAB_ITEM4, $hGUI_BOT_TAB_ITEM5]
+Global $aTabControlsStats = [$hGUI_STATS_TAB, $hGUI_STATS_TAB_ITEM1, $hGUI_STATS_TAB_ITEM2, $hGUI_STATS_TAB_ITEM3, $hGUI_STATS_TAB_ITEM4, $hGUI_STATS_TAB_ITEM5]
 
-Global $aAlwaysEnabledControls = [$chkUpdatingWhenMinimized, $chkHideWhenMinimized, $chkDebugClick, $chkDebugSetlog, $chkDebugDisableZoomout, $chkDebugDisableVillageCentering, $chkDebugOcr, $chkDebugImageSave, $chkdebugBuildingPos, $chkdebugTrain, $chkdebugOCRDonate,$btnTestTrain, $btnTestDonateCC, $btnTestRequestCC, $btnTestAttackBar, $btnTestClickDrag, $btnTestImage, $btnTestVillageSize, $btnTestDeadBase, $btnTestDeadBaseFolder, $btnTestTHimgloc, $btnTestimglocTroopBar,$btnTestQuickTrainsimgloc, $chkdebugAttackCSV, $chkmakeIMGCSV, $btnTestAttackCSV, $btnTestFindButton, $txtTestFindButton, $btnTestCleanYard] ; , $lblLightningUsed, $lblSmartZap
+Global $aAlwaysEnabledControls = [$chkUpdatingWhenMinimized, $chkHideWhenMinimized, $chkDebugClick, $chkDebugSetlog, $chkDebugDisableZoomout, $chkDebugDisableVillageCentering, $chkDebugDeadbaseImage, $chkDebugOcr, $chkDebugImageSave, $chkdebugBuildingPos, $chkdebugTrain, $chkdebugOCRDonate,$btnTestTrain, $btnTestDonateCC, $btnTestRequestCC, $btnTestAttackBar, $btnTestClickDrag, $btnTestImage, $btnTestVillageSize, $btnTestDeadBase, $btnTestDeadBaseFolder, $btnTestTHimgloc, $btnTestimglocTroopBar,$btnTestQuickTrainsimgloc, $chkdebugAttackCSV, $chkmakeIMGCSV, $btnTestAttackCSV, $btnTestFindButton, $txtTestFindButton, $btnTestCleanYard] ; , $lblLightningUsed, $lblSmartZap
 
 Global $frmBot_WNDPROC = 0
 Global $frmBot_WNDPROC_ptr = 0
@@ -113,8 +111,6 @@ Func IsTab($controlID)
 			_ArraySearch($aTabControlsAttackOptions, $controlID) <> -1 Or _
 			_ArraySearch($aTabControlsStrategies, $controlID) <> -1 Or _
 			_ArraySearch($aTabControlsBot, $controlID) <> -1 Or _
-			_ArraySearch($aTabControlsMOD, $controlID) <> -1 Or _
-			_ArraySearch($aTabControlsModOptions2, $controlID) <> -1 Or _
 			_ArraySearch($aTabControlsStats, $controlID) <> -1 Then
 		Return True
 	EndIf
@@ -159,8 +155,7 @@ AtkLogHead()
 #include "GUI\MBR GUI Control Preset.au3"
 #include "GUI\MBR GUI Control Child Misc.au3"
 #include "GUI\MBR GUI Control Android.au3"
-#include "GUI\MBR GUI Control Tab Profiles.au3"
-#include "GUI\MBR GUI Control Tab Mod Option.au3"
+#include "functions\NguyenAnhHD Mod's\GUI - Mod\MBR GUI Control - Mod.au3"
 
 ; Accelerator Key, more responsive than buttons in run-mode
 Local $aAccelKeys[2][2] = [["{ESC}", $btnStop], ["{PAUSE}", $btnPause]]
@@ -434,11 +429,6 @@ Func GUIControl_WM_COMMAND($hWind, $iMsg, $wParam, $lParam)
 			btnAttackNowTS()
 		;Case $idMENU_DONATE_SUPPORT
 		;	ShellExecute("https://mybot.run/forums/index.php?/donate/make-donation/")
-		Case $CheckVersionConfig
-			CheckVersionHTML()
-			CheckModVersion()
-		Case $ModSupportConfig
-			ShellExecute($sModSupportUrl)
 		Case $btnNotifyDeleteMessages
 			If $RunState Then
 				btnDeletePBMessages() ; call with flag when bot is running to execute on _sleep() idle
@@ -471,6 +461,8 @@ Func GUIControl_WM_COMMAND($hWind, $iMsg, $wParam, $lParam)
 			chkDebugDisableZoomout()
 		Case $chkDebugDisableVillageCentering
 			chkDebugDisableVillageCentering()
+		Case $chkDebugDeadbaseImage
+			chkDebugDeadbaseImage()
 		Case $chkDebugOcr
 			chkDebugOcr()
 		Case $chkDebugImageSave
@@ -632,8 +624,6 @@ Func GUIControl_WM_NOTIFY($hWind, $iMsg, $wParam, $lParam)
 			tabTHSnipe()
 		Case $hGUI_BOT_TAB
 			tabBot()
-		Case $hGUI_MOD_TAB
-			tabMOD()
 		Case Else
 			$bCheckEmbeddedShield = False
 	EndSwitch
@@ -726,13 +716,6 @@ Func BotClose($SaveConfig = Default, $bExit = True)
    $TPaused = False
    ResumeAndroid()
    SetLog("Closing " & $sBotTitle & " now ...")
-   Sleep(500)
-   SetLog(" » All SharedFolder Deleted...", $COLOR_ORANGE)
-   Sleep(1000)
-   SetLog(" » Thanks For Using MyBot MOD NguyenAnhHD", $COLOR_ORANGE)
-   Sleep(800)
-   SetLog(" »» Cheers!!", $COLOR_ORANGE)
-   Sleep(500)
    AndroidEmbed(False) ; detach Android Window
    AndroidShieldDestroy() ; destroy Shield Hooks
    AndroidBotStopEvent() ; signal android that bot is now stoppting
@@ -1008,14 +991,12 @@ Func tabMain()
 				GUISetState(@SW_HIDE, $hGUI_VILLAGE)
 				GUISetState(@SW_HIDE, $hGUI_ATTACK)
 				GUISetState(@SW_HIDE, $hGUI_BOT)
-				GUISetState(@SW_HIDE, $hGUI_MOD)
 				GUISetState(@SW_SHOWNOACTIVATE, $hGUI_LOG)
 
 			Case $tabidx = 1 ; Village
 				GUISetState(@SW_HIDE, $hGUI_LOG)
 				GUISetState(@SW_HIDE, $hGUI_ATTACK)
 				GUISetState(@SW_HIDE, $hGUI_BOT)
-				GUISetState(@SW_HIDE, $hGUI_MOD)
 				GUISetState(@SW_SHOWNOACTIVATE, $hGUI_VILLAGE)
 				tabVillage()
 
@@ -1023,7 +1004,6 @@ Func tabMain()
 				GUISetState(@SW_HIDE, $hGUI_LOG)
 				GUISetState(@SW_HIDE, $hGUI_VILLAGE)
 				GUISetState(@SW_HIDE, $hGUI_BOT)
-				GUISetState(@SW_HIDE, $hGUI_MOD)
 				GUISetState(@SW_SHOWNOACTIVATE, $hGUI_ATTACK)
 				tabAttack()
 
@@ -1031,23 +1011,14 @@ Func tabMain()
 				GUISetState(@SW_HIDE, $hGUI_LOG)
 				GUISetState(@SW_HIDE, $hGUI_VILLAGE)
 				GUISetState(@SW_HIDE, $hGUI_ATTACK)
-				GUISetState(@SW_HIDE, $hGUI_MOD)
 				GUISetState(@SW_SHOWNOACTIVATE, $hGUI_BOT)
 				tabBot()
 
-		Case $tabidx = 4 ; MOD Option
-			GUISetState(@SW_HIDE, $hGUI_LOG)
-			GUISetState(@SW_HIDE, $hGUI_VILLAGE)
-			GUISetState(@SW_HIDE, $hGUI_ATTACK)
-			GUISetState(@SW_HIDE, $hGUI_BOT)
-			GUISetState(@SW_SHOWNOACTIVATE, $hGUI_MOD)
-			tabMOD()
 			Case ELSE
 				GUISetState(@SW_HIDE, $hGUI_LOG)
 				GUISetState(@SW_HIDE, $hGUI_VILLAGE)
 				GUISetState(@SW_HIDE, $hGUI_ATTACK)
 				GUISetState(@SW_HIDE, $hGUI_BOT)
-				GUISetState(@SW_HIDE, $hGUI_MOD)
 		EndSelect
 
 EndFunc   ;==>tabMain
@@ -1082,15 +1053,23 @@ Func tabAttack()
 		GUISetState(@SW_HIDE, $hGUI_STRATEGIES)
 		GUISetState(@SW_SHOWNOACTIVATE, $hGUI_ARMY)
 		GUISetState(@SW_HIDE, $hGUI_SEARCH)
+		GUISetState(@SW_HIDE, $hGUI_NewSmartZap)
 	Case $tabidx = 1 ; SEARCH tab
 		GUISetState(@SW_HIDE, $hGUI_STRATEGIES)
 		GUISetState(@SW_HIDE, $hGUI_ARMY)
 		GUISetState(@SW_SHOWNOACTIVATE, $hGUI_SEARCH)
+		GUISetState(@SW_HIDE, $hGUI_NewSmartZap)
 		tabSEARCH()
-	Case $tabidx = 2 ; STRATEGIES tab
+	Case $tabidx = 2 ; NewSmartZap tab
+		GUISetState(@SW_HIDE, $hGUI_ARMY)
+		GUISetState(@SW_HIDE, $hGUI_SEARCH)
+		GUISetState(@SW_SHOWNOACTIVATE, $hGUI_NewSmartZap)
+		GUISetState(@SW_HIDE, $hGUI_STRATEGIES)
+	Case $tabidx = 3 ; STRATEGIES tab
 		GUISetState(@SW_SHOWNOACTIVATE, $hGUI_STRATEGIES)
 		GUISetState(@SW_HIDE, $hGUI_ARMY)
 		GUISetState(@SW_HIDE, $hGUI_SEARCH)
+		GUISetState(@SW_HIDE, $hGUI_NewSmartZap)
 	EndSelect
 EndFunc   ;==>tabAttack
 
@@ -1207,26 +1186,17 @@ Func tabBot()
 			Case $tabidx = 1 ; Debug tab
 				GUISetState(@SW_HIDE, $hGUI_STATS)
 				ControlHide("","",$cmbLanguage)
-			Case $tabidx = 2 ; Android tab
+			Case $tabidx = 2 ; Profiles tab
 				GUISetState(@SW_HIDE, $hGUI_STATS)
 				ControlHide("","",$cmbLanguage)
-			Case $tabidx = 3 ; Stats tab
+			Case $tabidx = 3 ; Android tab
+				GUISetState(@SW_HIDE, $hGUI_STATS)
+				ControlHide("","",$cmbLanguage)
+			Case $tabidx = 4 ; Stats tab
 				GUISetState(@SW_SHOWNOACTIVATE, $hGUI_STATS)
 				ControlHide("","",$cmbLanguage)
 		EndSelect
 EndFunc   ;==>tabBot
-
-Func tabMOD()
-	$tabidx = GUICtrlRead($hGUI_MOD_TAB)
-		Select
-			Case $tabidx = 0 ; Mod Option Tab
-				GUISetState(@SW_SHOWNOACTIVATE, $hGUI_ModOptions)
-				GUISetState(@SW_HIDE, $hGUI_ModOptions2)
-			Case $tabidx = 1 ; Switch Profile $ Multi Option Tab
-				GUISetState(@SW_HIDE, $hGUI_ModOptions)
-				GUISetState(@SW_SHOWNOACTIVATE, $hGUI_ModOptions2)
-		EndSelect
-EndFunc   ;==>tabMOD
 
 Func tabDeadbase()
 	$tabidx = GUICtrlRead($hGUI_DEADBASE_TAB)
@@ -1461,7 +1431,7 @@ Func Bind_ImageList($nCtrl)
 	Switch $nCtrl
 		Case $tabMain
 			; the icons for main tab
-			Local $aIconIndex[6] = [$eIcnHourGlass, $eIcnTH11, $eIcnAttack, $eIcnGUI, $eIcnModNguyenAnh, $eIcnInfo]
+			Local $aIconIndex[5] = [$eIcnHourGlass, $eIcnTH11, $eIcnAttack, $eIcnGUI, $eIcnInfo]
 
 		Case $hGUI_VILLAGE_TAB
 			; the icons for village tab
@@ -1485,7 +1455,7 @@ Func Bind_ImageList($nCtrl)
 
 		Case $hGUI_ATTACK_TAB
 			; the icons for attack tab
-			Local $aIconIndex[3] = [$eIcnTrain, $eIcnMagnifier, $eIcnStrategies]
+			Local $aIconIndex[4] = [$eIcnTrain, $eIcnMagnifier, $eIcnLightSpell, $eIcnStrategies]
 
 		Case $hGUI_SEARCH_TAB
 			; the icons for SEARCH tab
@@ -1509,16 +1479,8 @@ Func Bind_ImageList($nCtrl)
 
 		Case $hGUI_BOT_TAB
 			; the icons for Bot tab
-			Local $aIconIndex[4] = [$eIcnOptions, $eIcnAndroid, $eIcnProfile, $eIcnGold]
+			Local $aIconIndex[5] = [$eIcnOptions, $eIcnAndroid, $eIcnProfile, $eIcnProfile, $eIcnGold]
 			; The Android Robot is a Google Trademark and follows Creative Common Attribution 3.0
-
-		Case $hGUI_MOD_TAB
-			; the icons for Mod tab
-			Local $aIconIndex[2] = [$eIcnOptions, $eIcnAchievements]
-
-		Case $hGUI_ModOptions2_TAB
-			; the icons for Mod tab
-			Local $aIconIndex[2] = [$eIcnReload2, $eIcnProfile2]
 
 		Case $hGUI_STRATEGIES_TAB
 			; the icons for strategies tab
@@ -1526,7 +1488,7 @@ Func Bind_ImageList($nCtrl)
 
 		Case $hGUI_STATS_TAB
 			; the icons for stats tab
-			Local $aIconIndex[4] = [$eIcnGoldElixir, $eIcnOptions, $eIcnGoldElixir, $eIcnCamp]
+			Local $aIconIndex[5] = [$eIcnGoldElixir, $eIcnGoldElixir, $eIcnOptions, $eIcnCamp, $eIcnCCRequest]
 
 		Case Else
 			;do nothing
@@ -1661,6 +1623,7 @@ If $devmode = 1 Then
 	GUICtrlSetState($chkDebugSetlog, $GUI_SHOW + $GUI_ENABLE)
 	GUICtrlSetState($chkDebugDisableZoomout, $GUI_SHOW + $GUI_ENABLE)
 	GUICtrlSetState($chkDebugDisableVillageCentering, $GUI_SHOW + $GUI_ENABLE)
+	GUICtrlSetState($chkDebugDeadbaseImage, $GUI_SHOW + $GUI_ENABLE)
 	GUICtrlSetState($chkDebugOcr, $GUI_SHOW + $GUI_ENABLE)
 	GUICtrlSetState($chkDebugImageSave, $GUI_SHOW + $GUI_ENABLE)
 	GUICtrlSetState($chkdebugBuildingPos, $GUI_SHOW + $GUI_ENABLE)
