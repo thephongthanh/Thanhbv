@@ -83,12 +83,9 @@ Local $x = 20, $y = 25
 			GUICtrlSetBkColor (-1, 0xD7ECFF)
 			$txtTip = "Number of dark elixir zapped during the attack with lightning."
 			GUICtrlSetTip(-1, $txtTip)
-	$x = 320
-	$y = 265
-		$chkDebugSmartZap = GUICtrlCreateCheckbox("DebugSZ", $x + 50 + 2, $y + 80, -1, -1)
-		$txtTip = "Use it for debug SmartZap"
-		GUICtrlSetTip(-1, $txtTip)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 ; ============================================================================
 ; ====================== SmartZap - Added by DocOC team ======================
 ; ============================================================================
+
+;~	#include "..\functions\NguyenAnhHD Mod's\GUI - Mod\MBR GUI Design - Treasury.au3"									;	Treasury Collect

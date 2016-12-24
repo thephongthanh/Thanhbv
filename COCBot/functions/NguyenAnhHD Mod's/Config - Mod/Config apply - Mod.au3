@@ -104,3 +104,144 @@
 	; Change Android Shield Color
 	_GUICtrlSlider_SetPos($sldrTransparancyShield, $AndroidShieldTransparency)
 	_GUICtrlSlider_SetPos($sldrTransparancyIdleShield, $AndroidInactiveTransparency)
+#cs
+	;Treasury Collect
+	If $ichkCollectTresory = 1 Then
+		GUICtrlSetState($chkCollectTresory, $GUI_CHECKED)
+		GUICtrlSetData($txtTreasuryGold, $itxtTreasuryGold)
+		GUICtrlSetData($txtTreasuryElixir, $itxtTreasuryElixir)
+		GUICtrlSetData($txtTreasuryDark, $itxtTreasuryDark)
+		For $i = $leurequisertarienTresor To $btnResetDE
+			GUICtrlSetState($i, $GUI_SHOW)
+		Next
+	Else
+		GUICtrlSetState($chkCollectTresory, $GUI_UNCHECKED)
+		GUICtrlSetData($txtTreasuryGold, $itxtTreasuryGold)
+		GUICtrlSetData($txtTreasuryElixir, $itxtTreasuryElixir)
+		GUICtrlSetData($txtTreasuryDark, $itxtTreasuryDark)
+		For $i = $leurequisertarienTresor To $btnResetDE
+			GUICtrlSetState($i, $GUI_HIDE)
+		Next
+	EndIf
+
+	If $ichkCollectTresoryGold = 1 Then
+		GUICtrlSetState($chkCollectTresoryGold, $GUI_CHECKED)
+		GUICtrlSetState($txtTreasuryGold, $GUI_SHOW)
+		GUICtrlSetState($eIcnGold, $GUI_SHOW)
+		GUICtrlSetState($btnResetOR, $GUI_SHOW)
+	Else
+		GUICtrlSetState($chkCollectTresoryGold, $GUI_UNCHECKED)
+	EndIf
+	chkCollectTresoryGold()
+
+	If $ichkCollectTresoryElixir = 1 Then
+		GUICtrlSetState($chkCollectTresoryElixir, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkCollectTresoryElixir, $GUI_UNCHECKED)
+	EndIf
+	chkCollectTresoryElixir()
+
+	If $ichkCollectTresoryDark = 1 Then
+		GUICtrlSetState($chkCollectTresoryDark, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkCollectTresoryDark, $GUI_UNCHECKED)
+	EndIf
+	chkCollectTresoryDark()
+	chkCollectTresory()
+
+	If $ichkTRFull = 1 Then
+		GUICtrlSetState($chkTRFull, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkTRFull, $GUI_UNCHECKED)
+	EndIf
+
+	; Smart Upgrade
+	If $ichkSmartUpgrade = 1 Then
+		GUICtrlSetState($chkSmartUpgrade, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkSmartUpgrade, $GUI_UNCHECKED)
+	EndIf
+	chkSmartUpgrade()
+
+	GUICtrlSetData($SmartMinGold, $iSmartMinGold)
+	GUICtrlSetData($SmartMinElixir, $iSmartMinElixir)
+	GUICtrlSetData($SmartMinDark, $iSmartMinDark)
+
+	If $ichkIgnoreTH = 1 Then
+		GUICtrlSetState($chkIgnoreTH, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreTH, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreKing = 1 Then
+		GUICtrlSetState($chkIgnoreKing, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreKing, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreQueen = 1 Then
+		GUICtrlSetState($chkIgnoreQueen, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreQueen, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreWarden = 1 Then
+		GUICtrlSetState($chkIgnoreWarden, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreWarden, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreCC = 1 Then
+		GUICtrlSetState($chkIgnoreCC, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreCC, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreLab = 1 Then
+		GUICtrlSetState($chkIgnoreLab, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreLab, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreBarrack = 1 Then
+		GUICtrlSetState($chkIgnoreBarrack, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreBarrack, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreDBarrack = 1 Then
+		GUICtrlSetState($chkIgnoreDBarrack, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreDBarrack, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreFactory = 1 Then
+		GUICtrlSetState($chkIgnoreFactory, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreFactory, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreDFactory = 1 Then
+		GUICtrlSetState($chkIgnoreDFactory, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreDFactory, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreGColl = 1 Then
+		GUICtrlSetState($chkIgnoreGColl, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreGColl, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreEColl = 1 Then
+		GUICtrlSetState($chkIgnoreEColl, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreEColl, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkIgnoreDColl = 1 Then
+		GUICtrlSetState($chkIgnoreDColl, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkIgnoreDColl, $GUI_UNCHECKED)
+	EndIf
+#ce

@@ -2758,11 +2758,6 @@ Func saveConfig() ;Saves the controls settings to the config
 	Else
 		IniWrite($config, "SmartZap", "THSnipeSaveHeroes", 0)
 	EndIf
-	If GUICtrlRead($chkDebugSmartZap) = $GUI_CHECKED Then
-		IniWrite($config, "SmartZap", "DebugSmartZap", 1)
-	Else
-		IniWrite($config, "SmartZap", "DebugSmartZap", 0)
-	EndIf
 	IniWrite($config, "SmartZap", "MinDE", GUICtrlRead($txtMinDark))
 	IniWrite($config, "SmartZap", "ExpectedDE", GUICtrlRead($txtExpectedDE))
 ;==============================================================

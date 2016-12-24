@@ -325,6 +325,9 @@ Global $lblWallCost, $cmbWalls, $UseGold, $UseElixir, $UseElixirGold, $txtWallMi
 			_GUICtrlSetTip(-1, GetTranslated(617,30, "Input number of Walls level")&" 12 "&GetTranslated(617,31, "you have."))
 		$Wall12ST = GUICtrlCreateIcon($pIconLib, $eWall12, $x+27, $y-2, 24, 24)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+;~	#include "..\functions\NguyenAnhHD Mod's\GUI - Mod\MBR GUI Design - SmartUpgrade.au3"									;	Smart Upgrade
+
 GUICtrlCreateTabItem("")
 
 ;GUISetState()

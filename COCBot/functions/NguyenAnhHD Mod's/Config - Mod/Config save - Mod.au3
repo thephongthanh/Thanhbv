@@ -99,4 +99,60 @@
 	; CSV Deployment Speed Mod
 	IniWrite($config, "DeploymentSpeed", "LB", _GUICtrlComboBox_GetCurSel($cmbCSVSpeed[$LB]))
 	IniWrite($config, "DeploymentSpeed", "DB", _GUICtrlComboBox_GetCurSel($cmbCSVSpeed[$DB]))
+#cs
+	; Treasury Collect
+	If GUICtrlRead($chkCollectTresory) = $GUI_CHECKED Then
+		IniWrite($config, "other", "CollectTresory", 1)
+		IniWrite($config, "other", "treasuryGold", GUICtrlRead($txtTreasuryGold))
+		IniWrite($config, "other", "treasuryElixir", GUICtrlRead($txtTreasuryElixir))
+		IniWrite($config, "other", "treasuryDark", GUICtrlRead($txtTreasuryDark))
+	Else
+		IniWrite($config, "other", "CollectTresory", 0)
+		IniWrite($config, "other", "treasuryGold", GUICtrlRead($txtTreasuryGold))
+		IniWrite($config, "other", "treasuryElixir", GUICtrlRead($txtTreasuryElixir))
+		IniWrite($config, "other", "treasuryDark", GUICtrlRead($txtTreasuryDark))
+	EndIf
 
+	If GUICtrlRead($chkCollectTresoryGold) = $GUI_CHECKED Then
+		IniWrite($config, "other", "CollectTresoryGold", 1)
+	Else
+		IniWrite($config, "other", "CollectTresoryGold", 0)
+	EndIf
+
+	If GUICtrlRead($chkCollectTresoryElixir) = $GUI_CHECKED Then
+		IniWrite($config, "other", "CollectTresoryElixir", 1)
+	Else
+		IniWrite($config, "other", "CollectTresoryElixir", 0)
+	EndIf
+
+	If GUICtrlRead($chkCollectTresoryDark) = $GUI_CHECKED Then
+		IniWrite($config, "other", "CollectTresoryDark", 1)
+	Else
+		IniWrite($config, "other", "CollectTresoryDark", 0)
+	EndIf
+
+	If GUICtrlRead($chkTRFull) = $GUI_CHECKED Then
+		IniWrite($config, "other", "chkTRFull", 1)
+	Else
+		IniWrite($config, "other", "chkTRFull", 0)
+	EndIf
+
+	; Smart Upgrade
+	IniWrite($config, "upgrade", "chkSmartUpgrade", $ichkSmartUpgrade)
+	IniWrite($config, "upgrade", "chkIgnoreTH", $ichkIgnoreTH)
+	IniWrite($config, "upgrade", "chkIgnoreKing", $ichkIgnoreKing)
+	IniWrite($config, "upgrade", "chkIgnoreQueen", $ichkIgnoreQueen)
+	IniWrite($config, "upgrade", "chkIgnoreWarden", $ichkIgnoreWarden)
+	IniWrite($config, "upgrade", "chkIgnoreCC", $ichkIgnoreCC)
+	IniWrite($config, "upgrade", "chkIgnoreLab", $ichkIgnoreLab)
+	IniWrite($config, "upgrade", "chkIgnoreBarrack", $ichkIgnoreBarrack)
+	IniWrite($config, "upgrade", "chkIgnoreDBarrack", $ichkIgnoreDBarrack)
+	IniWrite($config, "upgrade", "chkIgnoreFactory", $ichkIgnoreFactory)
+	IniWrite($config, "upgrade", "chkIgnoreDFactory", $ichkIgnoreDFactory)
+	IniWrite($config, "upgrade", "chkIgnoreGColl", $ichkIgnoreGColl)
+	IniWrite($config, "upgrade", "chkIgnoreEColl", $ichkIgnoreEColl)
+	IniWrite($config, "upgrade", "chkIgnoreDColl", $ichkIgnoreDColl)
+	IniWrite($config, "upgrade", "SmartMinGold", GUICtrlRead($SmartMinGold))
+	IniWrite($config, "upgrade", "SmartMinElixir", GUICtrlRead($SmartMinElixir))
+	IniWrite($config, "upgrade", "SmartMinDark", GUICtrlRead($SmartMinDark))
+#ce

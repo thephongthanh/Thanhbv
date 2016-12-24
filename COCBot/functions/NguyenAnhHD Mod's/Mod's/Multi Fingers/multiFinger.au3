@@ -14,13 +14,13 @@
 ; ===============================================================================================================================
 
 Local $aAttackTypeString[$mf8FPinWheelRight + 1] = ["Random", _
-		"Four Finger Standard", _
-		"Four Finger Spiral Left", _
-		"Four Finger Spiral Right", _
-		"Eight Finger Blossom", _
-		"Eight Finger Implosion", _
-		"Eight Finger Pin Wheel Spiral Left", _
-		"Eight Finger Pin Wheel Spiral Right"]
+													"Four Finger Standard", _
+													"Four Finger Spiral Left", _
+													"Four Finger Spiral Right", _
+													"Eight Finger Blossom", _
+													"Eight Finger Implosion", _
+													"Eight Finger Pin Wheel Spiral Left", _
+													"Eight Finger Pin Wheel Spiral Right"]
 
 Func multiFingerSetupVecors($multiStyle, ByRef $dropVectors, $listInfoDeploy)
 	Switch $multiStyle
@@ -64,7 +64,7 @@ Func launchMultiFinger($listInfoDeploy, $CC, $King, $Queen, $Warden, $overrideSm
 	Local $RandomEdge, $RandomXY
 	Local $dropVectors[0][0]
 
-	Local $multiStyle = ($iMultiFingerStyle = $mfRandom) ? Random($mfFFStandard, $mf8FPinWheelRight, 1) : $iMultiFingerStyle
+	Local $multiStyle = ($iMultiFingerStyle = $mfRandom) ? Random($mfFFStandard, $mf8FPinWheelRight, 1) : (($iMultiFingerStyle = -1) ? Random($mfFFStandard, $mf8FPinWheelRight, 1) : $iMultiFingerStyle)
 
 	SetLog("Attacking " & $aAttackTypeString[$multiStyle] & " fight style.", $COLOR_BLUE)
 	If $debugSetLog = 1 Then SetLog("Launch " & $aAttackTypeString[$multiStyle] & " with CC " & $CC & ", K " & $King & ", Q " & $Queen & ", W " & $Warden, $COLOR_PURPLE)

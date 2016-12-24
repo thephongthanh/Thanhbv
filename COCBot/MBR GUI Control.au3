@@ -1447,7 +1447,7 @@ Func Bind_ImageList($nCtrl)
 
 		Case $hGUI_UPGRADE_TAB
 			; the icons for upgrade tab
-			Local $aIconIndex[4] = [$eIcnLaboratory, $eIcnKingAbility, $eIcnMortar, $eIcnWall]
+			Local $aIconIndex[4] = [$eIcnLaboratory, $eIcnKingAbility, $eIcnMortar, $eIcnWall] ;, $eIcnUpgrade
 
 		Case $hGUI_NOTIFY_TAB
 			; the icons for NOTIFY tab

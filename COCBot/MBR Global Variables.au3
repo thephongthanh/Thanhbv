@@ -511,7 +511,7 @@ Global Enum $eIcnArcher = 1, $eIcnDonArcher, $eIcnBalloon, $eIcnDonBalloon, $eIc
 		$eWall04, $eWall05, $eWall06, $eWall07, $eWall08, $eWall09, $eWall10, $eWall11, _
 		$eIcnPBNotify, $eIcnCCTroops, $eIcnCCSpells, $eIcnSpellsGroup, _
 		$eBahasaIND, $eChinese_S, $eChinese_T, $eEnglish, $eFrench, $eGerman, $eItalian, $ePersian, $eRussian, $eSpanish, $eTurkish, $eMissingLangIcon, _
-		$eWall12, $ePortuguese
+		$eWall12, $ePortuguese, $eIcnUpgrade
 
 Global $eIcnDonBlank = $eIcnDonBlacklist
 Global $eIcnOptions = $eIcnDonBlacklist
@@ -537,7 +537,7 @@ Global $iGUIChildTop = 65
 
 Global $hAttackCountDown = 0 ; Timer Handle for 30 Seconds Attack countdown
 
-Global Enum $DB, $LB, $TS, $MA, $TB, $DT ; DeadBase, LiveBase, TownhallSnipe, Milking Attack, TownhallBully, DropTrophy
+Global Enum $DB, $LB, $TS, $MA, $TB, $DT ; DeadBase, ActiveBase, TownhallSnipe, Milking Attack, TownhallBully, DropTrophy
 Global $iModeCount = 3
 Global $iMatchMode ; 0 Dead / 1 Live / 2 TH Snipe / 3 Milking Attack / 4 TH Bully / 5 Drop Trophy
 Global $sModeText[6]
@@ -1461,8 +1461,11 @@ Global $ichkUpgradeQueen = 0
 Global $ichkUpgradeWarden = 0
 
 ; Barbarian King/Queen Upgrade Costs = Dark Elixir in xxxK
-Global $aKingUpgCost[40] = [10, 12.5, 15, 17.5, 20, 22.5, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190]
-Global $aQueenUpgCost[40] = [40, 22.5, 25, 27.5, 30, 32.5, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 195, 200]
+Global $iMaxKingLevel = 45
+Global $iMaxQueenLevel = 45
+Global $iMaxWardenLevel = 20
+Global $aKingUpgCost[45] = [10, 12.5, 15, 17.5, 20, 22.5, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 144, 148, 152, 156, 160, 164, 168, 172, 176, 180, 185, 188, 191, 194, 197]
+Global $aQueenUpgCost[45] = [40, 22.5, 25, 27.5, 30, 32.5, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 129, 133, 137, 141, 145, 149, 153, 157, 161, 165, 169, 173, 177, 181, 185, 190, 192, 194, 196, 198]
 ; Grand Warden Upgrade Costs = Elixir in xx.xK
 Global $aWardenUpgCost[20] = [6, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.4, 8.8, 9.1, 9.4, 9.6, 9.8, 10]
 
@@ -1715,7 +1718,7 @@ Global $iAddIdleTimeMax = 60			; maximum time to wait in seconds
 
 Global $ichkFixClanCastle = 0
 
-$iDeadBaseDisableCollectorsFilter = 0 ; 0 default, set 1 to transform deadbase search like a livebase search
+$iDeadBaseDisableCollectorsFilter = 0 ; 0 default, set 1 to transform deadbase search like a ActiveBase search
 
 
 ;imgloc globals for THSearch and also deadbase
@@ -1748,8 +1751,6 @@ Global $iOldsmartZapGain = 0, $iOldNumLTSpellsUsed = 0
 Global Const $drillLevelHold[6] = [120, 225, 405, 630, 960, 1350]
 ; SmartZap Array to hold Amount of DE available to steal from Drills at each level (1-6)
 Global Const $drillLevelSteal[6] = [59, 102, 172, 251, 343, 479]
-; Debug SmartZap
-Global $DebugSmartZap = 0
 ;---------------------------------------------------------------
 ;End Smart Zap Globals
 ;---------------------------------------------------------------
@@ -1820,6 +1821,8 @@ Global $topTrophyloot = 0
 Global $TroopsDonQ[24] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 Global $TroopsDonXP[24] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 Global $lblDonQ[24] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+Global $isSantaSpellAvailable = -1	; -1 Means not Set
 
 ; MBR Global Variables - Added By NguyenAnhHD
 #include "functions\NguyenAnhHD Mod's\GUI - Mod\MBR Global Variables - Mod.au3"	;	Mod's Added By NguyenAnhHD

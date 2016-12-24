@@ -5,7 +5,7 @@
 ; Parameters ....: None
 ; Return values .: None
 ; Author ........: LunaEclipse(March, 2016)
-; Modified ......: TheRevenor (November, 2016)
+; Modified ......: NTS team (October, 2016)
 ; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -33,16 +33,17 @@ Func getDarkElixir()
 
 	If _ColorCheck(_GetPixelColor(31, 144, True), Hex(0x282020, 6), 10) Or _ColorCheck(_GetPixelColor(31, 144, True), Hex(0x0F0617, 6), 5) Then ; check if the village have a Dark Elixir Storage
 		While $searchDark = ""
+			$oldSearchDark = $searchDark
 			$searchDark = getDarkElixirVillageSearch(48, 126) ; Get updated Dark Elixir value
-			;$oldSearchDark = $searchDark
 			$iCount += 1
-			;If $DebugSmartZap = 1 Then Setlog("$searchDark = " & $searchDark & ", $oldSearchDark = " & Number($oldSearchDark), $COLOR_PURPLE)
+
+			If $debugSetLog = 1 Then Setlog("$searchDark = " & $searchDark & ", $oldSearchDark = " & $oldSearchDark, $COLOR_PURPLE)
 			If $iCount > 15 Then ExitLoop ; Check a couple of times in case troops are blocking the image
 			If _Sleep(1000) Then Return
 		WEnd
 	Else
 		$searchDark = False
-		If $DebugSmartZap = 1 Then SetLog("No DE Detected.", $COLOR_PURPLE)
+		If $debugSetLog = 1 Then SetLog("No DE Detected.", $COLOR_PURPLE)
 	EndIf
 
 	Return $searchDark
@@ -89,10 +90,8 @@ Func smartZap($minDE = -1)
 	Local $searchDark, $oldSearchDark = 0, $numSpells, $skippedZap = True, $performedZap = False, $dropPoint
 
 	; If smartZap is not checked, exit.
-	If $DebugSmartZap = 1 Then SetLog("$ichkSmartZap = " & $ichkSmartZap & " | $ichkNoobZap = " & $ichkNoobZap, $COLOR_DEBUG)
 	If $ichkSmartZap <> 1 Then Return $performedZap
-	If $ichkSmartZap = 1 And $ichkNoobZap = 0 Then SetLog("====== You Are Activate SmartZap Mode ======", $COLOR_RED)
-	If $ichkNoobZap = 1 Then SetLog("====== You Are Activate NoobZap Mode ======", $COLOR_RED)
+	If $ichkNoobZap = 1 Then SetLog("====== Your Activate NoobZap Mode ======", $COLOR_RED)
 
 	; Use UI Setting if no Min DE is specified
 	If $minDE = -1 Then $minDE = Number($itxtMinDE)
@@ -101,47 +100,34 @@ Func smartZap($minDE = -1)
 	$searchDark = getDarkElixirVillageSearch(48, 126)
 	If Number($searchDark) = 0 Then
 		SetLog("No Dark Elixir so lets just exit!", $COLOR_FUCHSIA)
-		SetDebugLog("$searchDark = " & $searchDark)
 		Return $performedZap
-	Else
-		If $DebugSmartZap = 1 Then SetLog("$searchDark = " & $searchDark, $COLOR_DEBUG)
-	EndIf
 	; Check to see if the DE Storage is already full
-	If isDarkElixirFull() Then
+	ElseIf isDarkElixirFull() Then
 		SetLog("Your Dark Elixir Storage is full, no need to zap!", $COLOR_FUCHSIA)
-		SetDebugLog("isDarkElixirFull() = " & isDarkElixirFull())
 		Return $performedZap
-	Else
-		If $DebugSmartZap = 1 Then SetLog("isDarkElixirFull() = " & isDarkElixirFull(), $COLOR_DEBUG)
-	EndIf
 	; Check to make sure the account is high enough level to store DE.
-	If $iTownHallLevel < 7 Then
+	ElseIf $iTownHallLevel < 7 Then
 		SetLog("You do not have the ability to store Dark Elixir, time to go home!", $COLOR_FUCHSIA)
-		SetDebugLog("$iTownHallLevel = " & $iTownHallLevel)
 		Return $performedZap
-	Else
-		If $DebugSmartZap = 1 Then SetLog("$iTownHallLevel = " & $iTownHallLevel, $COLOR_DEBUG)
-	EndIf
 	; Check to ensure there is at least the minimum amount of DE available.
-	If (Number($searchDark) < Number($minDE)) Then
+	ElseIf (Number($searchDark) < Number($minDE)) Then
 		SetLog("Dark Elixir is below minimum value [" & $itxtMinDE & "], Exiting Now!", $COLOR_FUCHSIA)
-		SetDebugLog("$searchDark = " & $searchDark)
 		Return $performedZap
-	Else
-		If $DebugSmartZap = 1 Then SetLog("$searchDark = " & $searchDark & " | $itxtMinDE = " & $itxtMinDE, $COLOR_DEBUG)
-	EndIf
-
-	If $DebugSmartZap = 1 Then
-		SetLog("$itxtExpectedDE = " & $itxtExpectedDE, $COLOR_DEBUG)
 	EndIf
 
 	; Check match mode
 	If $ichkSmartZapDB = 1 And $iMatchMode <> $DB Then
 		SetLog("Not a dead base so lets just go home!", $COLOR_FUCHSIA)
-		SetDebugLog("$ichkSmartZapDB = " & $ichkSmartZapDB)
+		Return $performedZap
+	EndIf
+
+	; Get the number of lightning spells
+	$numSpells = $CurLSpell
+	If $numSpells = 0 Then
+		SetLog("No lightning spells trained, time to go home!", $COLOR_FUCHSIA)
 		Return $performedZap
 	Else
-		If $DebugSmartZap = 1 Then SetLog("$ichkSmartZapDB = " & $ichkSmartZapDB, $COLOR_DEBUG)
+		SetLog("Number of Lightning Spells: " & $numSpells, $COLOR_FUCHSIA)
 	EndIf
 
 	Local $aDrills
@@ -158,31 +144,20 @@ Func smartZap($minDE = -1)
 	$numDrills = getNumberOfDrills($listPixelByLevel)
 	If $numDrills = 0 Then
 		SetLog("No drills found, time to go home!", $COLOR_FUCHSIA)
-		SetDebugLog("$numDrills = " & $numDrills)
 		Return $performedZap
 	Else
 		SetLog("Number of Dark Elixir Drills: " & $numDrills, $COLOR_FUCHSIA)
-	EndIf
-
-	; Get the number of lightning spells
-	$numSpells = $LSpellComp
-	If $numSpells = 0 Then
-		SetLog("No lightning spells trained, time to go home!", $COLOR_FUCHSIA)
-		SetDebugLog("$LSpellComp = " & $LSpellComp)
-		Return $performedZap
-	Else
-		SetLog("Number of Lightning Spells: " & $numSpells, $COLOR_FUCHSIA)
 	EndIf
 
 	_ArraySort($aDarkDrills, 1, 0, 0, 3)
 
 	; Offset the drill level based on town hall level
 	$drillLvlOffset = getDrillOffset()
-	If $DebugSmartZap = 1 Then SetLog("Drill Level Offset is: " & $drillLvlOffset, $COLOR_PURPLE)
+	If $debugSetLog = 1 Then SetLog("Drill Level Offset is: " & $drillLvlOffset, $COLOR_PURPLE)
 
 	; Offset the number of spells based on town hall level
 	$spellAdjust = getSpellOffset()
-	If $DebugSmartZap = 1 Then SetLog("Spell Adjust is: " & $spellAdjust, $COLOR_PURPLE)
+	If $debugSetLog = 1 Then SetLog("Spell Adjust is: " & $spellAdjust, $COLOR_PURPLE)
 
 	Local $itotalStrikeGain = 0
 
@@ -251,19 +226,15 @@ Func smartZap($minDE = -1)
 		; No Dark Elixir Left
 		If Not $searchDark Or $searchDark = 0 Then
 			SetLog("No Dark Elixir so lets just exit!", $COLOR_FUCHSIA)
-			SetDebugLog("$searchDark = " & $searchDark)
 			Return $performedZap
-		Else
-			If $DebugSmartZap = 1 Then SetLog("$searchDark = " & $searchDark, $COLOR_DEBUG)
 		EndIf
 
 		; Check to make sure we actually zapped
 		If $skippedZap = False Then
-			If $DebugSmartZap = 1 Then Setlog("$oldSearchDark = [" & Number($oldSearchDark) & "] - $searchDark = [" & $searchDark & "]", $COLOR_PURPLE)
 			$strikeGain = $oldSearchDark - $searchDark
 			$numLSpellsUsed += 1
 			$numSpells -= 1
-			If $DebugSmartZap = 1 Then Setlog("$strikeGain = " & Number($strikeGain), $COLOR_PURPLE)
+
 			If $aDarkDrills[0][2] <> -1 Then
 				If $ichkNoobZap = 0 Then
 					$expectedDE = $drillLevelSteal[($aDarkDrills[0][2] - 1)] * 0.75
@@ -309,7 +280,7 @@ Func smartZap($minDE = -1)
 					$tempTestX = Abs($aDrills[$i][0] - $aDarkDrills[0][0])
 					$tempTestY = Abs($aDrills[$i][1] - $aDarkDrills[0][1])
 
-					If $DebugSmartZap = 1 Then SetLog("tempX: " & $tempTestX & " tempY: " & $tempTestY, $COLOR_PURPLE)
+					If $debugSetLog = 1 Then SetLog("tempX: " & $tempTestX & " tempY: " & $tempTestY, $COLOR_PURPLE)
 
 					; If the tests are less than error, give pass onto test phase
 					If $tempTestX < $error And $tempTestY < $error Then
@@ -319,7 +290,7 @@ Func smartZap($minDE = -1)
 					EndIf
 				EndIf
 			Next
-			If $DebugSmartZap = 1 Then SetLog("testX: " & $testX & " testY: " & $testY, $COLOR_PURPLE)
+			If $debugSetLog = 1 Then SetLog("testX: " & $testX & " testY: " & $testY, $COLOR_PURPLE)
 
 			; Test Phase, if test error is greater than expected, or test error is default value.
 			If ($testX > $error Or $testY > $error) And ($testX <> -1 Or $testY <> -1) Then
@@ -358,7 +329,7 @@ Func zapDrill($THSpell, $x, $y)
 		If _Sleep($iDelayCastSpell1) Then Return
 		If IsAttackPage() Then Click($x, $y, 1, 0, "#0029")
 	Else
-		If $DebugSmartZap = 1 Then SetLog("No " & $name & " Found")
+		If $debugSetLog = 1 Then SetLog("No " & $name & " Found")
 	EndIf
 
 EndFunc   ;==>zapDrill

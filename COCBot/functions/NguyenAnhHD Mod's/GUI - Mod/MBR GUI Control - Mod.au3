@@ -338,3 +338,197 @@ Func sldrTransparancyIdleShield()
 	$AndroidInactiveTransparency = Int($ReadTransparancyIdle)
 
 EndFunc
+#cs
+; Treasury Collect
+Func chkCollectTresory()
+	If GUICtrlRead($chkCollectTresory) = $GUI_CHECKED Then
+		For $i = $leurequisertarienTresor To $btnResetDE
+			GUICtrlSetState($i, $GUI_SHOW)
+		Next
+		If GUICtrlRead($chkCollectTresoryGold) = $GUI_UNCHECKED Then
+			GUICtrlSetState($btnResetOR, $GUI_DISABLE)
+			GUICtrlSetState($btnResetEL, $GUI_DISABLE)
+			GUICtrlSetState($btnResetDE, $GUI_DISABLE)
+		EndIf
+		$ichkCollectTresory = 1
+	Else
+		For $i = $leurequisertarienTresor To $btnResetDE
+			GUICtrlSetState($i, $GUI_HIDE)
+		Next
+		$ichkCollectTresory = 0
+	EndIf
+EndFunc   ;==>chkCollectTresory
+
+Func chkCollectTresoryGold()
+	If GUICtrlRead($chkCollectTresoryGold) = $GUI_CHECKED And GUICtrlRead($chkCollectTresory) = $GUI_CHECKED Then
+		GUICtrlSetState($txtTreasuryGold, $GUI_ENABLE)
+		GUICtrlSetState($btnResetOR, $GUI_ENABLE)
+	ElseIf GUICtrlRead($chkCollectTresoryGold) = $GUI_CHECKED And GUICtrlRead($chkCollectTresory) = $GUI_UNCHECKED Then
+		GUICtrlSetState($txtTreasuryGold, $GUI_DISABLE)
+		GUICtrlSetState($btnResetOR, $GUI_DISABLE)
+	ElseIf GUICtrlRead($chkCollectTresoryGold) = $GUI_UNCHECKED And GUICtrlRead($chkCollectTresory) = $GUI_CHECKED Then
+		GUICtrlSetState($txtTreasuryGold, $GUI_DISABLE)
+		GUICtrlSetState($btnResetOR, $GUI_DISABLE)
+	EndIf
+EndFunc   ;==>chkCollectTresoryGold
+
+Func ResetOr()
+	Global $ResetOR = 0
+	GUICtrlSetData($txtTreasuryGold, $ResetOR)
+	$itxtTreasuryGold = GUICtrlRead($txtTreasuryGold)
+EndFunc   ;==>ResetOr
+
+Func chkCollectTresoryElixir()
+	If GUICtrlRead($chkCollectTresoryElixir) = $GUI_CHECKED And GUICtrlRead($chkCollectTresory) = $GUI_CHECKED Then
+		GUICtrlSetState($txtTreasuryElixir, $GUI_ENABLE)
+		GUICtrlSetState($btnResetEL, $GUI_ENABLE)
+	ElseIf GUICtrlRead($chkCollectTresoryElixir) = $GUI_CHECKED And GUICtrlRead($chkCollectTresory) = $GUI_UNCHECKED Then
+		GUICtrlSetState($txtTreasuryElixir, $GUI_DISABLE)
+		GUICtrlSetState($btnResetEL, $GUI_DISABLE)
+	ElseIf GUICtrlRead($chkCollectTresoryElixir) = $GUI_UNCHECKED And GUICtrlRead($chkCollectTresory) = $GUI_CHECKED Then
+		GUICtrlSetState($txtTreasuryElixir, $GUI_DISABLE)
+		GUICtrlSetState($btnResetEL, $GUI_DISABLE)
+	EndIf
+EndFunc   ;==>chkCollectTresoryElixir
+
+Func ResetEL()
+	Global $ResetEL = 0
+	GUICtrlSetData($txtTreasuryElixir, $ResetEL)
+	$itxtTreasuryElixir = GUICtrlRead($txtTreasuryElixir)
+EndFunc   ;==>ResetEL
+
+Func chkCollectTresoryDark()
+	If GUICtrlRead($chkCollectTresoryDark) = $GUI_CHECKED And GUICtrlRead($chkCollectTresory) = $GUI_CHECKED Then
+		GUICtrlSetState($txtTreasuryDark, $GUI_ENABLE)
+		GUICtrlSetState($btnResetDE, $GUI_ENABLE)
+	ElseIf GUICtrlRead($chkCollectTresoryDark) = $GUI_CHECKED And GUICtrlRead($chkCollectTresory) = $GUI_UNCHECKED Then
+		GUICtrlSetState($txtTreasuryDark, $GUI_DISABLE)
+		GUICtrlSetState($btnResetDE, $GUI_DISABLE)
+	ElseIf GUICtrlRead($chkCollectTresoryDark) = $GUI_UNCHECKED And GUICtrlRead($chkCollectTresory) = $GUI_CHECKED Then
+		GUICtrlSetState($txtTreasuryDark, $GUI_DISABLE)
+		GUICtrlSetState($btnResetDE, $GUI_DISABLE)
+	EndIf
+EndFunc   ;==>chkCollectTresoryDark
+
+Func ResetDE()
+	Global $ResetDE = 0
+	GUICtrlSetData($txtTreasuryDark, $ResetDE)
+	$itxtTreasuryDark = GUICtrlRead($txtTreasuryDark)
+EndFunc   ;==>ResetDE
+
+Func randomSleep($SleepTime, $Range = 0)
+
+	If $RunState = False Then Return
+	If $Range = 0 Then $Range = Round($SleepTime / 5)
+	$SleepTimeF = Random($SleepTime - $Range, $SleepTime + $Range, 1)
+	If $DebugClick = 1 Then Setlog("Default sleep : " & $SleepTime & " - Random sleep : " & $SleepTimeF, $COLOR_ORANGE)
+	If _Sleep($SleepTimeF) Then Return
+
+EndFunc   ;==>randomSleep
+
+Func QuickMIS($ValueReturned, $directory, $Left = 0, $Top = 0, $Right = $GAME_WIDTH, $Bottom = $GAME_HEIGHT, $Debug = False)
+
+	If ($ValueReturned <> "BC1") And ($ValueReturned <> "CX") And ($ValueReturned <> "N1") And ($ValueReturned <> "NX") And ($ValueReturned <> "Q1") And ($ValueReturned <> "QX") Then
+		SetLog("Error of parameters settings during QuickMIS call for MultiSearch...", $COLOR_RED)
+		Return
+	EndIf
+
+	Sleep(1500)
+
+	_CaptureRegion2($Left, $Top, $Right, $Bottom)
+	$Res = DllCall($hImgLib, "str", "SearchMultipleTilesBetweenLevels", "handle", $hHBitmap2, "str", $directory, "str", "FV", "Int", 0, "str", "FV", "Int", 0, "Int", 1000)
+
+	If IsArray($Res) Then
+		If $Debug Then _ArrayDisplay($Res)
+		If $DebugSetlog = 1 Then SetLog("DLL Call succeeded " & $Res[0], $COLOR_PURPLE)
+
+		If $Res[0] = "" Or $Res[0] = "0" Then
+			If $DebugSetlog Then SetLog("No Button found")
+			Switch $ValueReturned
+				Case "BC1"
+					Return False
+				Case "CX"
+					Return "-1"
+				Case "N1"
+					Return "none"
+				Case "NX"
+					Return "none"
+				Case "Q1"
+					Return 0
+				Case "QX"
+					Return 0
+			EndSwitch
+
+		ElseIf StringInStr($Res[0], "-1") <> 0 Then
+			SetLog("DLL Error", $COLOR_RED)
+
+		Else
+			Switch $ValueReturned
+
+				Case "BC1" ; coordinates of first/one image found + boolean value
+
+					$Result = ""
+					$KeyValue = StringSplit($Res[0], "|", $STR_NOCOUNT)
+					For $i = 0 To UBound($KeyValue) - 1
+						$DLLRes = DllCall($hImgLib, "str", "GetProperty", "str", $KeyValue[$i], "str", "objectpoints")
+						$Result &= $DLLRes[0] & "|"
+					Next
+					If StringRight($Result, 1) = "|" Then $Result = StringLeft($Result, (StringLen($Result) - 1))
+					$CoordsInArray = StringSplit($Result, ",", $STR_NOCOUNT)
+					$QuickMISX = $CoordsInArray[0]
+					$QuickMISY = $CoordsInArray[1]
+					Return True
+
+				Case "CX" ; coordinates of each image found - eg: $Array[0] = [X1, Y1] ; $Array[1] = [X2, Y2]
+
+					$Result = ""
+					$KeyValue = StringSplit($Res[0], "|", $STR_NOCOUNT)
+					For $i = 0 To UBound($KeyValue) - 1
+						$DLLRes = DllCall($hImgLib, "str", "GetProperty", "str", $KeyValue[$i], "str", "objectpoints")
+						$Result &= $DLLRes[0] & "|"
+					Next
+					If StringRight($Result, 1) = "|" Then $Result = StringLeft($Result, (StringLen($Result) - 1))
+					$CoordsInArray = StringSplit($Result, "|", $STR_NOCOUNT)
+					Return $CoordsInArray
+
+
+				Case "N1" ; name of first file found
+
+					$MultiImageSearchResult = StringSplit($Res[0], "|")
+					$FilenameFound = StringSplit($MultiImageSearchResult[1], "_")
+					Return $FilenameFound[1]
+
+				Case "NX" ; names of all files found
+
+					$AllFilenamesFound = ""
+					$MultiImageSearchResult = StringSplit($Res[0], "|")
+					For $i = 1 To $MultiImageSearchResult[0]
+						$FilenameFound = StringSplit($MultiImageSearchResult[$i], "_")
+						$AllFilenamesFound &= $FilenameFound[1] & "|"
+					Next
+					If StringRight($AllFilenamesFound, 1) = "|" Then $AllFilenamesFound = StringLeft($AllFilenamesFound, (StringLen($AllFilenamesFound) - 1))
+					Return $AllFilenamesFound
+
+				Case "Q1" ; quantity of first/one tiles found
+
+					$Result = ""
+					$KeyValue = StringSplit($Res[0], "|", $STR_NOCOUNT)
+					For $i = 0 To UBound($KeyValue) - 1
+						$DLLRes = DllCall($hImgLib, "str", "GetProperty", "str", $KeyValue[$i], "str", "totalobjects")
+						$Result &= $DLLRes[0] & "|"
+					Next
+					If StringRight($Result, 1) = "|" Then $Result = StringLeft($Result, (StringLen($Result) - 1))
+					$QuantityInArray = StringSplit($Result, "|", $STR_NOCOUNT)
+					Return $QuantityInArray[0]
+
+				Case "QX" ; quantity of files found
+
+					$MultiImageSearchResult = StringSplit($Res[0], "|", $STR_NOCOUNT)
+					Return UBound($MultiImageSearchResult)
+
+			EndSwitch
+		EndIf
+	EndIf
+
+EndFunc   ;==>QuickMIS
+#ce
