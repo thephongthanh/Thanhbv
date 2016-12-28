@@ -228,6 +228,7 @@ Func AttackReport()
 	EndIf
 	$iTrophyTotal += $iTrophyLast
 	$iTotalTrophyGain[$iMatchMode] += $iTrophyLast
+	If $ichkSwitchAcc = 1 Then $aTrophyLootAcc[$nCurProfile-1] += $iTrophyLast						; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
 	If $iMatchMode = $TS Then
 		If $starsearned > 0 Then
 			$iNbrOfTHSnipeSuccess += 1

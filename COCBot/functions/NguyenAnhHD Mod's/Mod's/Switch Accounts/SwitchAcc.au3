@@ -17,32 +17,25 @@ Func InitiateSwitchAcc() ; Checking profiles setup in Mybot, First matching CoC 
 	$nCurProfile = _GuiCtrlComboBox_GetCurSel($cmbProfile) + 1
 
 	Setlog($nTotalProfile & " profiles available")
-	Setlog("Scanning through all profiles")
 
-	For $i = 0 To $nTotalProfile - 1
-		_GUICtrlComboBox_SetCurSel($cmbProfile, $i)
-		cmbProfile()
-	Next
-
-	For $i = 0 to $nTotalProfile - 1
+	For $i = 0 to _Min($nTotalProfile - 1,7)
 		Switch $aProfileType[$i]
 		Case 1
 			Setlog("Profile [" & $i + 1 & "]: " & $ProfileList[$i+1] & " - Active - Match with Account [" & $aMatchProfileAcc[$i] &"]")
 		Case 2
 			Setlog("Profile [" & $i + 1 & "]: " & $ProfileList[$i+1] & " - Donate - Match with Account [" & $aMatchProfileAcc[$i] &"]")
-		Case 3
+		Case Else
 			Setlog("Profile [" & $i + 1 & "]: " & $ProfileList[$i+1] & " - Idle   - Match with Account [" & $aMatchProfileAcc[$i] &"]")
 		EndSwitch
 	Next
 
-	; Counting CoC Accounts
-	If $icmbTotalCoCAcc > 0 then
+	If $icmbTotalCoCAcc <> -1 then
 		$nTotalCoCAcc = $icmbTotalCoCAcc
-		Setlog ("Total CoC Account(s)is declared: " & $nTotalCoCAcc)
+		Setlog ("Total CoC Account is declared: " & $nTotalCoCAcc)
 	Else
-		Setlog ("Total CoC Account(s) has not declared, default: " & $nTotalCoCAcc)
+		$nTotalCoCAcc = 8
+		Setlog ("Total CoC Account has not declared, default: " & $nTotalCoCAcc)
 	EndIf
-
 
 	; Locating CoC Accounts
 	If _ArrayMax($aAccPosY) > 0 Then
@@ -68,14 +61,16 @@ Func InitiateSwitchAcc() ; Checking profiles setup in Mybot, First matching CoC 
 		EndIf
 	Else																		; There is no active profile
 		$i = _ArraySearch($aProfileType, 2)
-		Setlog("Try to avoid Idle Profile. Switching to Profile [" & $i+1 &"] - CoC Acc [" & $aMatchProfileAcc[$i] & "]")
-		_GUICtrlComboBox_SetCurSel($cmbProfile, $i)							; Move to first Donate Profile
-		cmbProfile()
+		If $i >= 0 Then
+			Setlog("Try to avoid Idle Profile. Switching to Profile [" & $i+1 &"] - CoC Acc [" & $aMatchProfileAcc[$i] & "]")
+			_GUICtrlComboBox_SetCurSel($cmbProfile, $i)							; Move to first Donate Profile
+			cmbProfile()
+		EndIf
 	EndIf
 
 	$nCurProfile = _GuiCtrlComboBox_GetCurSel($cmbProfile) + 1
 
-	For $i = 0 to $nTotalProfile - 1
+	For $i = 0 to _Min($nTotalProfile - 1, 7)
 		$aTimerStart[$i] = 0
 		$aTimerEnd[$i] = 0
 		$aRemainTrainTime[$i] = 0
@@ -120,7 +115,7 @@ Func CheckWaitHero()	; get hero regen time remaining if enabled
 				EndIf
 				$iActiveHero = -1
 				If IsSpecialTroopToBeUsed($pMatchMode, $pTroopType) And _
-					BitOr($iHeroAttack[$pMatchMode], $iHeroWait[$pMatchMode]) = $iHeroAttack[$pMatchMode] Then ; check if Hero enabled to wait
+					 BitOr($iHeroAttack[$pMatchMode], $iHeroWait[$pMatchMode]) = $iHeroAttack[$pMatchMode] Then ; check if Hero enabled to wait
 				$iActiveHero = $pTroopType - $eKing ; compute array offset to active hero
 				EndIf
 				If $iActiveHero <> -1 And $aHeroResult[$iActiveHero] > 0 Then ; valid time?
@@ -229,7 +224,6 @@ Func CheckSwitchAcc(); Switch CoC Account with or without sleep combo - DEMEN
 
 	SetLog("Start SwitchAcc Mode")
 
-
 	If IsMainPage() = False Then ClickP($aAway, 2, 250, "#0335")	; Sometimes the bot cannot open Army Overview Window, trying to click away first
 	If IsMainPage() = False Then checkMainScreen()				; checkmainscreen (may restart CoC) if still fail to locate main page.
 	getArmyTroopTime(True, False)
@@ -279,7 +273,7 @@ Func CheckSwitchAcc(); Switch CoC Account with or without sleep combo - DEMEN
 		If $SwitchCase <> 3 Then
 			If $aProfileType[$nCurProfile-1] = 1 And $iPlannedRequestCCHoursEnable = 1 And $canRequestCC = True Then
 				Setlog("Try Request troops before switching account", $COLOR_BLUE)
-				RequestCC()
+				RequestCC(true)
 			EndIf
 			SwitchProfile($SwitchCase)
 			checkMainScreen()
@@ -293,7 +287,7 @@ Func CheckSwitchAcc(); Switch CoC Account with or without sleep combo - DEMEN
 			ReArm()
 			If $iPlannedRequestCCHoursEnable = 1 And $canRequestCC = True Then
 				Setlog("Try Request troops before going to sleep", $COLOR_BLUE)
-				RequestCC()
+				RequestCC(true)
 			EndIf
 			PoliteCloseCoC()
 			$iShouldRearm = True
@@ -346,7 +340,7 @@ Func SwitchCOCAcc()
 	Setlog ("Switching CoC Account to match with Bot Profile ", $COLOR_BLUE)
 
 	Click(820, 585, 1, 0, "Click Setting")      ;Click setting
-	If _Sleepstatus(5000) Then Return
+	If _Sleepstatus(3000) Then Return
 
 	If _ColorCheck(_GetPixelColor($XConnect, $YConnect, True), Hex($ColorConnect, 6), 20) Then       ;Blue
 		Click($XConnect, $YConnect, 1, 0, "Click Connected")      ;Click Connect
@@ -369,7 +363,7 @@ Func SwitchCOCAcc()
 		Click(383, 373.5 - ($nTotalCoCAcc - 1)*36.5 + 73*($nCurCoCAcc - 1), 1, 0, "Click Account " & $nCurCoCAcc)      ;Click Account - DEMEN
 	EndIf
 
-	If _Sleepstatus(10000) Then Return
+	If _Sleepstatus(8000) Then Return
 
 	If _ColorCheck(_GetPixelColor($XConnect, $YConnect, True), Hex($ColorConnect, 6), 20) Then       ;Blue
 		Setlog("Already in current account")
@@ -417,7 +411,7 @@ Func SwitchCOCAcc()
 			If _Sleepstatus(1000) Then Return
 			PureClick(480, 200, 1, 0, "Click CONFIRM")      ;Click CONFIRM
 			Setlog("OKAY button clicked")
-			Setlog("Please wait 8 seconds for loading CoC")
+			Setlog("please wait 8 seconds for loading CoC")
 			If _Sleepstatus(1000) Then Return
 			ClickP($aAway, 1, 0, "#0167") ;Click Away
 			If _Sleepstatus(8000) Then Return

@@ -52,6 +52,8 @@ Func LoadLanguagesComboBox()
 					$LangIcons = 202
 				Case "Portuguese"
 					$LangIcons = 205
+				Case "Vietnamese"
+					$LangIcons = 207
 				Case Else
 					$LangIcons = 203 ; Use Grey Icon when none of the Languages is matching
 		EndSwitch

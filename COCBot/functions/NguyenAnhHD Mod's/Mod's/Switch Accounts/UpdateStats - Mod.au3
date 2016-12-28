@@ -19,6 +19,17 @@ Func UpdateStatsForSwitchAcc()
 	GUICtrlSetData($lblResultAttackedHourNow, $aAttackedCountAcc[$nCurProfile -1])			;	Counting attacked village at Bottom GUI
 
 	For $i = 0 To 3
+		; Village report
+		GUICtrlSetData($lblResultGoldNowAcc[$i], _NumberFormat($aGoldCurrentAcc[$i], True))
+		GUICtrlSetData($lblResultElixirNowAcc[$i], _NumberFormat($aElixirCurrentAcc[$i], True))
+		If $iDarkStart <> "" Then
+			GUICtrlSetData($lblResultDeNowAcc[$i], _NumberFormat($aDarkCurrentAcc[$i], True))
+		EndIf
+		GUICtrlSetData($lblResultTrophyNowAcc[$i], _NumberFormat($aTrophyCurrentAcc[$i], True))
+		GUICtrlSetData($lblResultGemNowAcc[$i], _NumberFormat($aGemAmountAcc[$i], True))
+		GUICtrlSetData($lblResultBuilderNowAcc[$i], $aFreeBuilderCountAcc[$i] & "/" & $aTotalBuilderCountAcc[$i])
+
+		; Gain stats
 		GUICtrlSetData($lblGoldLootAcc[$i], _NumberFormat($aGoldTotalAcc[$i]))
 		GUICtrlSetData($lblHourlyStatsGoldAcc[$i], _NumberFormat(Round($aGoldTotalAcc[$i] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600)) & "K / h")
 
@@ -30,14 +41,9 @@ Func UpdateStatsForSwitchAcc()
 			GUICtrlSetData($lblHourlyStatsDarkAcc[$i], _NumberFormat(Round($aDarkTotalAcc[$i] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h")
 		EndIf
 
-		GUICtrlSetData($lblResultGoldNowAcc[$i], _NumberFormat($aGoldCurrentAcc[$i], True))
-		GUICtrlSetData($lblResultElixirNowAcc[$i], _NumberFormat($aElixirCurrentAcc[$i], True))
-		If $iDarkStart <> "" Then
-			GUICtrlSetData($lblResultDeNowAcc[$i], _NumberFormat($aDarkCurrentAcc[$i], True))
-		EndIf
-		GUICtrlSetData($lblResultTrophyNowAcc[$i], _NumberFormat($aTrophyCurrentAcc[$i], True))
-		GUICtrlSetData($lblResultGemNowAcc[$i], _NumberFormat($aGemAmountAcc[$i], True))
-		GUICtrlSetData($lblResultBuilderNowAcc[$i], $aFreeBuilderCountAcc[$i] & "/" & $aTotalBuilderCountAcc[$i])
+		GUICtrlSetData($lblTrophyLootAcc[$i], _NumberFormat($aTrophyLootAcc[$i]))
+		GUICtrlSetData($lblHourlyStatsTrophyAcc[$i], _NumberFormat(Round($aTrophyLootAcc[$i] / (Int(TimerDiff($sTimer) + $iTimePassed)) * 3600 * 1000)) & " / h")
+
 	Next		; ============= Update Gain stats per each account
 
 	If $FirstAttack = 2 Then

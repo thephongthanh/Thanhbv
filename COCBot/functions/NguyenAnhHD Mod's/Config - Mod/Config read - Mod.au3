@@ -17,17 +17,16 @@
 		$iMultiFingerStyle = IniRead($config, "MultiFinger", "Select", "2")
 
 		; Config Read for SwitchAcc Mode - DEMEN
-		$ichkSwitchAcc = IniRead($profile, "Switch Account", "Enable", "0")
+		IniReadS($ichkSwitchAcc, $profile, "Switch Account", "Enable", "0")
 		$ichkTrain = IniRead($profile, "Switch Account", "Train", "0")
-		$icmbTotalCoCAcc = IniRead($profile, "Switch Account", "Total Coc Account", "0")	; 0 = AutoDetect
-		$ichkSmartSwitch = IniRead($profile, "Switch Account", "Smart Switch", "1")
+		IniReadS($icmbTotalCoCAcc, $profile, "Switch Account", "Total Coc Account", "-1")
+		IniReadS($ichkSmartSwitch, $profile, "Switch Account", "Smart Switch", "0")
 		$ichkCloseTraining = Number(IniRead($profile, "Switch Account", "Sleep Combo", "0"))	; Sleep Combo, 1 = Close CoC, 2 = Close Android, 0 = No sleep
 
-		$ProfileType = IniRead($config, "Switch Account", "Profile Type", "")
-		$MatchProfileAcc = IniRead($config, "Switch Account", "Match Profile Acc", "")
-
-		For $i = 1 to 6
-			IniReadS($aAccPosY[$i - 1], $profile, "Acc Location", "yAccNo." & $i, "-1")
+		For $i = 0 to 7
+			IniReadS($aMatchProfileAcc[$i],$profile, "Switch Account", "MatchProfileAcc." & $i+1, "-1")
+			IniReadS($aProfileType[$i], $profile, "Switch Account", "ProfileType." & $i+1, "-1")
+			IniReadS($aAccPosY[$i], $profile, "Switch Account", "AccLocation." & $i+1, "-1")
 		Next
 
 		; Config for Adding QuicktrainCombo - DEMEN

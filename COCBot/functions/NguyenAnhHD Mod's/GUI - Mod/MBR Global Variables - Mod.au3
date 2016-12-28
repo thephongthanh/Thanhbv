@@ -22,24 +22,21 @@ Global Enum $eCCSpell = $eHaSpell + 1
 
 ;Variables for SwitchAcc Mode - DEMEN
 Global $profile = $sProfilePath & "\Profile.ini"
-Global $aconfig[8]
 Global $ichkSwitchAcc = 0
 Global $ichkTrain = 0
 
-Global $icmbTotalCoCAcc		; 1 = 1 account, 2 = 2 accounts
-Global $nTotalCoCAcc = 6
-Global $ichkSmartSwitch = 1
+Global $icmbTotalCoCAcc
+Global $nTotalCoCAcc = 8
+Global $ichkSmartSwitch
 
-Global $ichkCloseTraining = 0
+Global $ichkCloseTraining
 
 Global $nCurProfile = 1
 Global $ProfileList
 Global $nTotalProfile = 1
 
-Global $ProfileType			; Type of the Current Profile, 1 = active, 2 = donate, 3 = idle
 Global $aProfileType[8]		; Type of the all Profiles, 1 = active, 2 = donate, 3 = idle
 
-Global $MatchProfileAcc		; Account match with Current Profile
 Global $aMatchProfileAcc[8]	; Accounts match with All Profiles
 
 Global $DonateSwitchCounter = 0
@@ -53,12 +50,7 @@ Global $aUpdateRemainTrainTime[8]
 Global $nNexProfile
 Global $nMinRemainTrain
 
-Global $aCCRemainTime[8]
-Global $aUpdateCCRemainTime[8]
-Global $nMinCCRemain
-Global $nNexProfileReqCC
-
-Global $aAccPosY[6]
+Global $aLocateAccConfig[8], $aAccPosY[8]
 
 ; Adding QuickTrainCombo - DEMEN
 Global 	$iRadio_Army12, $iRadio_Army123

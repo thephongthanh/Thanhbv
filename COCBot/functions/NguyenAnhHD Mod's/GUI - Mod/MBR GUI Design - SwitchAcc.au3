@@ -13,108 +13,115 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
-; Defining botting type of eachh profile - SwitchAcc - DEMEN
-		$x -= 3
-		$y += 40
-		$lblProfile = GUICtrlCreateLabel(GetTranslated(655,50, "Profile Type:"), $x, $y + 1, -1, -1)
-			$txtTip = GetTranslated(655,51, "Choosing type for this Profile") & @CRLF & GetTranslated(655,52, "Active Profile for botting") & @CRLF & GetTranslated(655,53, "Donate Profile for donating only") & @CRLF & GetTranslated(655,54, "Idle Profile for staying inactive")
-			GUICtrlSetTip(-1, $txtTip)
+Global $lblProfileNo[8], $lblProfileName[8], $cmbAccountNo[8], $cmbProfileType[8]
 
-		$radActiveProfile= GUICtrlCreateRadio(GetTranslated(655,55, "Active"), $x + 70 , $y, -1, 16)
-			GUICtrlSetTip(-1, GetTranslated(655,56, "Set as Active Profile for training troops & attacking"))
-			GUICtrlSetState(-1, $GUI_CHECKED)
-			GUICtrlSetOnEvent(-1, "radProfileType")
+$ProfileList = _GUICtrlComboBox_GetListArray($cmbProfile)
+$nTotalProfile = _GUICtrlComboBox_GetCount($cmbProfile)
 
-		$radDonateProfile = GUICtrlCreateRadio(GetTranslated(655,57, "Donate"), $x + 130, $y, -1, 16)
-			GUICtrlSetTip(-1, GetTranslated(655,58, "Set as Donating Profile for training troops & donating only"))
-			GUICtrlSetOnEvent(-1, "radProfileType")
+Local $x = 25, $y = 45	;	Keep upchanged as original GUI of Profile Tab
 
-		$radIdleProfile = GUICtrlCreateRadio(GetTranslated(655,59, "Idle"), $x + 190, $y, -1, 16)
-			GUICtrlSetTip(-1, GetTranslated(655,60, "Set as Idle Profile. The Bot will ignore this Profile"))
-			GUICtrlSetOnEvent(-1, "radProfileType")
+	$x = 22
+	$y = 100
 
-		$lblMatchProfileAcc = GUICtrlCreateLabel(GetTranslated(655,61, "Matching Acc. No."), $x + 260, $y + 1 , -1, 16)
-			$txtTip = GetTranslated(655,62, "Select the index of CoC Account to match with this Profile")
-			GUICtrlSetTip(-1, $txtTip)
-
-		$cmbMatchProfileAcc = GUICtrlCreateCombo("", $x + 360, $y -3, 60, 18, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			GUICtrlSetData(-1, "---" & "|" & "Acc. 1" & "|" & "Acc. 2" & "|" & "Acc. 3" & "|" & "Acc. 4" & "|" & "Acc. 5" & "|" & "Acc. 6", "---")
-			GUICtrlSetTip(-1, $txtTip)
-			GUICtrlSetOnEvent(-1, "cmbMatchProfileAcc")
-
-; SwitchAcc - DEMEN
-
-	Local $x = 25, $y = 135
-	$grpSwitchAcc = GUICtrlCreateGroup(GetTranslated(655,63, "Switch Account Mode"), $x - 15, $y - 20, 215, 265)
-		$chkSwitchAcc = GUICtrlCreateCheckbox(GetTranslated(655,64, "Enable Switch Account"), $x, $y, -1, -1)
-			$txtTip = GetTranslated(655,65, "Switch to another account & profile when troop training time is >= 3 minutes") & @CRLF & GetTranslated(655,66, "This function supports maximum 6 CoC accounts & 6 Bot profiles") & @CRLF & GetTranslated(655,67, "Make sure to create sufficient Profiles equal to number of CoC Accounts, and align the index of accounts order with profiles order")
+	$grpSwitchAcc = GUICtrlCreateGroup(GetTranslated(655,50, "Switch Account Mode"), $x - 12, $y - 20, 200, 300)
+		$chkSwitchAcc = GUICtrlCreateCheckbox(GetTranslated(655,51, "Enable Switch Account"), $x - 5, $y, -1, -1)
+			$txtTip = GetTranslated(655,52, "Switch to another account & profile when troop training time is >= 3 minutes") & @CRLF & GetTranslated(655,53, "This function supports maximum 8 CoC accounts & 8 Bot profiles") & @CRLF & GetTranslated(655,54, "Make sure to create sufficient Profiles equal to number of CoC Accounts, and align the index of accounts order with profiles order")
 			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "chkSwitchAcc")
 
-		$chkTrain = GUICtrlCreateCheckbox(GetTranslated(655,200, "Pre-train"), $x + 140, $y, -1, -1)
-			GUICtrlSetTip(-1, GetTranslated(655,201, "Enable it to pre-train donated troops in quick train 3 before switch to next account.") & @CRLF & GetTranslated(655,202, "This function requires use Quick Train, not Custom Train.") & @CRLF & GetTranslated(655,203, "Use army 1 for farming troops, army 2 for spells and army 3 for donated troops."))
-			GUICtrlSetState(-1, $GUI_DISABLE)
+		$chkTrain = GUICtrlCreateCheckbox(GetTranslated(655,55, "Pre-train"), $x + 127, $y, -1, -1)
+			$txtTip = GetTranslated(655,56, "Enable it to pre-train donated troops in quick train 3 before switch to next account.") & @CRLF & GetTranslated(655,57, "This function requires use Quick Train, not Custom Train.") & @CRLF & GetTranslated(655,58, "Use army 1 for farming troops, army 2 for spells and army 3 for donated troops.")
+			GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "chkTrain")
 
-		$lblTotalAccount = GUICtrlCreateLabel(GetTranslated(655,68, "Total CoC Acc:"), $x + 15, $y + 29, -1, -1)
-			$txtTip = GetTranslated(655,69, "Choose number of CoC Accounts pre-logged")
-			GUICtrlSetState(-1, $GUI_DISABLE)
+		$lblTotalAccount = GUICtrlCreateLabel(GetTranslated(655,59, "Total CoC Acc:"), $x + 10, $y + 29, -1, -1)
+			$txtTip = GetTranslated(655,60, "Choose number of CoC Accounts pre-logged")
 
-		$cmbTotalAccount= GUICtrlCreateCombo("", $x + 100, $y + 25, -1, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			GUICtrlSetData(-1, "--------" & "|" & "1 Account" & "|" & "2 Accounts" & "|" & "3 Accounts" & "|" & "4 Accounts" & "|" & "5 Accounts" & "|" & "6 Accounts")
+		$cmbTotalAccount= GUICtrlCreateCombo("", $x + 95, $y + 25, 60, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+			GUICtrlSetData(-1, "1 Acc." & "|" & "2 Acc." & "|" & "3 Acc." & "|" & "4 Acc." & "|" & "5 Acc." & "|" & "6 Acc." & "|" & "7 Acc." & "|" & "8 Acc.")
 			GUICtrlSetTip(-1, $txtTip)
-			GUICtrlSetState(-1, $GUI_DISABLE)
 
-		$radSmartSwitch= GUICtrlCreateRadio(GetTranslated(655,70, "Smart switch"), $x + 15 , $y + 55, -1, 16)
-			GUICtrlSetTip(-1, GetTranslated(655,71, "Switch to account with the shortest remain training time"))
+		$radNormalSwitch = GUICtrlCreateRadio(GetTranslated(655,61, "Normal switch"), $x + 10, $y + 55, -1, 16)
+			GUICtrlSetTip(-1, GetTranslated(655,62, "Switching accounts continously"))
 			GUICtrlSetState(-1, $GUI_CHECKED)
-			GUICtrlSetState(-1, $GUI_DISABLE)
+			GUICtrlSetOnEvent(-1, "radNormalSwitch")
 
-		$radNormalSwitch = GUICtrlCreateRadio(GetTranslated(655,72, "Normal switch"), $x + 100, $y + 55, -1, 16)
-			GUICtrlSetTip(-1, GetTranslated(655,73, "Switching accounts continously"))
-			GUICtrlSetState(-1, $GUI_DISABLE)
+		$radSmartSwitch = GUICtrlCreateRadio(GetTranslated(655,63, "Smart switch"), $x + 100, $y + 55, -1, 16)
+			GUICtrlSetTip(-1, GetTranslated(655,64, "Switch to account with the shortest remain training time"))
 			GUICtrlSetOnEvent(-1, "radNormalSwitch")
 
 		$y += 80
 
-		$chkUseTrainingClose = GUICtrlCreateCheckbox(GetTranslated(655,74, "Combo Sleep after Switch Account"), $x, $y, -1, -1)
-			$txtTip = GetTranslated(655,75, "Close CoC combo with Switch Account when there is more than 3 mins remaining on training time of all accounts.")
+		$chkUseTrainingClose = GUICtrlCreateCheckbox(GetTranslated(655,65, "Combo Sleep after Switch Acc."), $x - 5, $y, -1, -1)
+			$txtTip = GetTranslated(655,66, "Close CoC combo with Switch Account when there is more than 3 mins remaining on training time of all accounts.")
 			GUICtrlSetTip(-1, $txtTip)
-			GUICtrlSetOnEvent(-1, "chkUseTrainingClose")
 
 		GUIStartGroup()
-		$radCloseCoC= GUICtrlCreateRadio(GetTranslated(655,76, "Close CoC"), $x + 15 , $y + 30, -1, 16)
+		$radCloseCoC = GUICtrlCreateRadio(GetTranslated(655,67, "Close CoC"), $x + 10, $y + 30, -1, 16)
 			GUICtrlSetState(-1, $GUI_CHECKED)
 
-		$radCloseAndroid = GUICtrlCreateRadio(GetTranslated(655,77, "Close Android"), $x + 100, $y + 30, -1, 16)
+		$radCloseAndroid = GUICtrlCreateRadio(GetTranslated(655,68, "Close Android"), $x + 100, $y + 30, -1, 16)
 
-		$lblLocateAcc = GUICtrlCreateLabel(GetTranslated(655,78, "Manually Locate Account Coordinates"), $x, $y + 60, -1, -1)
+		$y += 60
 
-		For $i = 1 to 6
-			If $i <= 3 Then	GUICtrlCreateButton("Acc. " & $i, $x + 10 + 50 * ($i-1), $y + 85, 40, 25)
-			If $i > 3 Then GUICtrlCreateButton("Acc. " & $i, $x + 10 + 50 * ($i-4), $y + 120, 40, 25)
-			GUICtrlSetTip(-1, GetTranslated(655,79, "Locate Your CoC Account No. ") & $i)
-			GUICtrlSetOnEvent(-1, "btnLocateAcc" & $i)
-		Next
+		$lblLocateAcc = GUICtrlCreateLabel(GetTranslated(655,69, "Manually locate account coordinates"), $x - 5, $y, -1, -1)
 
-		GUICtrlCreateButton(GetTranslated(655,80, "Clear All"), $x + 159, $y + 95, 30, 40, $BS_MULTILINE)
-			GUICtrlSetTip(-1, GetTranslated(655,81, "Clear Location Data Of All Accounts"))
+		$cmbLocateAcc = GUICtrlCreateCombo("", $x + 5, $y + 25, 60, 18, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+			$txtTip = GetTranslated(655,70, "Select CoC Account to manually locate its y-coordinate")
+			GUICtrlSetData(-1, "Acc. 1" & "|" & "Acc. 2" & "|" & "Acc. 3" & "|" & "Acc. 4" & "|" & "Acc. 5" & "|" & "Acc. 6" & "|" & "Acc. 7" & "|" & "Acc. 8", "Acc. 1")
+			GUICtrlSetTip(-1, $txtTip)
+
+		GUICtrlCreateButton(GetTranslated(655,71, "Locate"), $x + 70, $y + 24 , 50, 23)
+			GUICtrlSetTip(-1, GetTranslated(655,72, "Starting locate your CoC Account"))
+			GUICtrlSetOnEvent(-1, "btnLocateAcc")
+
+		GUICtrlCreateButton(GetTranslated(655,73, "Clear All"), $x + 125, $y + 24 , 50, 23, $BS_MULTILINE)
+			GUICtrlSetTip(-1, GetTranslated(655,74, "clear location data of all accounts"))
 			GUICtrlSetOnEvent(-1, "btnClearAccLocation")
 
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-; Profiles & Account matching
+	; Profiles & Account matching
+	Local $x = 235, $y = 100
+	$grpSwitchAccMapping = GUICtrlCreateGroup(GetTranslated(655,75, "Profiles"), $x - 20, $y - 20, 225, 300)
+		$btnUpdateProfiles = GUICtrlCreateButton(GetTranslated(655,76, "Update Profiles"), $x + 20, $y - 5 , -1, 25)
+			GUICtrlSetOnEvent(-1, "btnUpdateProfile")
+		$btnClearAllProfiles = GUICtrlCreateButton(GetTranslated(655,77, "Clear Profiles"), $x + 130, $y - 5 , -1, 25)
+			GUICtrlSetOnEvent(-1, "btnClearProfile")
 
-	Local $x = 250, $y = 135
-	$grpSwitchAccMapping = GUICtrlCreateGroup(GetTranslated(655,82, "Profiles"), $x - 20, $y - 20, 210, 265)
-		$btnUpdateProfiles = GUICtrlCreateButton(GetTranslated(655,83, "Update Profiles/Acc matching"), $x, $y - 5 , 170, 25)
-		GUICtrlSetOnEvent(-1, "btnUpdateProfile")
+	$y += 35
+		GUICtrlCreateLabel(GetTranslated(655,78, "No."), $x-10, $y, 15,-1,$SS_CENTER)
+		GUICtrlCreateLabel(GetTranslated(655,79, "Profile Name"), $x+10, $y, 90,-1,$SS_CENTER)
+		GUICtrlCreateLabel(GetTranslated(655,80, "Acc."), $x+105, $y, 30,-1,$SS_CENTER)
+		GUICtrlCreateLabel(GetTranslated(655,81, "Bot Type"), $x+140, $y, 60,-1,$SS_CENTER)
 
-		Global $lblProfileList[8]
+	$y += 20
+		GUICtrlCreateGraphic($x - 10, $y, 205, 1, $SS_GRAYRECT)
+		GUICtrlCreateGraphic($x + 10, $y - 25, 1, 40, $SS_GRAYRECT)
 
-		$y += 25
+	$y += 10
 		For $i = 0 To 7
-			$lblProfileList[$i] = GUICtrlCreateLabel("", $x, $y + ($i) * 25, 190, 18, $SS_LEFT)
-		Next
-	GUICtrlCreateGroup("", -99, -99, 1, 1)
+			$lblProfileNo[$i] = GUICtrlCreateLabel($i + 1 & ".", $x -10, $y + 4 + ($i) * 25, 15, 18, $SS_CENTER)
+			GUICtrlCreateGraphic($x + 10, $y + ($i) * 25, 1, 25, $SS_GRAYRECT)
 
+			$lblProfileName[$i] = GUICtrlCreateLabel(GetTranslated(655,82, "Village Name"), $x +10, $y + 4 + ($i) * 25, 90, 18, $SS_CENTER)
+				If $i <= $nTotalProfile - 1 Then GUICtrlSetData(-1, $ProfileList[$i+1])
+			$cmbAccountNo[$i] = GUICtrlCreateCombo("", $x + 105, $y + ($i) * 25, 30, 18, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+				$txtTip = GetTranslated(655,83, "Select the index of CoC Account to match with this Profile")
+				GUICtrlSetData(-1, "1" & "|" & "2" & "|" & "3" & "|" & "4" & "|" & "5" & "|" & "6" & "|" & "7" & "|" & "8")
+				GUICtrlSetTip(-1, $txtTip)
+				GUICtrlSetOnEvent(-1, "cmbMatchProfileAcc"&$i+1)
+			$cmbProfileType[$i] = GUICtrlCreateCombo("", $x + 140, $y + ($i) * 25, 60, 18, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+				$txtTip = GetTranslated(655,84, "Define the botting type of this profile")
+				GUICtrlSetData(-1, GetTranslated(655,85, "Active") & "|" & GetTranslated(655,86, "Donate") & "|" & GetTranslated(655,87, "Idle"))
+				GUICtrlSetTip(-1, $txtTip)
+			If $i > $nTotalProfile - 1 Then
+				For $j = $lblProfileNo[$i] To $cmbProfileType[$i]
+					GUICtrlSetState($j, $GUI_HIDE)
+				Next
+			EndIf
+
+		Next
+		GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+GUICtrlCreateGroup("", -99, -99, 1, 1)

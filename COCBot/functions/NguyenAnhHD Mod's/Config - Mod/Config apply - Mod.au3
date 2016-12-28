@@ -21,17 +21,6 @@
 	cmbDeployDB()
 
 	; Config Apply for SwitchAcc Mode - DEMEN
-	Switch $ProfileType
-	Case 1
-		GUICtrlSetState($radActiveProfile, $GUI_CHECKED)
-	Case 2
-		GUICtrlSetState($radDonateProfile, $GUI_CHECKED)
-	Case 3
-		GUICtrlSetState($radIdleProfile, $GUI_CHECKED)
-	EndSwitch
-
-	_GUICtrlCombobox_SetCurSel($cmbMatchProfileAcc, $MatchProfileAcc)
-
 	If $ichkSwitchAcc = 1 Then
 		GUICtrlSetState($chkSwitchAcc, $GUI_CHECKED)
 	Else
@@ -50,9 +39,9 @@
 		GUICtrlSetState($radNormalSwitch, $GUI_CHECKED)
 	EndIf
 
-	chkSwitchAcc()
+	radNormalSwitch()
 
-	_GUICtrlCombobox_SetCurSel($cmbTotalAccount, $icmbTotalCoCAcc)	; 0 = AutoDetect
+	_GUICtrlCombobox_SetCurSel($cmbTotalAccount, $icmbTotalCoCAcc - 1)
 
 	If $ichkCloseTraining >= 1 Then
 		GUICtrlSetState($chkUseTrainingClose, $GUI_CHECKED)
@@ -65,6 +54,10 @@
 		GUICtrlSetState($chkUseTrainingClose, $GUI_UNCHECKED)
 	EndIf
 
+	For $i = 0 to 7
+		_GUICtrlCombobox_SetCurSel($cmbAccountNo[$i], $aMatchProfileAcc[$i]-1)
+		_GUICtrlCombobox_SetCurSel($cmbProfileType[$i], $aProfileType[$i]-1)
+	Next
 
 	; Adding QuicktrainCombo - DEMEN
 	If $iRadio_Army12 = 1 Then

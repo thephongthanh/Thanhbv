@@ -20,7 +20,7 @@ Func donateCCWBLUserImageCollect($x,$y)
 
 	;capture donate request image
 	_CaptureRegion(0 , $y -  90, $x -30,$y)
-	If $debugImageSave= 1 Then DebugImageSave("donateCCWBLUserImageCollect_",  False, "png",  True)
+	If $debugImageSave = 1 Then DebugImageSave("donateCCWBLUserImageCollect_",  False, "png",  True)
 
    ;if OnlyWhiteList enable check and donate TO COMPLETE
    If $debugsetlog=1 then Setlog("Search into whitelist...",$color_purple)
@@ -52,7 +52,7 @@ Func donateCCWBLUserImageCollect($x,$y)
 
 
    ;if OnlyBlackList enable check and donate
-   If $debugsetlog=1 then Setlog("Search into blacklist...",$color_purple)
+   If $debugsetlog =1 then Setlog("Search into blacklist...",$color_purple)
 	  Local $xyz1
 	  $xyz1 = _FileListToArrayRec($donateimagefoldercaptureBlackList, "*.png", $FLTAR_FILES, $FLTAR_NORECUR, $FLTAR_SORT, $FLTAR_NOPATH)
 	  if ubound($xyz1)>1 then
@@ -81,7 +81,7 @@ Func donateCCWBLUserImageCollect($x,$y)
 
 
    if $imagematch = False and $icmbFilterDonationsCC >0 Then
-	  If $debugsetlog=1 then Setlog("Search into images to assign...",$color_purple)
+	  If $debugsetlog =1 then Setlog("Search into images to assign...",$color_purple)
 	  ;try to search into images to Assign
 	  Local $xyzw
 	  $xyzw = _FileListToArrayRec($donateimagefoldercapture, "*.png", $FLTAR_FILES, $FLTAR_NORECUR, $FLTAR_SORT, $FLTAR_NOPATH)

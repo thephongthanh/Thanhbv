@@ -1946,7 +1946,7 @@ Func TrainArmyNumber($Num)
 		; _ColorCheck($nColor1, $nColor2, $sVari = 5, $Ignore = "")
 		If _ColorCheck(_GetPixelColor($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], True), Hex($a_TrainArmy[$Num][2], 6), $a_TrainArmy[$Num][3]) Then
 			Click($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], 1)
-			SetLog("Making the Army " & $Num + 1)
+			SetLog(" - Making the Army " & $Num + 1)
 			If _Sleep(1000) Then Return
 		Else
 			Setlog(" - Error Clicking On Army: " & $Num + 1 & "| Pixel was :" & _GetPixelColor($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], True), $COLOR_ORANGE)
