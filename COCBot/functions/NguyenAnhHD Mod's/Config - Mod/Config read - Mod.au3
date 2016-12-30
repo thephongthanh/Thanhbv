@@ -42,8 +42,10 @@
 		IniReadS($ichkAutoHideDelay, $config, "general", "AutoHideDelay", "10")
 
 		; CSV Deployment Speed Mod
-		$icmbCSVSpeed[$LB] = IniRead($config, "DeploymentSpeed", "LB", "2")
-		$icmbCSVSpeed[$DB] = IniRead($config, "DeploymentSpeed", "DB", "2")
+		IniReadS($isldSelectedCSVSpeed[$DB], $config, "attack", "CSVSpeedDB", 4)
+		IniReadS($isldSelectedCSVSpeed[$LB], $config, "attack", "CSVSpeedAB", 4)
+
+		$ichkDontRemoveTroops = IniRead($config, "MOD", "DontRemoveTroops", "0")
 #cs
 		;Treasury Collect
 		$ichkCollectTresory = IniRead($config, "other", "CollectTresory", "0")

@@ -91,12 +91,21 @@
 	chkAutoHide()
 
 	; CSV Deployment Speed Mod
-	_GUICtrlComboBox_SetCurSel($cmbCSVSpeed[$LB], $icmbCSVSpeed[$LB])
-	_GUICtrlComboBox_SetCurSel($cmbCSVSpeed[$DB], $icmbCSVSpeed[$DB])
+	GUICtrlSetData($sldSelectedSpeedDB, $isldSelectedCSVSpeed[$DB])
+	GUICtrlSetData($sldSelectedSpeedAB, $isldSelectedCSVSpeed[$LB])
+	sldSelectedSpeedDB()
+	sldSelectedSpeedAB()
 
 	; Change Android Shield Color
 	_GUICtrlSlider_SetPos($sldrTransparancyShield, $AndroidShieldTransparency)
 	_GUICtrlSlider_SetPos($sldrTransparancyIdleShield, $AndroidInactiveTransparency)
+
+	If $ichkDontRemoveTroops = 1 Then
+		GUICtrlSetState($chkDontRemoveTroops, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkDontRemoveTroops, $GUI_UNCHECKED)
+	EndIf
+	chkDontRemoveTroops()
 #cs
 	;Treasury Collect
 	If $ichkCollectTresory = 1 Then

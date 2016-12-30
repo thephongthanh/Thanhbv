@@ -99,6 +99,10 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 			If $ichkSkeletonSpell[$iMatchMode] = 0 Then $usespell = False
 	EndSwitch
 
+	; CVSDeploy Speed Mod
+	If $delayPointmin = 0 Then $delayPointmin = 100
+	If $delayPointmax = 0 Then $delayPointmax = 300
+
 	If $troopPosition = -1 Or $usespell = False Then
 		If $usespell = True Then
 			Setlog("No troop found in your attack troops list")
@@ -131,10 +135,8 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 				;delay time between 2 drops in different point
 				If $delayDropMin <> $delayDropMax Then
 					$delayDrop = Random($delayDropMin, $delayDropMax, 1)
-					$delayDrop = Int($delayDrop / $Divider)
 				Else
 					$delayDrop = $delayDropMin
-					$delayDrop = Int($delayDrop / $Divider)
 				EndIf
 				debugAttackCSV(">> delay change drop point: " & $delayDrop)
 			EndIf
@@ -151,11 +153,13 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 					;delay time between 2 drops in same point
 					If $delayPointmin <> $delayPointmax Then
 						Local $delayPoint = Random($delayPointmin, $delayPointmax, 1)
-						$delayPoint = Int($delayPoint / $Divider)
 					Else
 						Local $delayPoint = $delayPointmin
-						$delayPoint = Int($delayPoint / $Divider)
 					EndIf
+
+					; CSV Deployment Speed Mod
+					$delayPoint = $delayPoint / $iCSVSpeeds[$isldSelectedCSVSpeed[$iMatchMode]]
+					$delayDropLast = $delayDropLast / $iCSVSpeeds[$isldSelectedCSVSpeed[$iMatchMode]]
 
 					Switch Eval("e" & $troopName)
 						Case $eBarb To $eBowl ; drop normal troops
@@ -210,11 +214,12 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 		Local $sleepafter = 0
 		If $sleepafterMin <> $sleepAfterMax Then
 			$sleepafter = Random($sleepafterMin, $sleepAfterMax, 1)
-			$sleepafter = Int($sleepafter / $Divider)
 		Else
 			$sleepafter = Int($sleepafterMin)
-			$sleepafter = Int($sleepafter / $Divider)
 		EndIf
+
+		$sleepafter = $sleepafter / $isldSelectedCSVSpeed[$iMatchMode]
+
 		If $sleepafter > 0 And IsKeepClicksActive() = False Then
 			debugAttackCSV(">> delay after drop all troops: " & $sleepafter)
 			If $sleepafter <= 1000 Then  ; check SLEEPAFTER value is less than 1 second?

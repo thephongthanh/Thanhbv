@@ -88,8 +88,14 @@
 	IniWriteS($config, "general", "AutoHideDelay", $ichkAutoHideDelay)
 
 	; CSV Deployment Speed Mod
-	IniWrite($config, "DeploymentSpeed", "LB", _GUICtrlComboBox_GetCurSel($cmbCSVSpeed[$LB]))
-	IniWrite($config, "DeploymentSpeed", "DB", _GUICtrlComboBox_GetCurSel($cmbCSVSpeed[$DB]))
+	IniWriteS($config, "attack", "CSVSpeedDB", $isldSelectedCSVSpeed[$DB])
+	IniWriteS($config, "attack", "CSVSpeedAB", $isldSelectedCSVSpeed[$LB])
+
+	If GUICtrlRead($chkDontRemoveTroops) = $GUI_CHECKED Then
+		IniWrite($config, "MOD", "DontRemoveTroops", 1)
+	Else
+		IniWrite($config, "MOD", "DontRemoveTroops", 0)
+	EndIf
 #cs
 	; Treasury Collect
 	If GUICtrlRead($chkCollectTresory) = $GUI_CHECKED Then

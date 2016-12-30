@@ -364,7 +364,7 @@ $Y -= 23
 	$icnDarkCamp = GUICtrlCreateIcon($pIconLib, $eIcnDark, $x + 146, $y + 14, 16, 16)
 
 $x -= 175
-$Y += 35
+$y += 35
 $chkTotalCampForced = GUICtrlCreateCheckbox(GetTranslated(636, 46, "Force Total Army Camp") & ":", $x, $y, -1, -1)
 GUICtrlSetState(-1, $GUI_CHECKED)
 GUICtrlSetOnEvent(-1, "chkTotalCampForced")
@@ -377,7 +377,12 @@ $caltotaltroops = GUICtrlCreateProgress($x, $y + 22, 407, 10)
 $lbltotalprogress = GUICtrlCreateLabel("", $x, $y + 22, 407, 10)
 GUICtrlSetBkColor(-1, $COLOR_RED)
 GUICtrlSetState(-1, BitOR($GUI_DISABLE, $GUI_HIDE))
-$x += 38
+$x += 50
+$chkDontRemoveTroops = GUICtrlCreateCheckbox(GetTranslated(636, 204, "Don't Remove Troops"), $x + 127, $y, -1, -1)
+$txtTip = GetTranslated(636, 205, "Enable it to Don't Remove Troops.") & @CRLF & GetTranslated(636, 206, "This function only works if you do not donate.") & @CRLF & GetTranslated(636, 207, "If you donate, it's useless!")
+GUICtrlSetTip(-1, $txtTip)
+GUICtrlSetOnEvent(-1, "chkDontRemoveTroops")
+$x -= 10
 $lblTotalTroops = GUICtrlCreateLabel(GetTranslated(621, 15, "Total"), $x + 300, $y + 7, -1, -1, $SS_RIGHT)
 $lblCountTotal = GUICtrlCreateLabel(0, $x + 332, $y + 5, 30, 15, $SS_CENTER)
 _GUICtrlSetTip(-1, GetTranslated(621, 16, "The total Units of Troops should equal Total Army Camps."))

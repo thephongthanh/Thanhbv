@@ -66,16 +66,21 @@ Local $x = 25, $y = 20
 			$txtTip =  GetTranslated(607,8, "Copy current Attack Script to a new name")
 			_GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetOnEvent(-1, "DuplicateScriptDB")
-		$y += 110
-		$btnAttNowDB = GUICtrlCreateButton("Attack Now !", $x + 85, $y - 20, 80, -1)
+		$y += 90
+		$btnAttNowDB = GUICtrlCreateButton(GetTranslated(607, 33, "Attack Now!"), $x + 159, $y, 70, 25)
 				;GUISetState(@SW_SHOW)
 				GUICtrlSetOnEvent(-1, "AttackNowDB")
-
-Local $x = 50, $y = 233
-
-		GUICtrlCreateLabel("CSV Deployment Speed", $x - 2, $y, -1, -1)
-		$cmbCSVSpeed[$DB] = GUICtrlCreateCombo("", $x + 122, $y - 5, 50, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			GUICtrlSetData(-1, "0.5x|0.75x|1x|1.25x|1.5x|2x|3x", "1x")
+		; CSV Deployment Speed Mod
+		;$grpScriptSpeedDB = GUICtrlCreateGroup(GetTranslated(607,30, "CSV Deployment Speed"), $x, $y, 230, 50)
+			$lbltxtSelectedSpeedDB = GUICtrlCreateLabel(GetTranslated(607,31, "Normal speed"), $x + 20, $y + 30, 75, 25)
+				_GUICtrlSetTip(-1, GetTranslated(607,32, "Increase or decrease the speed at which the CSV attack script deploys troops and waves."))
+			$sldSelectedSpeedDB = GUICtrlCreateSlider($x + 100, $y + 28, 125, 25, BitOR($TBS_TOOLTIPS, $TBS_AUTOTICKS))
+				_GUICtrlSetTip(-1, GetTranslated(607,32, "Increase or decrease the speed at which the CSV attack script deploys troops and waves."))
+				_GUICtrlSlider_SetTipSide(-1, $TBTS_BOTTOM)
+				_GUICtrlSlider_SetTicFreq(-1, 1)
+				GUICtrlSetLimit(-1, 18, 0) ; change max/min value
+				GUICtrlSetData(-1, 5) ; default value
+				GUICtrlSetOnEvent(-1, "sldSelectedSpeedDB")
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 ;GUISetState()

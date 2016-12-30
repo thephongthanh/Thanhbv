@@ -133,7 +133,7 @@ EndFunc
 Func MatchProfileAcc($Num)
 
 	If _GUICtrlComboBox_GetCurSel($cmbAccountNo[$Num]) > _GUICtrlComboBox_GetCurSel($cmbTotalAccount) Then
-		MsgBox($MB_OK, GetTranslated(655,91, "SwitchAcc Mode"), GetTranslated(655,92, "Account [") & _GUICtrlComboBox_GetCurSel($cmbAccountNo[$Num]) & GetTranslated(655,93, "] exceeds Total Account declared") ,30, $hGUI_BOT)
+		MsgBox($MB_OK, GetTranslated(655,88, "SwitchAcc Mode"), GetTranslated(655,91, "Account [") & _GUICtrlComboBox_GetCurSel($cmbAccountNo[$Num]) & GetTranslated(655,92, "] exceeds Total Account declared") ,30, $hGUI_BOT)
 		_GUICtrlComboBox_SetCurSel($cmbAccountNo[$Num], -1)
 		_GUICtrlComboBox_SetCurSel($cmbProfileType[$Num], -1)
 		saveConfig()
@@ -141,13 +141,13 @@ Func MatchProfileAcc($Num)
 
 	If _GUICtrlComboBox_GetCurSel($cmbAccountNo[$Num]) >= 0 Then
 		If _ArraySearch($aMatchProfileAcc,_GUICtrlComboBox_GetCurSel($cmbAccountNo[$Num])+1) <> -1 Then
-			MsgBox($MB_OK, GetTranslated(655,91, "SwitchAcc Mode"), GetTranslated(655,92, "Account [") & _GUICtrlComboBox_GetCurSel($cmbAccountNo[$Num])+1 & GetTranslated(655,94, "] has been assigned to Profile [")_
+			MsgBox($MB_OK, GetTranslated(655,88, "SwitchAcc Mode"), GetTranslated(655,91, "Account [") & _GUICtrlComboBox_GetCurSel($cmbAccountNo[$Num])+1 & GetTranslated(655,93, "] has been assigned to Profile [")_
 				& _ArraySearch($aMatchProfileAcc,_GUICtrlComboBox_GetCurSel($cmbAccountNo[$Num])+1) + 1 & "]" ,30, $hGUI_BOT)
 			_GUICtrlComboBox_SetCurSel($cmbAccountNo[$Num], -1)
 			_GUICtrlComboBox_SetCurSel($cmbProfileType[$Num], -1)
 			saveConfig()
 		ElseIf UBound(_ArrayFindAll($aMatchProfileAcc,_GUICtrlComboBox_GetCurSel($cmbAccountNo[$Num])+1)) > 1 Then
-			MsgBox($MB_OK, GetTranslated(655,91, "SwitchAcc Mode"), GetTranslated(655,92, "Account [") & _GUICtrlComboBox_GetCurSel($cmbAccountNo[$Num]) & GetTranslated(655,95, "] has been assigned to another profile") ,30, $hGUI_BOT)
+			MsgBox($MB_OK, GetTranslated(655,88, "SwitchAcc Mode"), GetTranslated(655,91, "Account [") & _GUICtrlComboBox_GetCurSel($cmbAccountNo[$Num]) & GetTranslated(655,94, "] has been assigned to another profile") ,30, $hGUI_BOT)
 			_GUICtrlComboBox_SetCurSel($cmbAccountNo[$Num], -1)
 			_GUICtrlComboBox_SetCurSel($cmbProfileType[$Num], -1)
 			saveConfig()
@@ -165,36 +165,36 @@ Func btnLocateAcc()
 	Local $stext, $MsgBox
 	Local $wasRunState = $RunState
 	$RunState = True
-	SetLog(GetTranslated(655,96, "Locating Y-Coordinate of CoC Account No. ") & $AccNo & GetTranslated(655,97, ", please wait..."), $COLOR_BLUE)
+	SetLog(GetTranslated(655,95, "Locating Y-Coordinate of CoC Account No. ") & $AccNo & GetTranslated(655,96, ", please wait..."), $COLOR_BLUE)
 	WinGetAndroidHandle()
 
 	Zoomout()
 
-	Click(820, 585, 1, 0, GetTranslated(655,98, "Click Setting"))      ;Click setting
+	Click(820, 585, 1, 0, "Click Setting")      ;Click setting
 	Sleep(500)
 
 	While 1
 		_ExtMsgBoxSet(1 + 64, $SS_CENTER, 0x004080, 0xFFFF00, 12, "Comic Sans MS", 600)
-		$stext = GetTranslated(655,99, "Click Connect/Disconnect on emulator to show the accout list") & @CRLF & @CRLF & _
-				GetTranslated(655,100, "Click OK then click on your Account No. ") & $AccNo & @CRLF & @CRLF & _
-				GetTranslated(655,101, "Do not move mouse quickly after clicking location") & @CRLF & @CRLF
-		$MsgBox = _ExtMsgBox(0, GetTranslated(655,102, "Ok|Cancel"), GetTranslated(655,103, "Locate CoC Account No. ") & $AccNo, $stext, 60, $frmBot)
+		$stext = GetTranslated(655,97, "Click Connect/Disconnect on emulator to show the accout list") & @CRLF & @CRLF & _
+				GetTranslated(655,98, "Click OK then click on your Account No. ") & $AccNo & @CRLF & @CRLF & _
+				GetTranslated(655,99, "Do not move mouse quickly after clicking location") & @CRLF & @CRLF
+		$MsgBox = _ExtMsgBox(0, GetTranslated(655,100, "Ok|Cancel"), GetTranslated(655,101, "Locate CoC Account No. ") & $AccNo, $stext, 60, $frmBot)
 		If $MsgBox = 1 Then
 			WinGetAndroidHandle()
 			Local $aPos = FindPos()
 			$aLocateAccConfig[$AccNo-1] = Int($aPos[1])
 			ClickP($aAway, 1, 0, "#0379")
 		Else
-			SetLog(GetTranslated(655,104, "Locate CoC Account Cancelled"), $COLOR_BLUE)
+			SetLog(GetTranslated(655,102, "Locate CoC Account Cancelled"), $COLOR_BLUE)
 			ClickP($aAway, 1, 0, "#0382")
 			Return
 		EndIf
-		SetLog(GetTranslated(655,105, "Locate CoC Account Success: ") & GetTranslated(655,106, "(383, ") & $aLocateAccConfig[$AccNo-1] & ")", $COLOR_GREEN)
+		SetLog(GetTranslated(655,103, "Locate CoC Account Success: ") & "(383, " & $aLocateAccConfig[$AccNo-1] & ")", $COLOR_GREEN)
 
 		ExitLoop
 	WEnd
 	Clickp($aAway, 2, 0, "#0207")
-	IniWriteS($profile, GetTranslated(655,107, "Switch Account"), GetTranslated(655,108, "AccLocation.") & $AccNo, $aLocateAccConfig[$AccNo-1])
+	IniWriteS($profile, "Switch Account", "AccLocation." & $AccNo, $aLocateAccConfig[$AccNo-1])
 	$RunState = $wasRunState
 	AndroidShield("LocateAcc") ; Update shield status due to manual $RunState
 
@@ -205,7 +205,7 @@ Func btnClearAccLocation()
 		$aLocateAccConfig[$i-1] = -1
 		$aAccPosY[$i-1] = -1
 	Next
-	Setlog(GetTranslated(655,109, "Position of all accounts cleared"))
+	Setlog(GetTranslated(655,104, "Position of all accounts cleared"))
 	saveConfig()
 EndFunc
 ; ============= SwitchAcc Mode ============= - DEMEN
@@ -250,50 +250,74 @@ Func chkAutoHide()
 EndFunc   ;==>chkAutoHide
 
 ; CSV Deployment Speed Mod
-Func cmbCSVSpeed()
+Func sldSelectedSpeedDB()
+	$isldSelectedCSVSpeed[$DB] = GUICtrlRead($sldSelectedSpeedDB)
+	Local $speedText = $iCSVSpeeds[$isldSelectedCSVSpeed[$DB]] & "x";
+	IF $isldSelectedCSVSpeed[$DB] = 4 Then $speedText = "Normal"
+	GUICtrlSetData($lbltxtSelectedSpeedDB, $speedText & " speed")
+EndFunc   ;==>sldSelectedSpeedDB
 
-	Switch _GUICtrlComboBox_GetCurSel($cmbCSVSpeed[$iMatchMode])
-		Case 0
-			$Divider = 0.5
-		Case 1
-			$Divider = 0.75
-		Case 2
-			$Divider = 1
-		Case 3
-			$Divider = 1.25
-		Case 4
-			$Divider = 1.5
-		Case 5
-			$Divider = 2
-		Case 6
-			$Divider = 3
-	EndSwitch
-
-EndFunc   ;==>cmbCSVSpeed
+Func sldSelectedSpeedAB()
+	$isldSelectedCSVSpeed[$LB] = GUICtrlRead($sldSelectedSpeedAB)
+	Local $speedText = $iCSVSpeeds[$isldSelectedCSVSpeed[$LB]] & "x";
+	IF $isldSelectedCSVSpeed[$LB] = 4 Then $speedText = "Normal"
+	GUICtrlSetData($lbltxtSelectedSpeedAB, $speedText & " speed")
+EndFunc   ;
 
 Func AttackNowLB()
 	Setlog("Begin Live Base Attack TEST")
-	$iMatchMode = $LB ; Select Live Base As Attack Type
-	$iAtkAlgorithm[$LB] = 1 ; Select Scripted Attack
-	$scmbABScriptName = GUICtrlRead($cmbScriptNameAB) ; Select Scripted Attack File From The Combo Box, Cos it wasn't refreshing until pressing Start button
-	$iMatchMode = 1 ; Select Live Base As Attack Type
+	$iMatchMode = $LB			; Select Live Base As Attack Type
+	$iAtkAlgorithm[$LB] = 1			; Select Scripted Attack
+	$scmbABScriptName = GuiCtrlRead($cmbScriptNameAB)		; Select Scripted Attack File From The Combo Box, Cos it wasn't refreshing until pressing Start button
+	$iMatchMode = 1			; Select Live Base As Attack Type
 	$RunState = True
-	PrepareAttack($iMatchMode) ; lol I think it's not needed for Scripted attack, But i just Used this to be sure of my code
-	Attack() ; Fire xD
+
+	ForceCaptureRegion()
+	_CaptureRegion2()
+
+	If CheckZoomOut("VillageSearch", True, False) = False Then
+		$i = 0
+		Local $bMeasured
+		Do
+			$i += 1
+			If _Sleep($iDelayPrepareSearch3) Then Return ; wait 500 ms
+			ForceCaptureRegion()
+			$bMeasured = CheckZoomOut("VillageSearch", $i < 2, True)
+		Until $bMeasured = True Or $i >= 2
+		If $bMeasured = False Then Return ; exit func
+	EndIf
+
+	PrepareAttack($iMatchMode)			; lol I think it's not needed for Scripted attack, But i just Used this to be sure of my code
+	Attack()			; Fire xD
 	Setlog("End Live Base Attack TEST")
 EndFunc   ;==>AttackNowLB
 
 Func AttackNowDB()
 	Setlog("Begin Dead Base Attack TEST")
-	$iMatchMode = $DB ; Select Dead Base As Attack Type
-	$iAtkAlgorithm[$DB] = 1 ; Select Scripted Attack
-	$scmbABScriptName = GUICtrlRead($cmbScriptNameDB) ; Select Scripted Attack File From The Combo Box, Cos it wasn't refreshing until pressing Start button
-	$iMatchMode = 0 ; Select Dead Base As Attack Type
+	$iMatchMode = $DB			; Select Dead Base As Attack Type
+	$iAtkAlgorithm[$DB] = 1			; Select Scripted Attack
+	$scmbABScriptName = GuiCtrlRead($cmbScriptNameDB)		; Select Scripted Attack File From The Combo Box, Cos it wasn't refreshing until pressing Start button
+	$iMatchMode = 0			; Select Dead Base As Attack Type
 	$RunState = True
-	PrepareAttack($iMatchMode) ; lol I think it's not needed for Scripted attack, But i just Used this to be sure of my code
-	Attack() ; Fire xD
+	ForceCaptureRegion()
+	_CaptureRegion2()
+
+	If CheckZoomOut("VillageSearch", True, False) = False Then
+		$i = 0
+		Local $bMeasured
+		Do
+			$i += 1
+			If _Sleep($iDelayPrepareSearch3) Then Return ; wait 500 ms
+			ForceCaptureRegion()
+			$bMeasured = CheckZoomOut("VillageSearch", $i < 2, True)
+		Until $bMeasured = True Or $i >= 2
+		If $bMeasured = False Then Return ; exit func
+	EndIf
+
+	PrepareAttack($iMatchMode)			; lol I think it's not needed for Scripted attack, But i just Used this to be sure of my code
+	Attack()			; Fire xD
 	Setlog("End Dead Base Attack TEST")
-EndFunc   ;==>AttackNowDB
+EndFunc   ;==>AttackNowLB
 
 ; Change Android Shield Color
 Func btnColorShield()
@@ -331,6 +355,15 @@ Func sldrTransparancyIdleShield()
 	$AndroidInactiveTransparency = Int($ReadTransparancyIdle)
 
 EndFunc
+
+Func chkDontRemoveTroops()
+	If GUICtrlRead($chkDontRemoveTroops) = $GUI_CHECKED Then
+		$ichkDontRemoveTroops = 1
+	Else
+		$ichkDontRemoveTroops = 0
+	EndIf
+EndFunc
+
 #cs
 ; Treasury Collect
 Func chkCollectTresory()

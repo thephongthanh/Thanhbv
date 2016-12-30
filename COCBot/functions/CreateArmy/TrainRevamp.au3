@@ -48,38 +48,40 @@ Func TrainRevamp()
 	CountNumberDarkSpells() ; needed value for spell donate
 
 	If $Runstate = False Then Return
-
-	If ($IsFullArmywithHeroesAndSpells = True) Or ($CurCamp = 0 And $FirstStart) Then
-
-		If $IsFullArmywithHeroesAndSpells Then Setlog(" - Your Army is Full, let's make troops before Attack!", $COLOR_BLUE)
-		If ($CurCamp = 0 And $FirstStart) Then
-			Setlog(" - Your Army is Empty, let's make troops before Attack!", $COLOR_ACTION1)
-			Setlog(" - Go to TrainRevamp Tab and select your Quick Army position!", $COLOR_ACTION1)
-		EndIf
-
-		DeleteQueued("Troops")
-		If _Sleep(250) Then Return
-		DeleteQueued("Spells")
-		If _Sleep(500) Then Return
-
-		CheckCamp()
-
-		ResetVariables("donated")
-
-		If $FirstStart Then $FirstStart = False
-
-		If _Sleep(700) Then Return
+	If $ichkDontRemoveTroops = 1 Then
+		SimpleQuickTrain()
 	Else
+		If $ichkDontRemoveTroops = 0 And ($IsFullArmywithHeroesAndSpells = True) Or ($CurCamp = 0 And $FirstStart) Then
 
-		If $bDonationEnabled = True Then MakingDonatedTroops()
+			If $IsFullArmywithHeroesAndSpells Then Setlog(" - Your Army is Full, let's make troops before Attack!", $COLOR_BLUE)
+			If ($CurCamp = 0 And $FirstStart) Then
+				Setlog(" - Your Army is Empty, let's make troops before Attack!", $COLOR_ACTION1)
+				Setlog(" - Go to TrainRevamp Tab and select your Quick Army position!", $COLOR_ACTION1)
+			EndIf
 
-		CheckIsFullQueuedAndNotFullArmy()
-		If $Runstate = False Then Return
-		CheckIsEmptyQueuedAndNotFullArmy()
-		If $Runstate = False Then Return
-		If $FirstStart Then $FirstStart = False
+			DeleteQueued("Troops")
+			If _Sleep(250) Then Return
+			DeleteQueued("Spells")
+			If _Sleep(500) Then Return
+
+			CheckCamp()
+
+			ResetVariables("donated")
+
+			If $FirstStart Then $FirstStart = False
+
+			If _Sleep(700) Then Return
+		Else
+
+			If $bDonationEnabled = True Then MakingDonatedTroops()
+
+			CheckIsFullQueuedAndNotFullArmy()
+			If $Runstate = False Then Return
+			CheckIsEmptyQueuedAndNotFullArmy()
+			If $Runstate = False Then Return
+			If $FirstStart Then $FirstStart = False
+		EndIf
 	EndIf
-
 	ClickP($aAway, 2, 0, "#0346") ;Click Away
 	If _Sleep(1000) Then Return ; Delay AFTER the click Away Prevents lots of coc restarts
 	SetLog(" - Army Window Closed!", $COLOR_ACTION1)
