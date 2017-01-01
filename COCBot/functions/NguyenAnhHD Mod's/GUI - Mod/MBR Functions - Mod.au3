@@ -20,19 +20,5 @@
 ; Check Collector Outside
 #include "..\Mod's\AreCollectorsOutside.au3"
 
-; Multi Finger - Added by LunaEclipse
-#include "..\Mod's\Multi Fingers\Vectors\fourFingerStandard.au3"
-#include "..\Mod's\Multi Fingers\Vectors\fourFingerSpiralLeft.au3"
-#include "..\Mod's\Multi Fingers\Vectors\fourFingerSpiralRight.au3"
-#include "..\Mod's\Multi Fingers\Vectors\eightFingerPinWheelLeft.au3"
-#include "..\Mod's\Multi Fingers\Vectors\eightFingerPinWheelRight.au3"
-#include "..\Mod's\Multi Fingers\Vectors\eightFingerBlossom.au3"
-#include "..\Mod's\Multi Fingers\Vectors\eightFingerImplosion.au3"
-#include "..\Mod's\Multi Fingers\fourFinger.au3"
-#include "..\Mod's\Multi Fingers\eightFinger.au3"
-#include "..\Mod's\Multi Fingers\multiFinger.au3"
-#include "..\Mod's\Multi Fingers\unitInfo.au3"
-
 #include "..\Mod's\AutoHide.au3"
 #include "..\Mod's\SimpleQuickTrain.au3"
-;#include "..\Mod's\SmartUpgrade.au3"

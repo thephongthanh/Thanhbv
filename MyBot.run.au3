@@ -35,8 +35,8 @@ ProcessSetPriority(@AutoItPID, $PROCESS_ABOVENORMAL)
 Global $iBotLaunchTime = 0
 Local $hBotLaunchTime = TimerInit()
 
-Global $sBotVersion = "v6.5" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it is also use on Checkversion()
-Global $sModversion = "v1.2.2" ;<== Just Change This to Version Number
+Global $sBotVersion = "v6.5.2" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it is also use on Checkversion()
+Global $sModversion = "v1.3" ;<== Just Change This to Version Number
 Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/26474-new-mybot-v622v641-mod-nguyenanhhd-v532v10-update-1812/" ;<== Our Website Link Or Link Download
 Global $sModDownloadUrl = "https://github.com/NguyenAnhHD/MyBot-v6.5-Mod/releases"
 
@@ -344,7 +344,6 @@ Func runBot() ;Bot that runs everything in order
 					If Unbreakable() = True Then ContinueLoop
 				EndIf
 			EndIf
-;~			SmartUpgrade()
 			Local $aRndFuncList = ['Laboratory', 'UpgradeHeroes', 'UpgradeBuilding']
 			While 1
 				If $RunState = False Then Return

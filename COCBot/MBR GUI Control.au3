@@ -59,7 +59,7 @@ Global $aTabControlsStrategies = [$hGUI_STRATEGIES_TAB, $hGUI_STRATEGIES_TAB_ITE
 Global $aTabControlsBot = [$hGUI_BOT_TAB, $hGUI_BOT_TAB_ITEM1, $hGUI_BOT_TAB_ITEM2, $hGUI_BOT_TAB_ITEM3, $hGUI_BOT_TAB_ITEM4, $hGUI_BOT_TAB_ITEM5]
 Global $aTabControlsStats = [$hGUI_STATS_TAB, $hGUI_STATS_TAB_ITEM1, $hGUI_STATS_TAB_ITEM2, $hGUI_STATS_TAB_ITEM3, $hGUI_STATS_TAB_ITEM4, $hGUI_STATS_TAB_ITEM5]
 
-Global $aAlwaysEnabledControls = [$chkUpdatingWhenMinimized, $chkHideWhenMinimized, $chkDebugClick, $chkDebugSetlog, $chkDebugDisableZoomout, $chkDebugDisableVillageCentering, $chkDebugDeadbaseImage, $chkDebugOcr, $chkDebugImageSave, $chkdebugBuildingPos, $chkdebugTrain, $chkdebugOCRDonate,$btnTestTrain, $btnTestDonateCC, $btnTestRequestCC, $btnTestAttackBar, $btnTestClickDrag, $btnTestImage, $btnTestVillageSize, $btnTestDeadBase, $btnTestDeadBaseFolder, $btnTestTHimgloc, $btnTestimglocTroopBar,$btnTestQuickTrainsimgloc, $chkdebugAttackCSV, $chkmakeIMGCSV, $btnTestAttackCSV, $btnTestFindButton, $txtTestFindButton, $btnTestCleanYard] ; , $lblLightningUsed, $lblSmartZap
+Global $aAlwaysEnabledControls = [$chkUpdatingWhenMinimized, $chkHideWhenMinimized, $chkDebugClick, $chkDebugSetlog, $chkDebugDisableZoomout, $chkDebugDisableVillageCentering, $chkDebugDeadbaseImage, $chkDebugOcr, $chkDebugImageSave, $chkdebugBuildingPos, $chkdebugTrain, $chkdebugOCRDonate,$btnTestTrain, $btnTestDonateCC, $btnTestRequestCC, $btnTestAttackBar, $btnTestClickDrag, $btnTestImage, $btnTestVillageSize, $btnTestDeadBase, $btnTestDeadBaseFolder, $btnTestTHimgloc, $btnTestimglocTroopBar,$btnTestQuickTrainsimgloc, $chkdebugAttackCSV, $chkmakeIMGCSV, $btnTestAttackCSV, $btnTestFindButton, $txtTestFindButton, $btnTestCleanYard, $lblLightningUsed, $lblSmartZap, $lblEarthQuakeUsed, $btnTestConfigSave, $btnTestConfigRead, $btnTestConfigApply]
 
 Global $frmBot_WNDPROC = 0
 Global $frmBot_WNDPROC_ptr = 0
@@ -427,6 +427,11 @@ Func GUIControl_WM_COMMAND($hWind, $iMsg, $wParam, $lParam)
 			btnAttackNowLB()
 		Case $btnAttackNowTS
 			btnAttackNowTS()
+		Case $CheckVersionConfig
+			CheckVersionHTML()
+			CheckModVersion()
+		Case $ModSupportConfig
+			ShellExecute($sModSupportUrl)
 		;Case $idMENU_DONATE_SUPPORT
 		;	ShellExecute("https://mybot.run/forums/index.php?/donate/make-donation/")
 		Case $btnNotifyDeleteMessages
@@ -507,6 +512,12 @@ Func GUIControl_WM_COMMAND($hWind, $iMsg, $wParam, $lParam)
 			btnTestFindButton()
 		Case $btnTestCleanYard
 			btnTestCleanYard()
+		Case $btnTestConfigSave
+			saveConfig()
+		Case $btnTestConfigRead
+			readConfig()
+		Case $btnTestConfigApply
+			applyConfig()
 	EndSwitch
 
 		If $lParam = $cmbLanguage Then
@@ -730,10 +741,10 @@ Func BotClose($SaveConfig = Default, $bExit = True)
    If $hMutex_Profile <> 0 Then _WinAPI_CloseHandle($hMutex_Profile)
    If $hMutex_MyBot <> 0 Then _WinAPI_CloseHandle($hMutex_MyBot)
    ; Clean up resources
-   _GDIPlus_ImageDispose($hBitmap)
+   _GDIPlus_BitmapDispose($hBitmap)
    _WinAPI_DeleteObject($hHBitmap)
-	_WinAPI_DeleteObject($hHBitmap2)
-	_WinAPI_DeleteObject($hHBitmapTest)
+   _WinAPI_DeleteObject($hHBitmap2)
+   _WinAPI_DeleteObject($hHBitmapTest)
    _GDIPlus_Shutdown()
    MBRFunc(False) ; close MBRFunctions dll
    _GUICtrlRichEdit_Destroy($txtLog)
@@ -776,6 +787,7 @@ Func BotRestore($sCaller)
 	$FrmBotMinimized = False
 	Local $botPosX = ($AndroidEmbedded = False ? $frmBotPosX : $frmBotDockedPosX)
 	Local $botPosY = ($AndroidEmbedded = False ? $frmBotPosY : $frmBotDockedPosY)
+	Local $aPos = [$botPosX, $botPosY]
 	SetDebugLog("Restore bot window to " & $botPosX & ", " & $botPosY & ", caller: " & $sCaller, Default, True)
 	Local $iExStyle = _WinAPI_GetWindowLong($frmBot, $GWL_EXSTYLE)
 	If BitAND($iExStyle, $WS_EX_TOOLWINDOW) Then
@@ -787,6 +799,10 @@ Func BotRestore($sCaller)
 	WinMove2($frmBot, "", $botPosX, $botPosY, -1, -1, $HWND_TOP, $SWP_SHOWWINDOW)
 	_WinAPI_SetActiveWindow($frmBot)
 	_WinAPI_SetFocus($frmBot)
+	If _CheckWindowVisibility($frmBot, $aPos) Then
+		SetDebugLog("Bot Window '" & $Title & "' not visible, moving to position: " & $aPos[0] & ", " & $aPos[1])
+		WinMove2($frmBot, "", $aPos[0], $aPos[1])
+	EndIf
 	ReleaseMutex($hMutex)
 EndFunc   ;==BotRestore
 
@@ -1013,7 +1029,6 @@ Func tabMain()
 				GUISetState(@SW_HIDE, $hGUI_ATTACK)
 				GUISetState(@SW_SHOWNOACTIVATE, $hGUI_BOT)
 				tabBot()
-
 			Case ELSE
 				GUISetState(@SW_HIDE, $hGUI_LOG)
 				GUISetState(@SW_HIDE, $hGUI_VILLAGE)
@@ -1447,7 +1462,7 @@ Func Bind_ImageList($nCtrl)
 
 		Case $hGUI_UPGRADE_TAB
 			; the icons for upgrade tab
-			Local $aIconIndex[4] = [$eIcnLaboratory, $eIcnKingAbility, $eIcnMortar, $eIcnWall] ;, $eIcnUpgrade
+			Local $aIconIndex[4] = [$eIcnLaboratory, $eIcnKingAbility, $eIcnMortar, $eIcnWall]
 
 		Case $hGUI_NOTIFY_TAB
 			; the icons for NOTIFY tab

@@ -28,10 +28,10 @@ $y += 15
 	;95)
 		$lblDeployAB = GUICtrlCreateLabel(GetTranslated(608,3, "Attack on")&":", $x, $y + 5, -1, -1)
 		$cmbDeployAB = GUICtrlCreateCombo("", $x + 55, $y, 120, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			_GUICtrlSetTip(-1, GetTranslated(608,4, -1) & @CRLF & GetTranslated(608,5, -1) & @CRLF & GetTranslated(608,6, -1) & @CRLF & "Attack on Four Fingers Classic" & @CRLF & GetTranslated(608,29, "Attack on the single side closest to the Dark Elixir Storage") & @CRLF & GetTranslated(608,30, "Attack on the single side closest to the Townhall"), GetTranslated(608,7, -1))
+			_GUICtrlSetTip(-1, GetTranslated(608,4, -1) & @CRLF & GetTranslated(608,5, -1) & @CRLF & GetTranslated(608,6, -1) & @CRLF & GetTranslated(608,41, -1) & @CRLF & GetTranslated(608,29, "Attack on the single side closest to the Dark Elixir Storage") & @CRLF & GetTranslated(608,30, "Attack on the single side closest to the Townhall"), GetTranslated(608,7, -1))
 			GUICtrlSetData(-1, GetTranslated(608,8, -1) & "|" & GetTranslated(608,9, -1) & "|" & GetTranslated(608,10, -1) & "|" & GetTranslated(608,11, -1) & "|" & GetTranslated(608,40, -1) & "|" & GetTranslated(608,31, "DE Side Attack") & "|" & GetTranslated(608,32, "TH Side Attack"), GetTranslated(608,11, -1))
+			;GUICtrlSetOnEvent(-1, "chkDESideEB")
 			GUICtrlSetOnEvent(-1,"cmbDeployAB") ; Uncheck SmartAttack Red Area when enable FourFinger to avoid conflict
-
 		$y += 25
 		$lblUnitDelayAB = GUICtrlCreateLabel(GetTranslated(608,12, -1) & ":", $x, $y + 5, -1, -1)
 			$txtTip = GetTranslated(608,13, -1) & @CRLF & GetTranslated(608,14, -1)

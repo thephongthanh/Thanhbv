@@ -668,7 +668,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 
 		;======================================================================================================================
 		;End Battle Settings------------------------------------------------------------------------
-		IniReadS($sTimeStopAtk[$DB], $config, "endbattle", "txtDBTimeStopAtk", 20, "int")
+		IniReadS($sTimeStopAtk[$DB], $config, "endbattle", "txtDBTimeStopAtk", 15, "int")
 		IniReadS($iChkTimeStopAtk[$DB], $config, "endbattle", "chkDBTimeStopAtk", 1, "int")
 		IniReadS($sTimeStopAtk2[$DB], $config, "endbattle", "txtDBTimeStopAtk2", 7, "int")
 		IniReadS($iChkTimeStopAtk2[$DB], $config, "endbattle", "chkDBTimeStopAtk2", 0, "int")
@@ -862,7 +862,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		$iUseRandomClick = Int(IniRead($config, "other", "UseRandomClick", 0))
 
 		;Add idle phase during training read variables from ini file
-		$ichkAddIdleTime = Int(IniRead($config, "other", "chkAddIdleTime", 1))
+		$ichkAddIdleTime = Int(IniRead($config, "other", "chkAddIdleTime", 0))
 		IniReadS($iAddIdleTimeMin, $config, "other", "txtAddDelayIdlePhaseTimeMin", $iAddIdleTimeMin)
 		IniReadS($iAddIdleTimeMax, $config, "other", "txtAddDelayIdlePhaseTimeMax", $iAddIdleTimeMax)
 
@@ -1166,18 +1166,22 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		IniReadS($iCmbWaitForCastleSpell[$DB], $config, "search", "cmbDBWaitForCastleSpell", 0, "int")
 		IniReadS($iCmbWaitForCastleSpell[$LB], $config, "search", "cmbABWaitForCastleSpell", 0, "int")
 
-		;==============================================================
-		; SmartZap - Added by DocOC team
-		;==============================================================
+; ============================================================================
+; ================================= SmartZap =================================
+; ============================================================================
 		$ichkSmartZap = IniRead($config, "SmartZap", "UseSmartZap", "0")
 		$ichkSmartZapDB = IniRead($config, "SmartZap", "ZapDBOnly", "1")
 		$ichkSmartZapSaveHeroes = IniRead($config, "SmartZap", "THSnipeSaveHeroes", "1")
-		$itxtMinDE = IniRead($config, "SmartZap", "MinDE", "250")
+		$itxtMinDE = IniRead($config, "SmartZap", "MinDE", "350")
 		$ichkNoobZap = IniRead($config, "SmartZap", "UseNoobZap", "0")
-		$itxtExpectedDE = IniRead($config, "SmartZap", "ExpectedDE", "120")
-		;==============================================================
-		; SmartZap - Added by DocOC team
-		;==============================================================
+		$ichkEarthQuakeZap = IniRead($config, "SmartZap", "UseEarthQuakeZap", "0")
+		$itxtExpectedDE = IniRead($config, "SmartZap", "ExpectedDE", "320")
+		$DebugSmartZap = IniRead($config, "SmartZap", "DebugSmartZap", "0")
+; ============================================================================
+; ================================= SmartZap =================================
+; ============================================================================
+
+		$_CheckIceWizardSlot = True ; recheck if Ice Wizard exists in Train Window
 
 		; Adding Config Read - Added By NguyenAnhHD
 		#include "..\..\functions\NguyenAnhHD Mod's\Config - Mod\Config read - Mod.au3"

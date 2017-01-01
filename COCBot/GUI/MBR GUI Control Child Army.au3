@@ -142,8 +142,8 @@ Func lblTotalCountSpell2()
 	; calculate $iTotalTrainSpaceSpell value
 	$tmpTotalTrainSpaceSpell = (Eval("LSpell" & "Comp") * 2) + (Eval("HSpell" & "Comp") * 2) + (Eval("RSpell" & "Comp") * 2) + (Eval("JSpell" & "Comp") * 2) + _
 			(Eval("FSpell" & "Comp") * 2) + (Eval("CSpell" & "Comp") * 4) + Eval("PSpell" & "Comp") + Eval("HaSpell" & "Comp") + Eval("ESpell" & "Comp") + Eval("SkSpell" & "Comp")
-	If $tmpTotalTrainSpaceSpell <> $iTotalTrainSpaceSpell Then
-		$iTotalTrainSpaceSpell = $tmpTotalTrainSpaceSpell
+	$iTotalTrainSpaceSpell = $tmpTotalTrainSpaceSpell
+	;If $tmpTotalTrainSpaceSpell <> $iTotalTrainSpaceSpell Then
 		If $iTotalTrainSpaceSpell < GUICtrlRead($txtTotalCountSpell) + 1 Then
 			GUICtrlSetBkColor($txtNumLSpell, $COLOR_MONEYGREEN)
 			GUICtrlSetBkColor($txtNumHSpell, $COLOR_MONEYGREEN)
@@ -167,7 +167,7 @@ Func lblTotalCountSpell2()
 			GUICtrlSetBkColor($txtNumHaSpell, $COLOR_RED)
 			GUICtrlSetBkColor($txtNumSkSpell, $COLOR_RED)
 		EndIf
-	EndIf
+	;EndIf
 
 	Local $TotalTotalTimeSpell = 0
 	$TotalTotalTimeSpell = (Eval("LSpell" & "Comp") * 360) + _
@@ -831,21 +831,32 @@ Func IsUseCustomDarkTroopOrder()
 	Return True
 EndFunc   ;==>IsUseCustomDarkTroopOrder
  #CE
-;==============================================================
-; SmartZap - Added by DocOC team
-;==============================================================
+
+; ============================================================================
+; ================================= SmartZap =================================
+; ============================================================================
 Func chkSmartLightSpell()
 	If GUICtrlRead($chkSmartLightSpell) = $GUI_CHECKED Then
 		GUICtrlSetState($chkSmartZapDB, $GUI_ENABLE)
 		GUICtrlSetState($chkSmartZapSaveHeroes, $GUI_ENABLE)
 		GUICtrlSetState($txtMinDark, $GUI_ENABLE)
 		GUICtrlSetState($chkNoobZap, $GUI_ENABLE)
+		GUICtrlSetState($lblLSpell, $GUI_SHOW)
+		If GUICtrlRead($chkNoobZap) = $GUI_UNCHECKED Then
+			GUICtrlSetState($chkEarthQuakeZap, $GUI_ENABLE)
+		Else
+			GUICtrlSetState($chkEarthQuakeZap, $GUI_UNCHECKED)
+			GUICtrlSetState($chkEarthQuakeZap, $GUI_DISABLE)
+			GUICtrlSetState($lblEQZap, $GUI_HIDE)
+		EndIf
 		$ichkSmartZap = 1
 	Else
 		GUICtrlSetState($chkSmartZapDB, $GUI_DISABLE)
 		GUICtrlSetState($chkSmartZapSaveHeroes, $GUI_DISABLE)
 		GUICtrlSetState($txtMinDark, $GUI_DISABLE)
 		GUICtrlSetState($chkNoobZap, $GUI_DISABLE)
+		GUICtrlSetState($chkEarthQuakeZap, $GUI_DISABLE)
+		GUICtrlSetState($lblLSpell, $GUI_HIDE)
 		$ichkSmartZap = 0
 	EndIf
 EndFunc   ;==>chkSmartLightSpell
@@ -853,12 +864,26 @@ EndFunc   ;==>chkSmartLightSpell
 Func chkNoobZap()
 	If GUICtrlRead($chkNoobZap) = $GUI_CHECKED Then
 		GUICtrlSetState($txtExpectedDE, $GUI_ENABLE)
+		GUICtrlSetState($chkEarthQuakeZap, $GUI_UNCHECKED)
+		GUICtrlSetState($chkEarthQuakeZap, $GUI_DISABLE)
+		GUICtrlSetState($lblEQZap, $GUI_HIDE)
 		$ichkNoobZap = 1
 	Else
 		GUICtrlSetState($txtExpectedDE, $GUI_DISABLE)
+		GUICtrlSetState($chkEarthQuakeZap, $GUI_ENABLE)
 		$ichkNoobZap = 0
 	EndIf
-EndFunc   ;==>chkDumbZap
+EndFunc   ;==>chkNoobZap
+
+Func chkEarthQuakeZap()
+	If GUICtrlRead($chkEarthQuakeZap) = $GUI_CHECKED Then
+		GUICtrlSetState($lblEQZap, $GUI_SHOW)
+		$ichkEarthQuakeZap = 1
+	Else
+		GUICtrlSetState($lblEQZap, $GUI_HIDE)
+		$ichkEarthQuakeZap = 0
+	EndIf
+EndFunc   ;==>chkEarthQuakeZap
 
 Func chkSmartZapDB()
     If GUICtrlRead($chkSmartZapDB) = $GUI_CHECKED Then
@@ -883,9 +908,9 @@ EndFunc   ;==>txtMinDark
 Func txtExpectedDE()
 	$itxtExpectedDE = GUICtrlRead($txtExpectedDE)
 EndFunc   ;==>TxtExpectedDE
-;==========================END=================================
-;			 SmartZap - Added by DocOC team
-;==============================================================
+; ============================================================================
+; ================================= SmartZap =================================
+; ============================================================================
 
 Func LevUpDown($SelTroopSpell, $NoChangeLev = True)
 	Local $MaxLev = UBound(Eval("Lev" & $SelTroopSpell & "Cost"), 1)

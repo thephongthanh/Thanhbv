@@ -37,6 +37,8 @@ MAKE  |Z          |RIGHT-BACK |15         |10         |INT-EXT    |2          |2
 DROP  |A-B-C-D    |5          |1          |Giant      |0          |0          |0          |           |
 DROP  |A-B-C-D    |5          |1          |Giant      |0          |0          |0          |           |
 DROP  |E-F-G-H    |5          |1          |Giant      |0          |0          |0          |           |
+DROP  |E-F-G-H    |5          |1          |Giant      |0          |0          |0          |           |
+DROP  |A-B-C-D    |5          |1          |Giant      |0          |0          |0          |           |
 DROP  |E-F-G-H    |5          |1          |Giant      |0          |0          |1000-1200  |           |
 
       |VECTOR_____|INDEX______|QTY_X_VECT_|TROOPNAME__|DELAY_DROP_|DELAYCHANGE|SLEEPAFTER_|___________|

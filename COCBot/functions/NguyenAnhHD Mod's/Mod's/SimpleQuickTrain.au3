@@ -20,7 +20,7 @@ Func SimpleQuickTrain()
 	If $Runstate = False Then Return
 
 	If IsTrainPage() And ISArmyWindow(False, $TrainTroopsTAB) = False Then OpenTrainTabNumber($TrainTroopsTAB)
-	If _Sleep(1500) Then Return
+	If _Sleep(250) Then Return
 	If ISArmyWindow(True, $TrainTroopsTAB) = False Then Return
 
 	Local $ArmyCamp = GetOCRCurrent(48, 160)
@@ -70,7 +70,7 @@ Func SimpleQuickTrain()
 
 
 	If IsTrainPage() And ISArmyWindow(False, $BrewSpellsTAB) = False Then OpenTrainTabNumber($BrewSpellsTAB)
-	If _Sleep(1500) Then Return
+	If _Sleep(250) Then Return
 	If ISArmyWindow(True, $BrewSpellsTAB) = False Then Return
 
 	Local $SpellCamp = GetOCRCurrent(48, 160)

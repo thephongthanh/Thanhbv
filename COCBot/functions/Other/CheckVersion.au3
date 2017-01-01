@@ -47,7 +47,7 @@ Func CheckVersion()
 			_PrintLogVersion($oldModversmessage)
 			CheckModVersion()
 		ElseIf VersionNumFromVersionTXT($sModversion) > VersionNumFromVersionTXT($lastModversion) Then
-			SetLog("YOU ARE USING A FUTURE MOD BY DOC.OC VERSION CHIEF!", $COLOR_GREEN)
+			SetLog("YOU ARE USING A FUTURE MOD BY NguyenAnhHD VERSION CHIEF!", $COLOR_GREEN)
 			SetLog("YOUR MOD VERSION: " & $sModversion, $COLOR_GREEN)
 			SetLog("OFFICIAL MOD VERSION: " & $lastModversion, $COLOR_GREEN)
 			SetLog(" ")
@@ -112,7 +112,7 @@ Func CheckVersionHTML()
 	$lastModversion = ""
 	If FileExists($versionfile) Then
 		;$lastversion = IniRead($versionfile, "general", "version", "")
-		$lastModversion = IniRead($versionfile,"mod","version","")
+		$lastModversion = IniRead($versionfile, "mod", "version", "")
 		;look for localized messages for the new and old versions
 		Local $versionfilelocalized = @ScriptDir & "\LastVersion_" & $sLanguage & ".txt";
 		If FileExists(@ScriptDir & "\TestVersion_" & $sLanguage & ".txt") Then
@@ -133,14 +133,14 @@ Func CheckVersionHTML()
 		If FileExists($versionfilelocalized) Then
 			;$lastmessage = IniRead($versionfilelocalized, "general", "messagenew", "")
 			;$oldversmessage = IniRead($versionfilelocalized, "general", "messageold", "")
-			$lastModmessage = IniRead($versionfilelocalized,"mod","messagenew","")
-			$oldModversmessage = IniRead($versionfilelocalized,"mod","messageold","")
+			$lastModmessage = IniRead($versionfilelocalized, "mod", "messagenew", "")
+			$oldModversmessage = IniRead($versionfilelocalized, "mod", "messageold", "")
 			FileDelete($versionfilelocalized)
 		Else
 			;$lastmessage = IniRead($versionfile, "general", "messagenew", "")
 			;$oldversmessage = IniRead($versionfile, "general", "messageold", "")
-			$lastModmessage = IniRead($versionfilelocalized,"mod","messagenew","")
-			$oldModversmessage = IniRead($versionfilelocalized,"mod","messageold","")
+			$lastModmessage = IniRead($versionfilelocalized, "mod", "messagenew", "")
+			$oldModversmessage = IniRead($versionfilelocalized, "mod", "messageold", "")
 		EndIf
 		FileDelete($versionfile)
 	EndIf
