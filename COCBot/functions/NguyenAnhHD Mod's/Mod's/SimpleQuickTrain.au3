@@ -14,6 +14,8 @@ Func SimpleQuickTrain()
 
 	Setlog("Simple Quick Train")
 
+	IsWaitingForConnection()
+
 	Local $CheckTroop[4] = [810, 186, 0xCFCFC8, 15] ; the gray background
 	Local $CheckTroop1[4] = [390, 130, 0x78BE2B, 15] ; the Green Arrow on Troop Training tab
 

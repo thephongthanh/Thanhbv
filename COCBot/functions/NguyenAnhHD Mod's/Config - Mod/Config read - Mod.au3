@@ -13,6 +13,9 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
+		; Multi Finger (LunaEclipse)
+		$iMultiFingerStyle = IniRead($config, "MultiFinger", "Select", "2")
+
 		; Config Read for SwitchAcc Mode - DEMEN
 		IniReadS($ichkSwitchAcc, $profile, "Switch Account", "Enable", "0")
 		$ichkTrain = IniRead($profile, "Switch Account", "Pre-train", "0")
@@ -42,4 +45,5 @@
 		IniReadS($isldSelectedCSVSpeed[$DB], $config, "attack", "CSVSpeedDB", 4)
 		IniReadS($isldSelectedCSVSpeed[$LB], $config, "attack", "CSVSpeedAB", 4)
 
+		; Don't Remove Troops
 		$ichkDontRemoveTroops = IniRead($config, "MOD", "DontRemoveTroops", "0")

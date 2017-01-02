@@ -13,6 +13,9 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
+	; Multi Finger (LunaEclipse)
+	IniWrite($config, "MultiFinger", "Select", $iMultiFingerStyle)
+
 	; Config save for SwitchAcc Mode - DEMEN
 	If GUICtrlRead($chkSwitchAcc) = $GUI_CHECKED Then
 		IniWrite($profile, "Switch Account", "Enable", 1)
@@ -88,6 +91,7 @@
 	IniWriteS($config, "attack", "CSVSpeedDB", $isldSelectedCSVSpeed[$DB])
 	IniWriteS($config, "attack", "CSVSpeedAB", $isldSelectedCSVSpeed[$LB])
 
+	; Don't Remove Troops
 	If GUICtrlRead($chkDontRemoveTroops) = $GUI_CHECKED Then
 		IniWrite($config, "MOD", "DontRemoveTroops", 1)
 	Else

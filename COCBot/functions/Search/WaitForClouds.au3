@@ -53,6 +53,14 @@ Func WaitForClouds()
 	While _CheckPixel($aNoCloudsAttack, $bCapturePixel) = False ; loop to wait for clouds to disappear
 		If _Sleep($iDelayGetResources1) Then Return
 		$iCount += 1
+		If IsWaitingForConnection(100, 70) = True Then ; Loop with a delay of 70 in each loop, 7 seconds
+			checkMainScreen()
+			PrepareSearch()
+			$Is_ClientSyncError = True
+			If $OutOfGold = 1 Then Return ; Check flag for enough gold to search
+			If $Restart = True Then Return
+			$iCount = 0
+		EndIf
 		If isProblemAffect(True) Then ; check for reload error messages and restart search if needed
 			resetAttackSearch()
 			Return

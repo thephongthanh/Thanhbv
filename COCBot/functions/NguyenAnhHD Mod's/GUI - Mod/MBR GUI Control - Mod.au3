@@ -233,6 +233,12 @@ Func cmbDeployDB() ; avoid conflict between FourFinger and SmartAttack - DEMEN
 EndFunc   ;==>cmbDeployDB
 ; ============= Classic FourFinger Attack ============ - DEMEN
 
+; GUI Control for Multi Finger Attack
+Func Bridge()
+	cmbDeployDB()
+	cmbDBMultiFinger()
+EndFunc   ;==>Bridge
+
 ; Auto Hide
 Func chkAutoHide()
 	If GUICtrlRead($chkAutoHide) = $GUI_CHECKED Then

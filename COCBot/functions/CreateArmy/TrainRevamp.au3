@@ -27,6 +27,8 @@ Func TrainRevamp()
 		Return
 	EndIf
 
+	IsWaitingForConnection()
+
 	If $debugsetlogTrain = 1 Then Setlog(" - Initial Quick train Function")
 
 	Local $timer
@@ -157,6 +159,9 @@ Func TestMaxCamp()
 EndFunc   ;==>TestMaxCamp
 
 Func TrainRevampOldStyle()
+
+	IsWaitingForConnection()
+
 	If $debugsetlogTrain = 1 Then Setlog(" - Initial Custom train Function")
 
 	;If $bDonateTrain = -1 Then SetbDonateTrain()

@@ -13,7 +13,10 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
-	; Four Finger Classic
+	; Multi Finger (LunaEclipse)
+	_GUICtrlComboBox_SetCurSel($cmbDBMultiFinger, $iMultiFingerStyle)
+	cmbDBMultiFinger()
+
 	cmbDeployAB()
 	cmbDeployDB()
 
@@ -97,6 +100,7 @@
 	_GUICtrlSlider_SetPos($sldrTransparancyShield, $AndroidShieldTransparency)
 	_GUICtrlSlider_SetPos($sldrTransparancyIdleShield, $AndroidInactiveTransparency)
 
+	; Don't Remove Troops
 	If $ichkDontRemoveTroops = 1 Then
 		GUICtrlSetState($chkDontRemoveTroops, $GUI_CHECKED)
 	Else

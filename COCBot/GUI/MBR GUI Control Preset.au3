@@ -155,7 +155,7 @@ Func MakeSavePresetMessage()
 		Next
 		$message &= @CRLF
 	EndIf
-#CS 
+#CS
 	Switch $icmbDarkTroopComp
 		Case "0"
 			$message &= "- Dark Elixir Troops: Barracks: "
@@ -249,7 +249,7 @@ Func MakeSavePresetMessage()
 			If $i = $TS Then $message &= $scmbAttackTHType & @CRLF
 
 			If ($i = $DB Or $i = $LB) And $iAtkAlgorithm[$i] = 0 Then
-				Local $tmp = StringSplit("one side|two sides|three sides|four sides|DE side|TH side", "|", 2)
+				Local $tmp = StringSplit("one side|two sides|three sides|four sides|Four Fingers Classic|DE side|TH side", "|", 2)
 				$message &= $tmp[$iChkDeploySettings[$i]] & @CRLF
 			EndIf
 		EndIf

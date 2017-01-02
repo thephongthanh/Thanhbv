@@ -13,6 +13,13 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
+; Multi Finger Attack Style Setting
+Global Enum $directionLeft, $directionRight
+Global Enum $sideBottomRight, $sideTopLeft, $sideBottomLeft, $sideTopRight
+Global Enum $mfRandom, $mfFFStandard, $mfFFSpiralLeft, $mfFFSpiralRight, $mf8FBlossom, $mf8FImplosion, $mf8FPinWheelLeft, $mf8FPinWheelRight
+Global $iMultiFingerStyle = 1
+Global Enum $eCCSpell = $eHaSpell + 1
+
 ;Variables for SwitchAcc Mode - DEMEN
 Global $profile = $sProfilePath & "\Profile.ini"
 Global $ichkSwitchAcc = 0
