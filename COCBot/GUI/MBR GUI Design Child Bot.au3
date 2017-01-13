@@ -17,7 +17,7 @@ Global $chkAutostart, $txtAutostartDelay, $chkAutohide, $txtAutohideDelay, $chkL
 Global $chkDebugClick, $chkDebugSetlog, $chkDebugDisableZoomout, $chkDebugDisableVillageCentering, $chkDebugOcr, $chkDebugImageSave, $chkdebugBuildingPos, $chkdebugTrain, $chkdebugOCRDonate, $chkdebugAttackCSV, $chkMakeIMGCSV
 Global $txtDeleteLogsDays, $txtDeleteTempDays, $txtDeleteLootsDays, $cmbLanguage, $chkScreenshotType, $chkScreenshotHideName, $chkUseRandomClick
 Global $sldVSDelay, $sldMaxVSDelay, $lblVSDelay, $lblMaxVSDelay, $lbltxtVSDelay, $lbltxtMaxVSDelay
-Global $sldTrainITDelay ,  $lbltxtTrainITDelay, $chkAlertSearch
+Global $sldTrainITDelay, $lbltxtTrainITDelay, $chkAlertSearch
 Global $chkSinglePBTForced, $txtSinglePBTimeForced, $txtPBTimeForcedExit
 
 $hGUI_BOT = GUICreate("", $_GUI_MAIN_WIDTH - 20, $_GUI_MAIN_HEIGHT - 255, $_GUI_CHILD_LEFT, $_GUI_CHILD_TOP, BitOR($WS_CHILD, $WS_TABSTOP), -1, $frmBotEx)
@@ -36,10 +36,10 @@ GUICtrlCreateTabItem("")
 $hGUI_BOT_TAB_ITEM3 = GUICtrlCreateTabItem(GetTranslated(600,51,"Debug"))
 #include "MBR GUI Design Child Bot - Debug.au3"
 GUICtrlCreateTabItem("")
-$hGUI_BOT_TAB_ITEM4 = GUICtrlCreateTabItem(GetTranslated(600,36,"Profiles"))
-#include "MBR GUI Design Child Bot - Profiles.au3"
+;~ $hGUI_BOT_TAB_ITEM4 = GUICtrlCreateTabItem(GetTranslated(600,36,"Profiles"))
+;~ #include "MBR GUI Design Child Bot - Profiles.au3"
 ; this tab will be empty because it is only used to display a child GUI
-$hGUI_BOT_TAB_ITEM5 = GUICtrlCreateTabItem(GetTranslated(600,37, "Stats"))
+$hGUI_BOT_TAB_ITEM4 = GUICtrlCreateTabItem(GetTranslated(600,37, "Stats"))
 GUICtrlCreateTabItem("")
 ; create stats last because of $LastControlToHide
 #include "MBR GUI Design Child Bot - Stats.au3"

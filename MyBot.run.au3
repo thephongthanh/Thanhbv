@@ -35,8 +35,8 @@ ProcessSetPriority(@AutoItPID, $PROCESS_ABOVENORMAL)
 Global $iBotLaunchTime = 0
 Local $hBotLaunchTime = TimerInit()
 
-Global $sBotVersion = "v6.5.2" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it is also use on Checkversion()
-Global $sModversion = "v1.3.1" ;<== Just Change This to Version Number
+Global $sBotVersion = "v6.5.3" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it is also use on Checkversion()
+Global $sModversion = "v1.4" ;<== Just Change This to Version Number
 Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/26474-new-mybot-v622v641-mod-nguyenanhhd-v532v10-update-1812/" ;<== Our Website Link Or Link Download
 Global $sModDownloadUrl = "https://github.com/NguyenAnhHD/MyBot-v6.5-Mod/releases"
 
@@ -167,6 +167,8 @@ DirCopy(@ScriptDir & "\Temp", $sProfilePath & "\" & $sCurrProfile & "\Temp", $FC
 DirRemove(@ScriptDir & "\Logs", 1)
 DirRemove(@ScriptDir & "\Loots", 1)
 DirRemove(@ScriptDir & "\Temp", 1)
+Local $forecastDir = @ScriptDir & "\COCBot\Forecast"
+DirCreate($forecastDir)
 
 ;Setup profile if doesn't exist yet
 If FileExists($config) = 0 Then
@@ -283,6 +285,10 @@ Func runBot() ;Bot that runs everything in order
 			If $Restart = True Then ContinueLoop
 			If _Sleep($iDelayRunBot3) Then Return
 			VillageReport()
+			If _Sleep(500) Then Return
+			ProfileSwitch()                 ; Added for Profile Switch
+			If _Sleep(500) Then Return
+			clanHop()  			            ; Added for Clan Hop
 			If $OutOfGold = 1 And (Number($iGoldCurrent) >= Number($itxtRestartGold)) Then ; check if enough gold to begin searching again
 				$OutOfGold = 0 ; reset out of gold flag
 				Setlog("Switching back to normal after no gold to search ...", $COLOR_SUCCESS)
@@ -322,6 +328,14 @@ Func runBot() ;Bot that runs everything in order
 			AddIdleTime()
 			If $RunState = False Then Return
 			If $Restart = True Then ContinueLoop
+			If $iChkForecastBoost = 1 Then
+				$currentForecast = readCurrentForecast()
+					If $currentForecast >= Number($iTxtForecastBoost, 3) Then
+					SetLog("Boost Time !", $COLOR_GREEN)
+					Else
+					SetLog("Forecast index is below the required value, no boost !", $COLOR_RED)
+					EndIf
+			EndIf
 			If IsSearchAttackEnabled() Then ; if attack is disabled skip reporting, requesting, donating, training, and boosting
 				Local $aRndFuncList = ['ReplayShare', 'NotifyReport', 'DonateCC,Train', 'BoostBarracks', 'BoostSpellFactory', 'BoostKing', 'BoostQueen', 'BoostWarden', 'RequestCC']
 				While 1
@@ -425,6 +439,7 @@ EndFunc   ;==>runBot
 
 Func Idle() ;Sequence that runs until Full Army
 	Local $TimeIdle = 0 ;In Seconds
+	ForecastSwitch()
 	If $debugsetlog = 1 Then SetLog("Func Idle ", $COLOR_DEBUG)
 
 	While $IsFullArmywithHeroesAndSpells = False
@@ -452,7 +467,7 @@ Func Idle() ;Sequence that runs until Full Army
 				If $Restart = True Then ExitLoop
 				If checkAndroidReboot() Then ContinueLoop 2
 			WEnd
-		EndIF
+		EndIf
 		If _Sleep($iDelayIdle1) Then ExitLoop
 		checkObstacles() ; trap common error messages also check for reconnecting animation
 		checkMainScreen(False) ; required here due to many possible exits
@@ -546,10 +561,6 @@ Func Idle() ;Sequence that runs until Full Army
 		$TimeIdle += Round(TimerDiff($hTimer) / 1000, 2) ;In Seconds
 
 		If $canRequestCC = True Then RequestCC()
-
-		;If $CurCamp >= $TotalCamp * $iEnableAfterArmyCamps[$DB] / 100 And $iEnableSearchCamps[$DB] = 1 And IsSearchModeActive($DB) Then ExitLoop
-		;If $CurCamp >= $TotalCamp * $iEnableAfterArmyCamps[$LB] / 100 And $iEnableSearchCamps[$LB] = 1 And IsSearchModeActive($LB) Then ExitLoop
-		;If $CurCamp >= $TotalCamp * $iEnableAfterArmyCamps[$TS] / 100 And $iEnableSearchCamps[$TS] = 1 And IsSearchModeActive($TS) Then ExitLoop
 
 		SetLog("Time Idle: " & StringFormat("%02i", Floor(Floor($TimeIdle / 60) / 60)) & ":" & StringFormat("%02i", Floor(Mod(Floor($TimeIdle / 60), 60))) & ":" & StringFormat("%02i", Floor(Mod($TimeIdle, 60))))
 
@@ -701,12 +712,12 @@ Func _RunFunction($action)
 				;If $iSkipDonateNearFulLTroopsEnable = 1 and $FirstStart = False Then getArmyCapacity(True, True)
 				If SkipDonateNearFullTroops(True) = False Then DonateCC()
 				If _Sleep($iDelayRunBot1) = False Then checkMainScreen(False)
-			EndIF
+			EndIf
 		Case "DonateCC,Train"
-			If $iSkipDonateNearFulLTroopsEnable = 1 and $FirstStart = true Then getArmyCapacity(True, True)
+			If $iSkipDonateNearFulLTroopsEnable = 1 And $FirstStart = True Then getArmyCapacity(True, True)
 			If $bActiveDonate = True Then
 				If SkipDonateNearFullTroops(True) = False Then DonateCC()
-			EndIF
+			EndIf
 			If _Sleep($iDelayRunBot1) = False Then checkMainScreen(False)
 			If $troops_maked_after_fullarmy = False And $actual_train_skip < $max_train_skip Then
 				$troops_maked_after_fullarmy = False

@@ -27,8 +27,6 @@ Func VillageReport($bBypass = False, $bSuppressLog = False)
 			If Not $bSuppressLog Then SetLog("Village Report Error, You have been a BAD programmer!", $COLOR_ERROR)
 	EndSwitch
 
-	IsWaitingForConnection()
-
 	getBuilderCount($bSuppressLog) ; update builder data
 	If _Sleep($iDelayRespond) Then Return
 

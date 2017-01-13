@@ -33,5 +33,14 @@
 #include "..\Mod's\Multi Fingers\multiFinger.au3"
 #include "..\Mod's\Multi Fingers\unitInfo.au3"
 
+; Auto Hide
 #include "..\Mod's\AutoHide.au3"
+
+; Switch Profile
+#include "..\Mod's\ProfileSwitch.au3"
+
+; Simple QuickTrain
 #include "..\Mod's\SimpleQuickTrain.au3"
+
+; Clan Hop
+#include "..\Mod's\ClanHop.au3"

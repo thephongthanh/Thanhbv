@@ -15,7 +15,7 @@
 
 Func chkUseQTrain()
 	If GUICtrlRead($hChk_UseQTrain) = $GUI_CHECKED Then
-		_GUI_Value_STATE("ENABLE", $hRadio_Army1 & "#" & $hRadio_Army2 & "#" & $hRadio_Army3 & "#" & $hRadio_Army12 & "#" & $hRadio_Army123) ;	Adding Quicktrain combo - Demen
+		_GUI_Value_STATE("ENABLE", $hRadio_Army1 & "#" & $hRadio_Army2 & "#" & $hRadio_Army3)
 		_GUI_Value_STATE("DISABLE", $grpTrainTroops)
 		_GUI_Value_STATE("DISABLE", $grpCookSpell)
 		GUICtrlSetData($lblTotalCountCamp, " 0s")
@@ -25,12 +25,15 @@ Func chkUseQTrain()
 		GUICtrlSetData($lblElixirCostSpell, "0")
 		GUICtrlSetData($lblDarkCostSpell, "0")
 	Else
-		_GUI_Value_STATE("DISABLE", $hRadio_Army1 & "#" & $hRadio_Army2 & "#" & $hRadio_Army3 & "#" & $hRadio_Army12 & "#" & $hRadio_Army123) ;	Adding Quicktrain combo - Demen
+		_GUI_Value_STATE("DISABLE", $hRadio_Army1 & "#" & $hRadio_Army2 & "#" & $hRadio_Army3)
 		_GUI_Value_STATE("ENABLE", $grpTrainTroops)
 		_GUI_Value_STATE("ENABLE", $grpCookSpell)
 		lblTotalCount()
 		lblTotalCountSpell()
 	EndIf
+
+	GUIControlForSimpleQTrain()		; QuickTrainCombo & SimpleQuickTrain - DEMEN
+
 EndFunc   ;==>chkUseQTrain
 
 Func SetComboTroopComp()

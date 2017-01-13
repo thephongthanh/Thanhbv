@@ -99,8 +99,5 @@ Local $x = 25, $y = 45
 			_GUICtrlButton_SetImageList($btnRename, $bIconEdit, 4)
 			GUICtrlSetOnEvent(-1, "btnRenameConfirm")
 			_GUICtrlSetTip(-1, GetTranslated(637,10, "Rename Profile"))
-
-	#include "..\functions\NguyenAnhHD Mod's\GUI - Mod\MBR GUI Design - SwitchAcc.au3"									;	SwitchAcc Mode - Demen
-
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 ;GUISetState()

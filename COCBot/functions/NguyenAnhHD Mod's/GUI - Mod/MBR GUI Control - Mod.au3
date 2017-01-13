@@ -136,7 +136,7 @@ Func MatchProfileAcc($Num)
 		MsgBox($MB_OK, GetTranslated(655,88, "SwitchAcc Mode"), GetTranslated(655,91, "Account [") & _GUICtrlComboBox_GetCurSel($cmbAccountNo[$Num]) & GetTranslated(655,92, "] exceeds Total Account declared") ,30, $hGUI_BOT)
 		_GUICtrlComboBox_SetCurSel($cmbAccountNo[$Num], -1)
 		_GUICtrlComboBox_SetCurSel($cmbProfileType[$Num], -1)
-		saveConfig()
+		btnUpdateProfile()
 	EndIf
 
 	If _GUICtrlComboBox_GetCurSel($cmbAccountNo[$Num]) >= 0 Then
@@ -145,14 +145,15 @@ Func MatchProfileAcc($Num)
 				& _ArraySearch($aMatchProfileAcc,_GUICtrlComboBox_GetCurSel($cmbAccountNo[$Num])+1) + 1 & "]" ,30, $hGUI_BOT)
 			_GUICtrlComboBox_SetCurSel($cmbAccountNo[$Num], -1)
 			_GUICtrlComboBox_SetCurSel($cmbProfileType[$Num], -1)
-			saveConfig()
+			btnUpdateProfile()
 		ElseIf UBound(_ArrayFindAll($aMatchProfileAcc,_GUICtrlComboBox_GetCurSel($cmbAccountNo[$Num])+1)) > 1 Then
 			MsgBox($MB_OK, GetTranslated(655,88, "SwitchAcc Mode"), GetTranslated(655,91, "Account [") & _GUICtrlComboBox_GetCurSel($cmbAccountNo[$Num]) & GetTranslated(655,94, "] has been assigned to another profile") ,30, $hGUI_BOT)
 			_GUICtrlComboBox_SetCurSel($cmbAccountNo[$Num], -1)
 			_GUICtrlComboBox_SetCurSel($cmbProfileType[$Num], -1)
-			saveConfig()
+			btnUpdateProfile()
 		Else
 			_GUICtrlComboBox_SetCurSel($cmbProfileType[$Num], 0)
+			btnUpdateProfile()
 		EndIf
 
 	EndIf
@@ -318,47 +319,393 @@ Func AttackNowDB()
 	Setlog("End Dead Base Attack TEST")
 EndFunc   ;==>AttackNowLB
 
-; Change Android Shield Color
-Func btnColorShield()
-	$sSelectedColor = _ChooseColor(2,0xFFFFFF,2,$frmBot)
-	If $sSelectedColor <> -1 Then
-	$sSelectedColor = StringTrimLeft($sSelectedColor,2)
-	$AndroidShieldColor = Dec($sSelectedColor)
-	SetLog("Shield color successfully chosen! Will be used now", $COLOR_INFO)
+; GUI Control for SimpleQuickTrain
+Global Const $grpTrainTroops2=$grpTrainTroopsGUI&"#"&$icnBarb&"#"&$txtLevBarb&"#"&$icnArch&"#"&$txtLevArch&"#"&$icnGiant&"#"&$txtLevGiant&"#"&$icnGobl&"#"&$txtLevGobl&"#"&$icnWall&"#"&$txtLevWall&"#"&$icnBall&"#"&$txtLevBall&"#"&$icnWiza&"#"&$txtLevWiza&"#"&$icnHeal&"#"&$txtLevHeal&"#"&$icnDrag&"#"&$txtLevDrag&"#"&$icnPekk&"#"&$txtLevPekk&"#"&$icnBabyD&"#"&$txtLevBabyD&"#"&$icnMine&"#"&$txtLevMine&"#"&$icnMini&"#"&$txtLevMini&"#"&$icnHogs&"#"&$txtLevHogs&"#"&$icnValk&"#"&$txtLevValk&"#"&$icnGole&"#"&$txtLevGole&"#"&$icnWitc&"#"&$txtLevWitc&"#"&$icnLava&"#"&$txtLevLava&"#"&$icnBowl&"#"&$txtLevBowl
+Global Const $grpSimpleQT=$grpSimpleQuickTrain&"#"&$chkSimpleQuickTrain&"#"&$chkFillArcher&"#"&$txtFillArcher&"#"&$chkFillEQ&"#"&$chkTrainDonated
+Func GUIControlForSimpleQTrain()
+	If GUICtrlRead($hChk_UseQTrain) = $GUI_CHECKED Then
+		_GUI_Value_STATE("SHOW", $hRadio_Army12 & "#" & $hRadio_Army123 & "#" & $grpSimpleQT)
+		_GUI_Value_STATE("ENABLE", $hRadio_Army12 & "#" & $hRadio_Army123)
+		_GUI_Value_STATE("HIDE", $LblRemovecamp & "#" & $icnRemovecamp & "#" & $grpTrainTroops & "#" & $grpTrainTroops2)
+		_GUI_Value_STATE("ENABLE", $chkSimpleQuickTrain & "#" & $chkFillArcher & "#" & $txtFillArcher & "#" & $chkFillEQ & "#" & $chkTrainDonated)
+		chkSimpleQuickTrain()
 	Else
-	SetLog("Shield color selection stopped, keeping the old one!",$COLOR_INFO)
+		_GUI_Value_STATE("DISABLE", $hRadio_Army12 & "#" & $hRadio_Army123)
+		_GUI_Value_STATE("HIDE", $hRadio_Army12 & "#" & $hRadio_Army123 & "#" & $grpSimpleQT)
+		_GUI_Value_STATE("SHOW", $LblRemovecamp & "#" &  $icnRemovecamp & "#" & $grpTrainTroops & "#" & $grpTrainTroops2)
+		_GUI_Value_STATE("DISABLE", $chkSimpleQuickTrain & "#" & $chkFillArcher & "#" & $txtFillArcher & "#" & $chkFillEQ & "#" & $chkTrainDonated)
+	EndIf
+EndFunc		;==>GUIControlForSimpleQTrain - additional Control to Func chkUseQTrain()
+
+Func chkSimpleQuickTrain()
+	If GUICtrlRead($chkSimpleQuickTrain) = $GUI_CHECKED Then
+		_GUI_Value_STATE("ENABLE", $chkFillArcher & "#" & $txtFillArcher & "#" & $chkFillEQ & "#" & $chkTrainDonated)
+
+	Else
+		_GUI_Value_STATE("DISABLE", $chkFillArcher & "#" & $txtFillArcher & "#" & $chkFillEQ & "#" & $chkTrainDonated)
+		_GUI_Value_STATE("UNCHECKED", $chkFillArcher & "#" & $chkFillEQ & "#" & $chkTrainDonated)
+
+	EndIf
+EndFunc   ;==>chkSimpleQuickTrain
+; ======================== SimpleQuickTrain ========================
+
+; Switch Profile
+; IceCube (Misc v1.0)
+Func btnRecycle()
+	FileDelete($config)
+	SaveConfig()
+	SetLog(GetTranslated(637, 20, "Profile ") & $sCurrProfile & GetTranslated(637, 21, " was recycled with success"), $COLOR_GREEN)
+	SetLog(GetTranslated(637, 22, "All unused settings were removed"), $COLOR_GREEN)
+EndFunc   ;==>btnRecycle
+; IceCube (Misc v1.0)
+Func setupProfileComboBoxswitch()
+		; Clear the combo box current data in case profiles were deleted
+		GUICtrlSetData($cmbGoldMaxProfile, "", "")
+		; Set the new data of available profiles
+		GUICtrlSetData($cmbGoldMaxProfile, $profileString, "<No Profiles>")
+		; Clear the combo box current data in case profiles were deleted
+		GUICtrlSetData($cmbGoldMinProfile, "", "")
+		; Set the new data of available profiles
+		GUICtrlSetData($cmbGoldMinProfile, $profileString, "<No Profiles>")
+		; Clear the combo box current data in case profiles were deleted
+		GUICtrlSetData($cmbElixirMaxProfile, "", "")
+		; Set the new data of available profiles
+		GUICtrlSetData($cmbElixirMaxProfile, $profileString, "<No Profiles>")
+		; Clear the combo box current data in case profiles were deleted
+		GUICtrlSetData($cmbElixirMinProfile, "", "")
+		; Set the new data of available profiles
+		GUICtrlSetData($cmbElixirMinProfile, $profileString, "<No Profiles>")
+		; Clear the combo box current data in case profiles were deleted
+		GUICtrlSetData($cmbDEMaxProfile, "", "")
+		; Set the new data of available profiles
+		GUICtrlSetData($cmbDEMaxProfile, $profileString, "<No Profiles>")
+		; Clear the combo box current data in case profiles were deleted
+		GUICtrlSetData($cmbDEMinProfile, "", "")
+		; Set the new data of available profiles
+		GUICtrlSetData($cmbDEMinProfile, $profileString, "<No Profiles>")
+		; Clear the combo box current data in case profiles were deleted
+		GUICtrlSetData($cmbTrophyMaxProfile, "", "")
+		; Set the new data of available profiles
+		GUICtrlSetData($cmbTrophyMaxProfile, $profileString, "<No Profiles>")
+		; Clear the combo box current data in case profiles were deleted
+		GUICtrlSetData($cmbTrophyMinProfile, "", "")
+		; Set the new data of available profiles
+		GUICtrlSetData($cmbTrophyMinProfile, $profileString, "<No Profiles>")
+EndFunc   ;==>setupProfileComboBox
+
+; GUI Control for Forecast
+Func chkForecastBoost()
+	If GUICtrlRead($chkForecastBoost) = $GUI_CHECKED Then
+		_GUICtrlEdit_SetReadOnly($txtForecastBoost, False)
+		GUICtrlSetState($txtForecastBoost, $GUI_ENABLE)
+		GUICtrlSetState($txtForecastBoost, $GUI_SHOW)
+	Else
+		_GUICtrlEdit_SetReadOnly($txtForecastBoost, True)
+		GUICtrlSetState($txtForecastBoost, $GUI_DISABLE)
+		GUICtrlSetState($txtForecastBoost, $GUI_HIDE)
+	EndIf
+EndFunc
+
+Func chkForecastHopingSwitchMax()
+	If GUICtrlRead($chkForecastHopingSwitchMax) = $GUI_CHECKED Then
+		_GUICtrlEdit_SetReadOnly($txtForecastHopingSwitchMax, False)
+		GUICtrlSetState($txtForecastHopingSwitchMax, $GUI_ENABLE)
+		GUICtrlSetState($cmbForecastHopingSwitchMax, $GUI_ENABLE)
+	Else
+		_GUICtrlEdit_SetReadOnly($txtForecastHopingSwitchMax, True)
+		GUICtrlSetState($txtForecastHopingSwitchMax, $GUI_DISABLE)
+		GUICtrlSetState($cmbForecastHopingSwitchMax, $GUI_DISABLE)
+	EndIf
+EndFunc
+
+Func chkForecastHopingSwitchMin()
+	If GUICtrlRead($chkForecastHopingSwitchMin) = $GUI_CHECKED Then
+		_GUICtrlEdit_SetReadOnly($txtForecastHopingSwitchMin, False)
+		GUICtrlSetState($txtForecastHopingSwitchMin, $GUI_ENABLE)
+		GUICtrlSetState($cmbForecastHopingSwitchMin, $GUI_ENABLE)
+	Else
+		_GUICtrlEdit_SetReadOnly($txtForecastHopingSwitchMin, True)
+		GUICtrlSetState($txtForecastHopingSwitchMin, $GUI_DISABLE)
+		GUICtrlSetState($cmbForecastHopingSwitchMin, $GUI_DISABLE)
+	EndIf
+EndFunc
+
+;Added Multi Switch Language by rulesss and Kychera
+Func setForecast()
+	_IENavigate($oIE, "about:blank")
+	_IEBodyWriteHTML($oIE, "<div style='width:440px;height:345px;padding:0;overflow:hidden;position: absolute;top:5x;left:-25px;z-index:0;'><center><img src='" & @ScriptDir & "\COCBot\Forecast\loading.gif'></center></div>")
+EndFunc
+
+Func setForecast2()
+	RunWait("..\COCBot\Forecast\wkhtmltoimage.exe --width 3100 http://clashofclansforecaster.com/?lang=english  ..\COCBot\Forecast\forecast.jpg", "", @SW_HIDE)
+	_IEBodyWriteHTML($oIE, "<img style='margin: -10px 0px -10px -100px;' src='" & @ScriptDir & "\COCBot\Forecast\forecast.jpg' width='1700'>")
+EndFunc
+
+Func setForecast3()
+	RunWait("..\COCBot\Forecast\wkhtmltoimage.exe --width 3100 http://clashofclansforecaster.com/?lang=russian  ..\COCBot\Forecast\forecast.jpg", "", @SW_HIDE)
+	_IEBodyWriteHTML($oIE, "<img style='margin: -10px 0px -10px -100px;' src='" & @ScriptDir & "\COCBot\Forecast\forecast.jpg' width='1700'>")
+EndFunc
+
+Func setForecast4()
+	RunWait("..\COCBot\Forecast\wkhtmltoimage.exe --width 3100 http://clashofclansforecaster.com/?lang=french  ..\COCBot\Forecast\forecast.jpg", "", @SW_HIDE)
+	_IEBodyWriteHTML($oIE, "<img style='margin: -10px 0px -10px -100px;' src='" & @ScriptDir & "\COCBot\Forecast\forecast.jpg' width='1700'>")
+EndFunc
+
+Func setForecast5()
+	RunWait("..\COCBot\Forecast\wkhtmltoimage.exe --width 3100 http://clashofclansforecaster.com/?lang=german  ..\COCBot\Forecast\forecast.jpg", "", @SW_HIDE)
+	_IEBodyWriteHTML($oIE, "<img style='margin: -10px 0px -10px -100px;' src='" & @ScriptDir & "\COCBot\Forecast\forecast.jpg' width='1700'>")
+EndFunc
+
+Func setForecast6()
+	RunWait("..\COCBot\Forecast\wkhtmltoimage.exe --width 3100 http://clashofclansforecaster.com/?lang=spanish  ..\COCBot\Forecast\forecast.jpg", "", @SW_HIDE)
+	_IEBodyWriteHTML($oIE, "<img style='margin: -10px 0px -10px -100px;' src='" & @ScriptDir & "\COCBot\Forecast\forecast.jpg' width='1700'>")
+EndFunc
+
+Func setForecast7()
+	RunWait("..\COCBot\Forecast\wkhtmltoimage.exe --width 3100 http://clashofclansforecaster.com/?lang=italian  ..\COCBot\Forecast\forecast.jpg", "", @SW_HIDE)
+	_IEBodyWriteHTML($oIE, "<img style='margin: -10px 0px -10px -100px;' src='" & @ScriptDir & "\COCBot\Forecast\forecast.jpg' width='1700'>")
+EndFunc
+
+Func setForecast8()
+	RunWait("..\COCBot\Forecast\wkhtmltoimage.exe --width 3100 http://clashofclansforecaster.com/?lang=portuguese  ..\COCBot\Forecast\forecast.jpg", "", @SW_HIDE)
+	_IEBodyWriteHTML($oIE, "<img style='margin: -10px 0px -10px -100px;' src='" & @ScriptDir & "\COCBot\Forecast\forecast.jpg' width='1700'>")
+EndFunc
+
+Func setForecast9()
+	RunWait("..\COCBot\Forecast\wkhtmltoimage.exe --width 3100 http://clashofclansforecaster.com/?lang=indonesian ..\COCBot\Forecast\forecast.jpg", "", @SW_HIDE)
+	_IEBodyWriteHTML($oIE, "<img style='margin: -10px 0px -10px -100px;' src='" & @ScriptDir & "\COCBot\Forecast\forecast.jpg' width='1700'>")
+EndFunc
+
+Func _RoundDown($nVar, $iCount)
+    Return Round((Int($nVar * (10 ^ $iCount))) / (10 ^ $iCount), $iCount)
+EndFunc
+
+Func redrawForecast()
+	If GUICtrlRead($hGUI_MOD_TAB, 1) = $hGUI_MOD_TAB_ITEM3 Then
+		_IENavigate($oIE, "about:blank")
+		_IEBodyWriteHTML($oIE, "<img style='margin: -10px 0px -10px -100px;' src='" & @ScriptDir & "\COCBot\Forecast\forecast.jpg' width='1700'>")
+	EndIf
+EndFunc
+
+Func readCurrentForecast()
+	Local $return = getCurrentForecast()
+	If $return > 0 Then Return $return
+
+	Local $line = ""
+	Local $filename = @ScriptDir & "\COCBot\Forecast\forecast.mht"
+
+;	SetLog("Consultation de la météo...", $COLOR_BLUE)
+
+	_INetGetMHT( "http://clashofclansforecaster.com", $filename)
+
+	Local $file = FileOpen($filename, 0)
+	If $file = -1 Then
+		SetLog("     Error reading forecast !", $COLOR_RED)
+		Return False
 	EndIf
 
+	ReDim $dtStamps[0]
+	ReDim $lootMinutes[0]
+	While 1
+		$line = FileReadLine($file)
+		If @error <> 0 Then ExitLoop
+		if StringCompare(StringLeft($line, StringLen("<script language=""javascript"">var militaryTime")), "<script language=""javascript"">var militaryTime") = 0 Then
+			Local $pos1
+			Local $pos2
+			$pos1 = StringInStr($line, "minuteNow")
+			If $pos1 > 0 Then
+				$pos1 = StringInStr($line, ":", 0, 1, $pos1 + 1)
+				If $pos1 > 0 Then
+					$pos2 = StringInStr($line, ",", 9, 1, $pos1 + 1)
+					Local $minuteNowString = StringMid($line, $pos1 + 1, $pos2 - $pos1 - 1)
+					$timeOffset = Int($minuteNowString) - nowTicksUTC()
+;					SetLog("     timeOffset: " & $timeOffset, $COLOR_BLUE)
+				EndIf
+			EndIf
+
+			$pos1 = StringInStr($line, "dtStamps")
+			If $pos1 > 0 Then
+				$pos1 = StringInStr($line, "[", 0, 1, $pos1 + 1)
+				If $pos1 > 0 Then
+					$pos2 = StringInStr($line, "]", 9, 1, $pos1 + 1)
+					Local $dtStampsString = StringMid($line, $pos1 + 1, $pos2 - $pos1 - 1)
+					$dtStamps = StringSplit($dtStampsString, ",", 2)
+				EndIf
+			EndIf
+
+			$pos1 = StringInStr($line, "lootMinutes", 0, 1, $pos1 + 1)
+			If $pos1 > 0 Then
+				$pos1 = StringInStr($line, "[", 0, 1, $pos1 + 1)
+				If $pos1 > 0 Then
+					$pos2 = StringInStr($line, "]", 9, 1, $pos1 + 1)
+					Local $minuteString = StringMid($line, $pos1 + 1, $pos2 - $pos1 - 1)
+					$lootMinutes = StringSplit($minuteString, ",", 2)
+				EndIf
+			EndIf
+
+			$pos1 = StringInStr($line, "lootIndexScaleMarkers", 0, 1, $pos1 + 1)
+			If $pos1 > 0 Then
+				$pos1 = StringInStr($line, "[", 0, 1, $pos1 + 1)
+				If $pos1 > 0 Then
+					$pos2 = StringInStr($line, "]", 9, 1, $pos1 + 1)
+					Local $lootIndexScaleMarkersString = StringMid($line, $pos1 + 1, $pos2 - $pos1 - 1)
+					$lootIndexScaleMarkers = StringSplit($lootIndexScaleMarkersString, ",", 2)
+				EndIf
+			EndIf
+			ExitLoop
+		EndIf
+	WEnd
+	FileClose($file)
+
+;	SetLog("     Processed " & UBound($lootMinutes) & " loot minutes.", $COLOR_BLUE)
+
+	$return = getCurrentForecast()
+	If $return = 0 Then
+		SetLog("Error reading forecast.")
+	EndIf
+	Return $return
 EndFunc
 
-Func sldrTransparancyShield()
-	$ReadTransparancyShield = GUICtrlRead($sldrTransparancyShield)
-	$AndroidShieldTransparency = Int($ReadTransparancyShield)
+Func _INetGetMHT( $url, $file )
+	Local $msg = ObjCreate("CDO.Message")
+	If @error Then Return False
+	Local $ado = ObjCreate("ADODB.Stream")
+	If @error Then Return False
+	Local $conf = ObjCreate("CDO.Configuration")
+	If @error Then Return False
 
+	With $ado
+		.Type = 2
+		.Charset = "US-ASCII"
+		.Open
+	EndWith
+
+	Local $flds = $conf.Fields
+	$flds.Item("http://schemas.microsoft.com/cdo/configuration/urlgetlatestversion") = True
+	$flds.Update()
+	$msg.Configuration = $conf
+	$msg.CreateMHTMLBody($url, 31)
+	$msg.DataSource.SaveToObject($ado, "_Stream")
+	FileDelete($file)
+	$ado.SaveToFile($file, 1)
+	$msg = ""
+	$ado = ""
+	Return True
 EndFunc
 
-Func btnColorIdleShield()
-	$sSelectedColor = _ChooseColor(2,0xFFFFFF,2,$frmBot)
-	If $sSelectedColor <> -1 Then
-	$sSelectedColor = StringTrimLeft($sSelectedColor,2)
-	$AndroidInactiveColor = Dec($sSelectedColor)
-	SetLog("Idle Shield color successfully chosen! Will be used now", $COLOR_INFO)
+Func getCurrentForecast()
+	Local $return = 0
+	Local $nowTicks = nowTicksUTC() + $timeOffset
+	If UBound($dtStamps) > 0 And UBound($lootMinutes) > 0 And UBound($dtStamps) = UBound($lootMinutes) Then
+	If $nowTicks >= Int($dtStamps[0]) And $nowTicks <= Int($dtStamps[UBound($dtStamps) - 1]) Then
+			Local $i
+			For $i = 0 To UBound($dtStamps) - 1
+				If $nowTicks >= Int($dtStamps[$i]) Then
+					$return = Int($lootMinutes[$i])
+				Else
+					ExitLoop
+				EndIf
+			Next
+		Else
+			Return 0
+		EndIf
 	Else
-	SetLog("Idle Shield color selection stopped, keeping the old one!",$COLOR_INFO)
+		Return 0
 	EndIf
 
+	Return CalculateIndex($return)
 EndFunc
 
-Func sldrTransparancyIdleShield()
-	$ReadTransparancyIdle = GUICtrlRead($sldrTransparancyIdleShield)
-	$AndroidInactiveTransparency = Int($ReadTransparancyIdle)
+Func CalculateIndex($minutes)
+	Local $index = 0
+	Local $iRound1 = 0
+	Local $index25 = 2.5
+	Local $index4 = 4
+	Local $index6 = 6
+	Local $index8 = 8
 
-EndFunc
-
-Func chkDontRemoveTroops()
-	If GUICtrlRead($chkDontRemoveTroops) = $GUI_CHECKED Then
-		$ichkDontRemoveTroops = 1
+	If $minutes < $lootIndexScaleMarkers[0] Then
+		$index = $minutes / $lootIndexScaleMarkers[0]
+	ElseIf $minutes < $lootIndexScaleMarkers[1] Then
+		$index = (($minutes - $lootIndexScaleMarkers[0]) / ($lootIndexScaleMarkers[1] - $lootIndexScaleMarkers[0])) + 1
+	ElseIf $minutes < $lootIndexScaleMarkers[2] Then
+		$index = (($minutes - $lootIndexScaleMarkers[1]) / ($lootIndexScaleMarkers[2] - $lootIndexScaleMarkers[1])) + 2
+	ElseIf $minutes < $lootIndexScaleMarkers[3] Then
+		$index = (($minutes - $lootIndexScaleMarkers[2]) / ($lootIndexScaleMarkers[3] - $lootIndexScaleMarkers[2])) + 3
+	ElseIf $minutes < $lootIndexScaleMarkers[4] Then
+		$index = (($minutes - $lootIndexScaleMarkers[3]) / ($lootIndexScaleMarkers[4] - $lootIndexScaleMarkers[3])) + 4
+	ElseIf $minutes < $lootIndexScaleMarkers[5] Then
+		$index = (($minutes - $lootIndexScaleMarkers[4]) / ($lootIndexScaleMarkers[5] - $lootIndexScaleMarkers[4])) + 5
+	ElseIf $minutes < $lootIndexScaleMarkers[6] Then
+		$index = (($minutes - $lootIndexScaleMarkers[5]) / ($lootIndexScaleMarkers[6] - $lootIndexScaleMarkers[5])) + 6
+	ElseIf $minutes < $lootIndexScaleMarkers[7] Then
+		$index = (($minutes - $lootIndexScaleMarkers[6]) / ($lootIndexScaleMarkers[7] - $lootIndexScaleMarkers[6])) + 7
+	ElseIf $minutes < $lootIndexScaleMarkers[8] Then
+		$index = (($minutes - $lootIndexScaleMarkers[7]) / ($lootIndexScaleMarkers[8] - $lootIndexScaleMarkers[7])) + 8
+	ElseIf $minutes < $lootIndexScaleMarkers[9] Then
+		$index = (($minutes - $lootIndexScaleMarkers[8]) / ($lootIndexScaleMarkers[9] - $lootIndexScaleMarkers[8])) + 9
 	Else
-		$ichkDontRemoveTroops = 0
+		$index = (($minutes - $lootIndexScaleMarkers[9]) / (44739594 - $lootIndexScaleMarkers[9])) + 10
 	EndIf
+
+    $iRound1 = Round($index, 1)
+
+	SetLog(GetTranslated(107,10,"Viewing weather information ..."), $COLOR_PURPLE)
+	If $iRound1 <= $index25 Then
+	SetLog("Index of Loot : " & $iRound1 & " ---> Awful!", $COLOR_RED)
+	Elseif $iRound1 > $index25 and $iRound1 <= $index4 Then
+	SetLog("Index of Loot : " & $iRound1 & " ---> Bad", $COLOR_DEEPPINK)
+	Elseif $iRound1 > $index4 and $iRound1 <= $index6 Then
+	SetLog("Index of Loot  : " & $iRound1 & " ---> Fine", $COLOR_ORANGE)
+	ElseIf $iRound1 > $index6 and $iRound1 <= $index8 Then
+	SetLog("Index of Loot : " & $iRound1 & " ---> Good!", $COLOR_GREEN)
+	ElseIf $iRound1 > $index8 Then
+	SetLog("Index of Loot  : " & $iRound1 & " ---> Perfect !!", $COLOR_DARKGREEN)
+	Endif
+	Return _RoundDown($index, 1)
+EndFunc
+
+
+Func nowTicksUTC()
+	Local $now = _Date_Time_GetSystemTime()
+	Local $nowUTC = _Date_Time_SystemTimeToDateTimeStr($now)
+
+	$nowUTC = StringMid($nowUTC, 7, 4) & "/" & StringMid($nowUTC, 1, 2) & "/" & StringMid($nowUTC, 4, 2) & StringMid($nowUTC, 11)
+	Return _DateDiff('s', "1970/01/01 00:00:00", $nowUTC)
+EndFunc
+
+Func ForecastSwitch()
+If $ichkForecastHopingSwitchMax	= 1 Or $ichkForecastHopingSwitchMin = 1 And $RunState Then
+	$currentForecast = readCurrentForecast()
+	Local $SwitchtoProfile = ""
+	Local $aArray = _FileListToArray($sProfilePath, "*", $FLTA_FOLDERS)
+	_ArrayDelete($aArray,0)
+	While True
+		If $ichkForecastHopingSwitchMax = 1 Then
+		If $currentForecast < Number($itxtForecastHopingSwitchMax, 3) And $sCurrProfile <> $icmbForecastHopingSwitchMax Then
+		$SwitchtoProfile = $icmbForecastHopingSwitchMax
+		Local $aNewProfile = $aArray[number($icmbForecastHopingSwitchMax)]
+			SetLog("Weather index < " & $itxtForecastHopingSwitchMax & " !!", $COLOR_ORANGE)
+			SetLog("Switching profile to : " & $aNewProfile, $COLOR_BLUE)
+		ExitLoop
+		EndIf
+		EndIf
+		If $ichkForecastHopingSwitchMin = 1 Then
+		If $currentForecast > Number($itxtForecastHopingSwitchMin, 3) And $sCurrProfile <> $icmbForecastHopingSwitchMin Then
+		$SwitchtoProfile = $icmbForecastHopingSwitchMin
+		Local $aNewProfile = $aArray[number($icmbForecastHopingSwitchMin)]
+			SetLog("Weather index > " & $itxtForecastHopingSwitchMin & " !!", $COLOR_ORANGE)
+			SetLog("Switching profile to : " & $aNewProfile, $COLOR_BLUE)
+		ExitLoop
+		EndIf
+		EndIf
+	ExitLoop
+	WEnd
+	If $SwitchtoProfile <> "" Then
+		If $sCurrProfile <> $SwitchtoProfile Then
+		_GUICtrlComboBox_SetCurSel($cmbProfile, $SwitchtoProfile)
+		cmbProfile()
+		EndIf
+	EndIf
+EndIf
 EndFunc

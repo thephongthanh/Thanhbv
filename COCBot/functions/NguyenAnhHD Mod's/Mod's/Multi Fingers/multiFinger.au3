@@ -14,13 +14,13 @@
 ; ===============================================================================================================================
 
 Local $aAttackTypeString[$mf8FPinWheelRight + 1] = ["Random", _
-													"Four Finger Standard", _
-													"Four Finger Spiral Left", _
-													"Four Finger Spiral Right", _
-													"Eight Finger Blossom", _
-													"Eight Finger Implosion", _
-													"Eight Finger Pin Wheel Spiral Left", _
-													"Eight Finger Pin Wheel Spiral Right"]
+		"Four Finger Standard", _
+		"Four Finger Spiral Left", _
+		"Four Finger Spiral Right", _
+		"Eight Finger Blossom", _
+		"Eight Finger Implosion", _
+		"Eight Finger Pin Wheel Spiral Left", _
+		"Eight Finger Pin Wheel Spiral Right"]
 
 Func multiFingerSetupVecors($multiStyle, ByRef $dropVectors, $listInfoDeploy)
 	Switch $multiStyle
@@ -39,7 +39,7 @@ Func multiFingerSetupVecors($multiStyle, ByRef $dropVectors, $listInfoDeploy)
 		Case $mf8FPinWheelRight
 			eightFingerPinWheelRightVectors($dropVectors, $listInfoDeploy)
 	EndSwitch
-EndFunc
+EndFunc   ;==>multiFingerSetupVecors
 
 Func multiFingerDropOnEdge($multiStyle, $dropVectors, $waveNumber, $kind, $dropAmount, $position = 0)
 	If $dropAmount = 0 Or isProblemAffect(True) Then Return
@@ -64,10 +64,10 @@ Func launchMultiFinger($listInfoDeploy, $CC, $King, $Queen, $Warden, $overrideSm
 	Local $RandomEdge, $RandomXY
 	Local $dropVectors[0][0]
 
-	Local $multiStyle = ($iMultiFingerStyle = $mfRandom) ? Random($mfFFStandard, $mf8FPinWheelRight, 1) : (($iMultiFingerStyle = -1) ? Random($mfFFStandard, $mf8FPinWheelRight, 1) : $iMultiFingerStyle)
+	Local $multiStyle = ($iMultiFingerStyle = $mfRandom) ? Random($mfFFStandard, $mf8FPinWheelRight, 1) : $iMultiFingerStyle
 
 	SetLog("Attacking " & $aAttackTypeString[$multiStyle] & " fight style.", $COLOR_BLUE)
-	If $debugSetLog = 1 Then SetLog("Launch " & $aAttackTypeString[$multiStyle] & " with CC " & $CC & ", K " & $King & ", Q " & $Queen & ", W " & $Warden , $COLOR_PURPLE)
+	If $debugSetLog = 1 Then SetLog("Launch " & $aAttackTypeString[$multiStyle] & " with CC " & $CC & ", K " & $King & ", Q " & $Queen & ", W " & $Warden, $COLOR_PURPLE)
 
 	Local $aDeployButtonPositions = getUnitLocationArray()
 	Local $unitCount = unitCountArray()
@@ -137,7 +137,7 @@ Func LaunchTroops($kind, $nbSides, $waveNb, $maxWaveNb, $slotsPerEdge = 0, $over
 	EndIf
 
 	If ($troop = -1) Or ($troopNb = 0) Then ; Troop not trained or 0 units to deploy
-		Return False; nothing to do => skip this wave
+		Return False ; nothing to do => skip this wave
 	EndIf
 
 	;SetLog("Dropping " & getWaveName($waveNb, $maxWaveNb) & " wave of " & $troopNb & " " & $name, $COLOR_GREEN)
@@ -207,7 +207,7 @@ Func modDropTroop($troop, $nbSides, $number, $slotsPerEdge = 0, $indexToAttack =
 			For $i = $startIndex To $maxElementNearCollector
 				$pixel = $PixelNearCollector[$i]
 				ReDim $listEdgesPixelToDrop[UBound($listEdgesPixelToDrop) + 1]
-				If ($troop = $eArch Or $troop = $eWiza Or $troop = $eMini or $troop = $eBarb) Then
+				If ($troop = $eArch Or $troop = $eWiza Or $troop = $eMini Or $troop = $eBarb) Then
 					$listEdgesPixelToDrop[UBound($listEdgesPixelToDrop) - 1] = _FindPixelCloser($PixelRedAreaFurther, $pixel, 5)
 				Else
 					$listEdgesPixelToDrop[UBound($listEdgesPixelToDrop) - 1] = _FindPixelCloser($PixelRedArea, $pixel, 5)

@@ -27,7 +27,7 @@ Local $x = 25, $y = 20
 	$y += 25
 		$lblDeployDB = GUICtrlCreateLabel(GetTranslated(608,3, "Attack on")&":", $x, $y + 5, -1, -1)
 		$cmbDeployDB = GUICtrlCreateCombo("", $x + 55, $y, 120, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			_GUICtrlSetTip(-1, GetTranslated(608,4, "Attack on a single side, penetrates through base") & @CRLF & GetTranslated(608,5, "Attack on two sides, penetrates through base") & @CRLF & GetTranslated(608,6, "Attack on three sides, gets outer and some inside of base") & @CRLF & GetTranslated(608,41, "Attack on Four Fingers Classic"), GetTranslated(608,7,"Select the No. of sides to attack on."))
+			_GUICtrlSetTip(-1, GetTranslated(608,4, "Attack on a single side, penetrates through base") & @CRLF & GetTranslated(608,5, "Attack on two sides, penetrates through base") & @CRLF & GetTranslated(608,6, "Attack on three sides, gets outer and some inside of base") & @CRLF & GetTranslated(608,41, "Attack on Four Fingers Classic") & @CRLF & GetTranslated(608,43, "Attack on Multi Finger Fingers"), GetTranslated(608,7,"Select the No. of sides to attack on."))
 			GUICtrlSetData(-1, GetTranslated(608,8, "one side") & "|" & GetTranslated(608,9, "two sides") & "|" & GetTranslated(608,10, "three sides") & "|" & GetTranslated(608,11, "all sides equally") & "|" & GetTranslated(608,40, "Four Fingers Classic")  & "|" & GetTranslated(608,42, "Multi Finger"), GetTranslated(608,11, -1))
 			GUICtrlSetOnEvent(-1,"Bridge") ; Uncheck SmartAttack Red Area when enable FourFinger to avoid conflict
 		$y += 25
@@ -83,18 +83,18 @@ Local $x = 25, $y = 20
 	$y += 60
 	$lblDBMultiFinger = GUICtrlCreateLabel("Style:", $x, $y + 3, 30, -1, $SS_RIGHT)
 	$cmbDBMultiFinger = GUICtrlCreateCombo("", $x + 35, $y, 170, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-		$txtTip = GetTranslated(608,43, "Select which multi finger attack style you would like.") & @CRLF & @CRLF & _
-				  GetTranslated(608,44, "     Random will chose one of the attacks at random.") & @CRLF & _
-				  GetTranslated(608,45, "     Four Finger and Eight Finger attacks will attack from all 4 sides at once.")
+		$txtTip = GetTranslated(608,44, "Select which multi finger attack style you would like.") & @CRLF & @CRLF & _
+				  GetTranslated(608,45, "     Random will chose one of the attacks at random.") & @CRLF & _
+				  GetTranslated(608,46, "     Four Finger and Eight Finger attacks will attack from all 4 sides at once.")
 	GUICtrlSetTip(-1, $txtTip)
-	GUICtrlSetData(-1,  GetTranslated(608,46, "Random") & "|" & _
-						GetTranslated(608,47, "Four Finger Standard") & "|" & _
-						GetTranslated(608,48, "Four Finger Spiral Left") & "|" & _
-						GetTranslated(608,49, "Four Finger Spiral Right") & "|" & _
-						GetTranslated(608,50, "Eight Finger Blossom") & "|" & _
-						GetTranslated(608,51, "Eight Finger Implosion") & "|" & _
-						GetTranslated(608,52, "Eight Finger Pin Wheel Spiral Left") & "|" & _
-						GetTranslated(608,53, "Eight Finger Pin Wheel Spiral Right"), GetTranslated(671,47, -1))
+	GUICtrlSetData(-1,  GetTranslated(608,47, "Random") & "|" & _
+						GetTranslated(608,48, "Four Finger Standard") & "|" & _
+						GetTranslated(608,49, "Four Finger Spiral Left") & "|" & _
+						GetTranslated(608,50, "Four Finger Spiral Right") & "|" & _
+						GetTranslated(608,51, "Eight Finger Blossom") & "|" & _
+						GetTranslated(608,52, "Eight Finger Implosion") & "|" & _
+						GetTranslated(608,53, "Eight Finger Pin Wheel Spiral Left") & "|" & _
+						GetTranslated(608,54, "Eight Finger Pin Wheel Spiral Right"), GetTranslated(671,48, -1))
 	GUICtrlSetOnEvent(-1, "cmbDBMultiFinger")
 
 ;GUISetState()

@@ -96,14 +96,127 @@
 	sldSelectedSpeedDB()
 	sldSelectedSpeedAB()
 
-	; Change Android Shield Color
-	_GUICtrlSlider_SetPos($sldrTransparancyShield, $AndroidShieldTransparency)
-	_GUICtrlSlider_SetPos($sldrTransparancyIdleShield, $AndroidInactiveTransparency)
-
-	; Don't Remove Troops
-	If $ichkDontRemoveTroops = 1 Then
-		GUICtrlSetState($chkDontRemoveTroops, $GUI_CHECKED)
+	; Profile Switch
+	If $ichkGoldSwitchMax = 1 Then
+		GUICtrlSetState($chkGoldSwitchMax, $GUI_CHECKED)
 	Else
-		GUICtrlSetState($chkDontRemoveTroops, $GUI_UNCHECKED)
+		GUICtrlSetState($chkGoldSwitchMax, $GUI_UNCHECKED)
 	EndIf
-	chkDontRemoveTroops()
+	_GUICtrlComboBox_SetCurSel($cmbGoldMaxProfile, $icmbGoldMaxProfile)
+	GUICtrlSetData($txtMaxGoldAmount, $itxtMaxGoldAmount)
+	If $ichkGoldSwitchMin = 1 Then
+		GUICtrlSetState($chkGoldSwitchMin, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkGoldSwitchMin, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbGoldMinProfile, $icmbGoldMinProfile)
+	GUICtrlSetData($txtMinGoldAmount, $itxtMinGoldAmount)
+
+	If $ichkElixirSwitchMax = 1 Then
+		GUICtrlSetState($chkElixirSwitchMax, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkElixirSwitchMax, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbElixirMaxProfile, $icmbElixirMaxProfile)
+	GUICtrlSetData($txtMaxElixirAmount, $itxtMaxElixirAmount)
+	If $ichkElixirSwitchMin = 1 Then
+		GUICtrlSetState($chkElixirSwitchMin, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkElixirSwitchMin, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbElixirMinProfile, $icmbElixirMinProfile)
+	GUICtrlSetData($txtMinElixirAmount, $itxtMinElixirAmount)
+
+	If $ichkDESwitchMax = 1 Then
+		GUICtrlSetState($chkDESwitchMax, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkDESwitchMax, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbDEMaxProfile, $icmbDEMaxProfile)
+	GUICtrlSetData($txtMaxDEAmount, $itxtMaxDEAmount)
+	If $ichkDESwitchMin = 1 Then
+		GUICtrlSetState($chkDESwitchMin, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkDESwitchMin, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbDEMinProfile, $icmbDEMinProfile)
+	GUICtrlSetData($txtMinDEAmount, $itxtMinDEAmount)
+
+	If $ichkTrophySwitchMax = 1 Then
+		GUICtrlSetState($chkTrophySwitchMax, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkTrophySwitchMax, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbTrophyMaxProfile, $icmbTrophyMaxProfile)
+	GUICtrlSetData($txtMaxTrophyAmount, $itxtMaxTrophyAmount)
+	If $ichkTrophySwitchMin = 1 Then
+		GUICtrlSetState($chkTrophySwitchMin, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkTrophySwitchMin, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbTrophyMinProfile, $icmbTrophyMinProfile)
+	GUICtrlSetData($txtMinTrophyAmount, $itxtMinTrophyAmount)
+
+	; SimpleQuicktrain - DEMEN
+	If $ichkSimpleQuickTrain = 1 Then
+		GUICtrlSetState($chkSimpleQuickTrain, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkSimpleQuickTrain, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkFillArcher = 1 Then
+		GUICtrlSetState($chkFillArcher, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkFillArcher, $GUI_UNCHECKED)
+	EndIf
+	GUICtrlSetData($txtFillArcher, $iFillArcher)
+
+	If $ichkFillEQ = 1 Then
+		GUICtrlSetState($chkFillEQ, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkFillEQ, $GUI_UNCHECKED)
+	EndIf
+
+	If $ichkTrainDonated = 1 Then
+		GUICtrlSetState($chkTrainDonated, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkTrainDonated, $GUI_UNCHECKED)
+	EndIf
+
+	; Clan Hop Setting
+	If $ichkClanHop = 1 Then
+		GUICtrlSetState($chkClanHop, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkClanHop, $GUI_UNCHECKED)
+	EndIf
+
+    ; Forecast Added by rulesss
+	GUICtrlSetData($txtForecastBoost, $iTxtForecastBoost)
+	If $iChkForecastBoost = 1 Then
+		GUICtrlSetState($chkForecastBoost, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkForecastBoost, $GUI_UNCHECKED)
+	EndIf
+	chkForecastBoost()
+
+	If $ichkForecastHopingSwitchMax = 1 Then
+		GUICtrlSetState($chkForecastHopingSwitchMax, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkForecastHopingSwitchMax, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbForecastHopingSwitchMax, $icmbForecastHopingSwitchMax)
+	GUICtrlSetData($txtForecastHopingSwitchMax, $itxtForecastHopingSwitchMax)
+	chkForecastHopingSwitchMax()
+
+	If $ichkForecastHopingSwitchMin = 1 Then
+		GUICtrlSetState($chkForecastHopingSwitchMin, $GUI_CHECKED)
+	Else
+		GUICtrlSetState($chkForecastHopingSwitchMin, $GUI_UNCHECKED)
+	EndIf
+	_GUICtrlComboBox_SetCurSel($cmbForecastHopingSwitchMin, $icmbForecastHopingSwitchMin)
+	GUICtrlSetData($txtForecastHopingSwitchMin, $itxtForecastHopingSwitchMin)
+	chkForecastHopingSwitchMin()
+
+	; Added Multi Switch Language by rulesss and Kychera
+	_GUICtrlComboBox_SetCurSel($cmbSwLang, $icmbSwLang)
+	$icmbSwLang = _GUICtrlComboBox_GetCurSel($cmbSwLang)

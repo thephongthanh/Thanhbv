@@ -128,7 +128,10 @@ Func CheckAttackLocation(ByRef $x, ByRef $y)
 	;If $x < 1 Then $x = 1
 	;If $x > $GAME_WIDTH - 1 Then $x = $GAME_WIDTH - 1
 	;If $y < 1 Then $y = 1
-	If $y > $DeployableLRTB[3] Then $y = $DeployableLRTB[3]
+	If $y > $DeployableLRTB[3] Then
+		$y = $DeployableLRTB[3]
+		Return False
+	EndIf
 	Return True
 	#cs
 	Local $sPoints = GetDeployableNextTo($x & "," & $y)
@@ -236,6 +239,9 @@ Func Algorithm_AttackCSV($testattack = False, $captureredarea = True)
 	Local $hTimerTOTAL = TimerInit()
 	;02.01 - REDAREA -----------------------------------------------------------------------------------------------------------------------------------------
 	Local $hTimer = TimerInit()
+
+	SetDebugLog("Redline mode: " & $iRedlineRoutine[$iMatchMode])
+	SetDebugLog("Dropline mode: " & $iDroplineEdge[$iMatchMode])
 
 	_CaptureRegion2() ; ensure full screen is captured (not ideal for debugging as clean image was already saved, but...)
 	If $captureredarea Then _GetRedArea($iRedlineRoutine[$iMatchMode])
@@ -739,7 +745,7 @@ Func Algorithm_AttackCSV($testattack = False, $captureredarea = True)
 	ParseAttackCSV($testattack)
 
 	;Activate Heroe's power Manual after X seconds
-	If ($checkKPower Or $checkQPower Or $checkWPower) And $iActivateKQCondition = "Manual" Then
+	If ($checkKPower Or $checkQPower or $checkWPower) And $iActivateKQCondition = "Manual" Then
 		SetLog("Waiting " & $delayActivateKQ / 1000 & " seconds before activating Hero abilities", $COLOR_INFO)
 		If _Sleep($delayActivateKQ) Then Return
 		If $checkKPower Then
@@ -752,7 +758,7 @@ Func Algorithm_AttackCSV($testattack = False, $captureredarea = True)
 			SelectDropTroop($Queen)
 			$checkQPower = False
 		EndIf
-		If $checkWPower Then
+		If $checkWPower then
 			SetLog("Activating Warden's power", $COLOR_INFO)
 			SelectDropTroop($Warden)
 			$checkWPower = False

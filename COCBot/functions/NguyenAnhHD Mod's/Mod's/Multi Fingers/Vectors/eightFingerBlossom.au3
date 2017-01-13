@@ -104,7 +104,7 @@ Func eightFingerBlossomVectors(ByRef $dropVectors, $listInfoDeploy)
 			If $dropAmount > 0 Then
 				$startPoint = convertToPoint($BottomLeft[2][0], $BottomLeft[2][1])
 				$endPoint = convertToPoint($BottomLeft[4][0], $BottomLeft[4][1])
-				addVector($dropVectors, $i, 7, $startPoint, $endPoint, $dropAmount + 1)				
+				addVector($dropVectors, $i, 7, $startPoint, $endPoint, $dropAmount + 1)
 				$waveDropAmount -= $dropAmount
 			EndIf
 		EndIf

@@ -51,8 +51,10 @@ Func CheckOverviewFullArmy($bOpenArmyWindow = False, $bCloseArmyWindow = False)
 	EndIf
 
 	If $debugsetlogTrain = 1 Then Setlog("Checking Overview for full army [!] " & $Pixel & ", " & _GetPixelColor(128, 176, True), $COLOR_DEBUG)
-	If $Pixel Then
-		$fullArmy = True
+	If $Pixel Then          ; Thanks ZecaClasher for this little fix
+		$fullArmy = True    ;
+	Else					; Avoid troops from not being trained when army count is zero
+		$fullArmy = False	; I don't Really know if it is necessary but I put it
 	EndIf
 
 	$canRequestCC = _ColorCheck(_GetPixelColor($aRequestTroopsAO[0], $aRequestTroopsAO[1], True), Hex($aRequestTroopsAO[2], 6), $aRequestTroopsAO[5])

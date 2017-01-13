@@ -97,4 +97,34 @@ $iCSVSpeeds[16] = 20
 $iCSVSpeeds[17] = 50
 $iCSVSpeeds[18] = 99
 
-Global $ichkDontRemoveTroops = 0
+; Profile Switch
+Global $profileString
+Global $ichkGoldSwitchMax, $itxtMaxGoldAmount, $icmbGoldMaxProfile, $ichkGoldSwitchMin, $itxtMinGoldAmount, $icmbGoldMinProfile
+Global $ichkElixirSwitchMax, $itxtMaxElixirAmount, $icmbElixirMaxProfile, $ichkElixirSwitchMin, $itxtMinElixirAmount, $icmbElixirMinProfile
+Global $ichkDESwitchMax, $itxtMaxDEAmount, $icmbDEMaxProfile, $ichkDESwitchMin, $itxtMinDEAmount, $icmbDEMinProfile
+Global $ichkTrophySwitchMax, $itxtMaxTrophyAmount, $icmbTrophyMaxProfile, $ichkTrophySwitchMin, $itxtMinTrophyAmount, $icmbTrophyMinProfile
+
+; SimpleQuicktrain
+Global $ichkSimpleQuickTrain, $ichkFillArcher, $iFillArcher, $ichkFillEQ, $ichkTrainDonated
+
+; Clan Hop Setting
+Global $ichkClanHop
+
+; Forecast Added by rulesss
+Global Const $COLOR_DEEPPINK = 0xFF1493
+Global Const $COLOR_DARKGREEN = 0x006400
+Global $oIE = ObjCreate("Shell.Explorer.2")
+Global $dtStamps[0]
+Global $lootMinutes[0]
+Global $timeOffset = 0
+Global $TimerForecast = 0
+Global $lootIndexScaleMarkers
+Global $currentForecast
+Global $chkForecastBoost, $txtForecastBoost
+Global $iChkForecastBoost, $iTxtForecastBoost
+Global $cmbForecastHopingSwitchMax, $cmbForecastHopingSwitchMin
+Global $ichkForecastHopingSwitchMax, $icmbForecastHopingSwitchMax, $itxtForecastHopingSwitchMax, $ichkForecastHopingSwitchMin, $icmbForecastHopingSwitchMin, $itxtForecastHopingSwitchMin
+
+; Added Multi Switch Language by rulesss and Kychera
+Global $icmbSwLang
+Global $cmbSwLang

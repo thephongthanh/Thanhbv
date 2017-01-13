@@ -62,6 +62,7 @@ Func ResetStatsForSwitchAcc()
 		$aGoldTotalAcc[$i] = 0
 		$aElixirTotalAcc[$i] = 0
 		$aDarkTotalAcc[$i] = 0
+		$aTrophyLootAcc[$i] = 0
 		$aAttackedCountAcc[$i] = 0
 		$aSkippedVillageCountAcc[$i] = 0
 	Next
