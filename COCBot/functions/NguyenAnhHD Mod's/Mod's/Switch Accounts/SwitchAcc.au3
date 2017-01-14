@@ -320,7 +320,7 @@ EndFunc; ==> Check & Switch CoC Account with / without sleep combo - DEMEN
 Func SwitchCOCAcc()
 
 	If $ichkTrain = 1 Then
-	SetLog("Pre-train Donated Troops in QuickTrain 3", $COLOR_ACTION1)
+	SetLog("Pre-train Donated Troops in QuickTrain Number 3", $COLOR_ACTION1)
 	If OpenArmyWindow() = False Then Return
 	SetLog(" - Army Window Opened!", $COLOR_ACTION)
 	If _Sleep(2000) Then Return

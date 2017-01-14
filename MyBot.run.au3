@@ -36,7 +36,7 @@ Global $iBotLaunchTime = 0
 Local $hBotLaunchTime = TimerInit()
 
 Global $sBotVersion = "v6.5.3" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it is also use on Checkversion()
-Global $sModversion = "v1.4" ;<== Just Change This to Version Number
+Global $sModversion = "v1.4.1" ;<== Just Change This to Version Number
 Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/26474-new-mybot-v622v641-mod-nguyenanhhd-v532v10-update-1812/" ;<== Our Website Link Or Link Download
 Global $sModDownloadUrl = "https://github.com/NguyenAnhHD/MyBot-v6.5-Mod/releases"
 

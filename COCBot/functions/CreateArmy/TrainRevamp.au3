@@ -106,11 +106,11 @@ Func CheckCamp($NeedOpenArmy = False, $CloseCheckCamp = False)
 		If $Num > 0 Then
 			TrainArmyNumber($Num)
 		Else
-			Setlog(" » Quick Train Combo Army", $COLOR_ORANGE)
+			Setlog(" » Quick Train Combo Army")
 			If $Runstate = False Then Return
 			If ISArmyWindow(True, $QuickTrainTAB) Then
 				For $i = 1 to 3
-					Setlog(" » Train Army Number: " & $i, $COLOR_ORANGE)
+					Setlog(" » TrainArmy Number: " & $i, $COLOR_ORANGE)
 					Click(817, 248 + 118*$i)
 					If $i = 2 And GUICtrlRead($hRadio_Army12)  = $GUI_CHECKED Then ExitLoop
 				Next
