@@ -29,7 +29,7 @@ Func chkUseQTrain()
 		GUICtrlSetData($g_hLblElixirCostSpell, "0")
 		GUICtrlSetData($g_hLblDarkCostSpell, "0")
 	Else
-		_GUI_Value_STATE("DISABLE", $g_hRdoArmy1 & "#" & $g_hRdoArmy2 & "#" & $g_hRdoArmy3)
+		_GUI_Value_STATE("DISABLE", $g_ahChkArmy[0] & "#" & $g_ahChkArmy[1] & "#" & $g_ahChkArmy[2])	; QuickTrainCombo (checkbox) - Demen`
 		_GUI_Value_STATE("ENABLE", $grpTrainTroops)
 		_GUI_Value_STATE("ENABLE", $grpCookSpell)
 		lblTotalCountTroop1()
