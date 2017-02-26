@@ -5,13 +5,16 @@
 ; Parameters ....: None
 ; Return values .: None
 ; Author ........: Boju (11-2016)
-; Modified ......:
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2016
+; Modified ......: CodeSlinger69 (2017)
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......:
 ; ===============================================================================================================================
+#include-once
+
+Global $TempGainCost[3] = [0, 0, 0]
 
 Func StartGainCost()
 	$TempGainCost[0] = 0
@@ -19,7 +22,7 @@ Func StartGainCost()
 	$TempGainCost[2] = 0
 	VillageReport(True, True)
 	Local $tempCounter = 0
-	While ($iGoldCurrent = "" Or $iElixirCurrent = "" Or ($iDarkCurrent = "" And $iDarkStart <> "")) And $tempCounter < 5
+	While ($iGoldCurrent = "" Or $iElixirCurrent = "" Or ($iDarkCurrent = "" And $g_iStatsStartedWith[$eLootDarkElixir] <> "")) And $tempCounter < 5
 		$tempCounter += 1
 		If _Sleep(100) Then Return
 		VillageReport(True, True)
@@ -31,8 +34,8 @@ EndFunc   ;==>StartGainCost
 
 Func EndGainCost($Type)
 	VillageReport(True, True)
-	$tempCounter = 0
-	While ($iGoldCurrent = "" Or $iElixirCurrent = "" Or ($iDarkCurrent = "" And $iDarkStart <> "")) And $tempCounter < 5
+	Local $tempCounter = 0
+	While ($iGoldCurrent = "" Or $iElixirCurrent = "" Or ($iDarkCurrent = "" And $g_iStatsStartedWith[$eLootDarkElixir] <> "")) And $tempCounter < 5
 		$tempCounter += 1
 		VillageReport(True, True)
 	WEnd
@@ -46,22 +49,19 @@ Func EndGainCost($Type)
 			If $TempGainCost[0] <> "" And $iGoldCurrent <> "" And $TempGainCost[0] <> $iGoldCurrent Then
 				$tempGoldCollected = $iGoldCurrent - $TempGainCost[0]
 				$iGoldFromMines += $tempGoldCollected
-				$iGoldTotal += $tempGoldCollected
-				If $ichkSwitchAcc = 1 Then $aGoldTotalAcc[$nCurProfile -1] += $tempGoldCollected 		; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
+				$g_iStatsTotalGain[$eLootGold] += $tempGoldCollected
 			EndIf
 
 			If $TempGainCost[1] <> "" And $iElixirCurrent <> "" And $TempGainCost[1] <> $iElixirCurrent Then
 				$tempElixirCollected = $iElixirCurrent - $TempGainCost[1]
 				$iElixirFromCollectors += $tempElixirCollected
-				$iElixirTotal += $tempElixirCollected
-				If $ichkSwitchAcc = 1 Then $aElixirTotalAcc[$nCurProfile -1] += $tempElixirCollected 	; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
+				$g_iStatsTotalGain[$eLootElixir] += $tempElixirCollected
 			EndIf
 
 			If $TempGainCost[2] <> "" And $iDarkCurrent <> "" And $TempGainCost[2] <> $iDarkCurrent Then
 				$tempDElixirCollected = $iDarkCurrent - $TempGainCost[2]
 				$iDElixirFromDrills += $tempDElixirCollected
-				$iDarkTotal += $tempDElixirCollected
-				If $ichkSwitchAcc = 1 Then $aDarkTotalAcc[$nCurProfile -1] += $tempDElixirCollected  	; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
+				$g_iStatsTotalGain[$eLootDarkElixir] += $tempDElixirCollected
 			EndIf
 		Case "Train"
 			Local $tempElixirSpent = 0
@@ -69,15 +69,13 @@ Func EndGainCost($Type)
 			If $TempGainCost[1] <> "" And $iElixirCurrent <> ""  And $TempGainCost[1] <> $iElixirCurrent Then
 				$tempElixirSpent = ($TempGainCost[1] - $iElixirCurrent)
 				$iTrainCostElixir += $tempElixirSpent
-				$iElixirTotal -= $tempElixirSpent
-				If $ichkSwitchAcc = 1 Then $aElixirTotalAcc[$nCurProfile-1] -= $tempElixirSpent 	; Separate stats per account - SwitchAcc - DEMEN
+				$g_iStatsTotalGain[$eLootElixir] -= $tempElixirSpent
 			EndIf
 
 			If $TempGainCost[2] <> "" And $iDarkCurrent <> ""  And $TempGainCost[2] <> $iDarkCurrent Then
 				$tempDElixirSpent = ($TempGainCost[2] - $iDarkCurrent)
 				$iTrainCostDElixir += $tempDElixirSpent
-				$iDarkTotal -= $tempDElixirSpent
-				If $ichkSwitchAcc = 1 Then $aDarkTotalAcc[$nCurProfile - 1] -= $tempDElixirSpent 	; Separate stats per account - SwitchAcc -  DEMEN
+				$g_iStatsTotalGain[$eLootDarkElixir] -= $tempDElixirSpent
 			EndIf
 	EndSwitch
 

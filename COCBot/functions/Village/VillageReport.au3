@@ -7,7 +7,7 @@
 ; Return values .: None
 ; Author ........: Hervidero (2015-feb-10)
 ; Modified ......: Safar46 (2015), Hervidero (2015), KnowJack (June-2015) , ProMac (2015), Sardo 2015-08, MonkeyHunter(6-2106)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2016
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -30,13 +30,7 @@ Func VillageReport($bBypass = False, $bSuppressLog = False)
 	getBuilderCount($bSuppressLog) ; update builder data
 	If _Sleep($iDelayRespond) Then Return
 
-	If $ichkSwitchAcc = 1 Then										; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
-		$aFreeBuilderCountAcc[$nCurProfile -1] = $iFreeBuilderCount
-		$aTotalBuilderCountAcc[$nCurProfile -1] = $iTotalBuilderCount
-	EndIf															; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
-
 	$iTrophyCurrent = getTrophyMainScreen($aTrophies[0], $aTrophies[1])
-	If $ichkSwitchAcc = 1 Then	$aTrophyCurrentAcc[$nCurProfile -1] = $iTrophyCurrent	; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
 	If Not $bSuppressLog Then Setlog(" [T]: " & _NumberFormat($iTrophyCurrent), $COLOR_SUCCESS)
 
 	If _ColorCheck(_GetPixelColor(837, 134, True), Hex(0x302030, 6), 10) Then ; check if the village have a Dark Elixir Storage
@@ -44,22 +38,11 @@ Func VillageReport($bBypass = False, $bSuppressLog = False)
 		$iElixirCurrent = getResourcesMainScreen(696, 74)
 		$iDarkCurrent =  getResourcesMainScreen(728, 123)
 		$iGemAmount = getResourcesMainScreen(740, 171)
-		If $ichkSwitchAcc = 1 Then										; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
-			$aGoldCurrentAcc[$nCurProfile -1] = $iGoldCurrent
-			$aElixirCurrentAcc[$nCurProfile -1] = $iElixirCurrent
-			$aDarkCurrentAcc[$nCurProfile -1] = $iDarkCurrent
-			$aGemAmountAcc[$nCurProfile -1] = $iGemAmount
-		EndIf
 		If Not $bSuppressLog Then SetLog(" [G]: " & _NumberFormat($iGoldCurrent) & " [E]: " & _NumberFormat($iElixirCurrent) & " [D]: " & _NumberFormat($iDarkCurrent) & " [GEM]: " & _NumberFormat($iGemAmount), $COLOR_SUCCESS)
 	Else
 		$iGoldCurrent = getResourcesMainScreen(701, 23)
 		$iElixirCurrent = getResourcesMainScreen(701, 74)
 		$iGemAmount = getResourcesMainScreen(719, 123)
-		If $ichkSwitchAcc = 1 Then										; Separate Stats per Each Account - SwitchAcc Mode - DEMEN
-			$aGoldCurrentAcc[$nCurProfile -1] = $iGoldCurrent
-			$aElixirCurrentAcc[$nCurProfile -1] = $iElixirCurrent
-			$aGemAmountAcc[$nCurProfile -1] = $iGemAmount
-		EndIf
 		If Not $bSuppressLog Then SetLog(" [G]: " & _NumberFormat($iGoldCurrent) & " [E]: " & _NumberFormat($iElixirCurrent) & " [GEM]: " & _NumberFormat($iGemAmount), $COLOR_SUCCESS)
 	EndIf
 	If $bBypass = False Then ; update stats
