@@ -98,6 +98,7 @@ Func BotStart()
 		EndIf
 		If Not $g_bRunState Then Return
 		If $hWndActive = $HWnD And ($g_bAndroidBackgroundLaunched = True Or AndroidControlAvailable())  Then ; Really?
+			AutoHide()
 			Initiate() ; Initiate and run bot
 		Else
 			SetLog("Cannot use " & $g_sAndroidEmulator & ", please check log", $COLOR_ERROR)

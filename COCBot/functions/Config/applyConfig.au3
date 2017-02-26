@@ -1639,6 +1639,9 @@ Func ApplyConfig_600_35($TypeReadSave)
 			GUICtrlSetState($g_hChkAutostart, $ichkAutoStart = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetData($g_hTxtAutostartDelay, $ichkAutoStartDelay)
 			chkAutoStart()
+			GUICtrlSetState($g_hChkAutohide, $ichkAutoHide = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			GUICtrlSetData($g_hTxtAutohideDelay, $ichkAutoHideDelay)
+			chkAutoHide()
 			GUICtrlSetState($g_hChkCheckGameLanguage, $ichkLanguage = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkAutoAlign, $iDisposeWindows = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			chkDisposeWindows()
@@ -1670,6 +1673,8 @@ Func ApplyConfig_600_35($TypeReadSave)
 			$iDeleteLootsDays = GUICtrlRead($g_hTxtDeleteLootsDays)
 			$ichkAutoStart = GUICtrlRead($g_hChkAutostart) = $GUI_CHECKED ? 1 : 0
 			$ichkAutoStartDelay = GUICtrlRead($g_hTxtAutostartDelay)
+			$ichkAutoHide = GUICtrlRead($g_hChkAutohide) = $GUI_CHECKED ? 1 : 0
+			$ichkAutoHideDelay = GUICtrlRead($g_hTxtAutohideDelay)
 			$ichkLanguage = GUICtrlRead($g_hChkCheckGameLanguage) = $GUI_CHECKED ? 1 : 0
 			$iDisposeWindows = GUICtrlRead($g_hChkAutoAlign) = $GUI_CHECKED ? 1 : 0
 			$icmbDisposeWindowsPos = _GUICtrlComboBox_GetCurSel($g_hCmbAlignmentOptions)

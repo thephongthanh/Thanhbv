@@ -108,6 +108,10 @@ Func chkAutoStart()
 	GUICtrlSetState($g_hTxtAutostartDelay, GUICtrlRead($g_hChkAutoStart) = $GUI_CHECKED ? $GUI_ENABLE : $GUI_DISABLE)
 EndFunc   ;==>chkAutoStart
 
+Func chkAutoHide()
+	GUICtrlSetState($g_hTxtAutohideDelay, GUICtrlRead($g_hChkAutoHide) = $GUI_CHECKED ? $GUI_ENABLE : $GUI_DISABLE)
+EndFunc   ;==>chkAutoHide
+
 Func chkDisposeWindows()
 	If GUICtrlRead($g_hChkAutoAlign) = $GUI_CHECKED Then
 		GUICtrlSetState($g_hCmbAlignmentOptions, $GUI_ENABLE)

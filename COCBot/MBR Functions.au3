@@ -184,6 +184,7 @@
 #include "functions\Other\CheckPrerequisites.au3"
 #include "functions\Other\CheckDisplay.au3"
 #include "functions\Other\AutoStart.au3"
+#include "functions\Other\AutoHide.au3"
 #include "functions\Other\WindowsArrange.au3"
 #include "functions\Other\MakeScreenshot.au3"
 #include "functions\Other\ClickDrag.au3"

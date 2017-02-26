@@ -1014,6 +1014,8 @@ Func ReadConfig_600_35()
 	IniReadS($iDeleteLootsDays, $g_sProfileConfigPath, "deletefiles", "DeleteLootsDays", 2, "int")
 	IniReadS($ichkAutoStart, $g_sProfileConfigPath, "general", "AutoStart", 0, "int")
 	IniReadS($ichkAutoStartDelay, $g_sProfileConfigPath, "general", "AutoStartDelay", 10, "int")
+	IniReadS($ichkAutoHide, $g_sProfileConfigPath, "general", "AutoHide", 0, "int")
+	IniReadS($ichkAutoHideDelay, $g_sProfileConfigPath, "general", "AutoHideDelay", 10, "int")
 	IniReadS($g_bRestarted, $g_sProfileConfigPath, "general", "Restarted", $g_bRestarted, "int")
 	If $g_bBotLaunchOption_Autostart = True Then $g_bRestarted = True
 	$ichkLanguage = Int(IniRead($g_sProfileConfigPath, "General", "ChkLanguage", 1))

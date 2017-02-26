@@ -909,6 +909,7 @@ Global $ichkDisableSplash = 0 ; Splash screen disabled = 1
 Global $ichkVersion = 1
 Global $ichkDeleteLogs = 1, $iDeleteLogsDays = 2, $ichkDeleteTemp = 1, $iDeleteTempDays = 2, $ichkDeleteLoots = 1, $iDeleteLootsDays = 2
 Global $ichkAutoStart, $ichkAutoStartDelay = 10
+Global $ichkAutoHide, $ichkAutoHideDelay = 10
 Global $ichklanguage = 1
 Global $idisposewindows = 1, $icmbDisposeWindowsPos = 0, $iWAOffsetX = 10, $iWAOffsetY = 10
 Global $iUpdatingWhenMinimized = 1 ; Alternative Minimize Window routine for bot that enables window updates when minimized
