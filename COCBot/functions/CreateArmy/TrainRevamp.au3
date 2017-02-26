@@ -99,7 +99,7 @@ Func CheckCamp($NeedOpenArmy = False, $CloseCheckCamp = False)
 	If $ReturnCamp = 1 Then
 		OpenTrainTabNumber($QuickTrainTAB, "CheckCamp()")
 		If _Sleep(1000) Then Return
-		TrainArmyNumber($g_bQuickTrainArmy)	; QuickTrainCombo (check box) - Demen
+		TrainArmyNumber($g_bQuickTrainArmy[0], $g_bQuickTrainArmy[1], $g_bQuickTrainArmy[2])	; QuickTrainCombo (check box) - Demen
 		If _Sleep(700) Then Return
 	EndIf
 	If $ReturnCamp = 0 Then
@@ -2029,8 +2029,9 @@ Func OpenTrainTabNumber($Num, $WhereFrom)
 	EndIf
 EndFunc   ;==>OpenTrainTabNumber
 
-Func TrainArmyNumber($Army)	; QuickTrainCombo (Checkbox) - Demen
+Func TrainArmyNumber($Army1, $Army2, $Army3)	; QuickTrainCombo (Checkbox) - Demen
 
+	Local $Army[3] = [$Army1, $Army2, $Army3]
 	Local $a_TrainArmy[3][4] = [[817, 366, 0x6bb720, 10], [817, 484, 0x6bb720, 10], [817, 601, 0x6bb720, 10]]
 	Setlog("Using Quick Train Tab.")
 	If $g_bRunState = False Then Return
