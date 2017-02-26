@@ -698,6 +698,7 @@ Func SaveConfig_600_29_DB_Scripted()
 	IniWriteS($g_sProfileConfigPath, "attack", "RedlineRoutineDB", $g_aiAttackScrRedlineRoutine[$DB])
 	IniWriteS($g_sProfileConfigPath, "attack", "DroplineEdgeDB", $g_aiAttackScrDroplineEdge[$DB])
 	IniWriteS($g_sProfileConfigPath, "attack", "ScriptDB", $g_sAttackScrScriptName[$DB])
+	IniWriteS($g_sProfileConfigPath, "DeploymentSpeed", "DB", $g_iCmbCSVSpeed[$DB])
 EndFunc
 
 Func SaveConfig_600_29_DB_Milking()
@@ -797,6 +798,7 @@ Func SaveConfig_600_29_LB_Scripted()
 	IniWriteS($g_sProfileConfigPath, "attack", "RedlineRoutineAB", $g_aiAttackScrRedlineRoutine[$LB])
 	IniWriteS($g_sProfileConfigPath, "attack", "DroplineEdgeAB", $g_aiAttackScrDroplineEdge[$LB])
 	IniWriteS($g_sProfileConfigPath, "attack", "ScriptAB", $g_sAttackScrScriptName[$LB])
+	IniWriteS($g_sProfileConfigPath, "DeploymentSpeed", "LB", $g_iCmbCSVSpeed[$LB])
 EndFunc
 
 Func SaveConfig_600_29_TS()

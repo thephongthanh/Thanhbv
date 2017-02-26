@@ -1320,3 +1320,8 @@ Global Const $THEllipseWidth = 200, $THEllipseHeigth = 150, $CollectorsEllipseWi
 Global Const $centerX = 430, $centerY = 335 ; check later if $THEllipseWidth, $THEllipseHeigth obsolete
 Global $hBitmapFirst
 #endregion
+
+; CSV Speed
+Global $g_hCmbCSVSpeed[2] = [$LB, $DB]
+Global $g_iCmbCSVSpeed[2] = [$LB, $DB]
+Global $g_hDivider

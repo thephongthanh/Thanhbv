@@ -139,8 +139,10 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 				;delay time between 2 drops in different point
 				If $delayDropMin <> $delayDropMax Then
 					$delayDrop = Random($delayDropMin, $delayDropMax, 1)
+					$delayDrop = Int($delayDrop / $g_hDivider)
 				Else
 					$delayDrop = $delayDropMin
+					$delayDrop = Int($delayDrop / $g_hDivider)
 				EndIf
 				debugAttackCSV(">> delay change drop point: " & $delayDrop)
 			EndIf
@@ -157,8 +159,10 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 					;delay time between 2 drops in same point
 					If $delayPointmin <> $delayPointmax Then
 						Local $delayPoint = Random($delayPointmin, $delayPointmax, 1)
+						$delayPoint = Int($delayPoint / $g_hDivider)
 					Else
 						Local $delayPoint = $delayPointmin
+						$delayPoint = Int($delayPoint / $g_hDivider)
 					EndIf
 
 					Switch $iTroopIndex
@@ -214,8 +218,10 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 		Local $sleepafter = 0
 		If $sleepafterMin <> $sleepAfterMax Then
 			$sleepafter = Random($sleepafterMin, $sleepAfterMax, 1)
+			$sleepafter = Int($sleepafter / $g_hDivider)
 		Else
 			$sleepafter = Int($sleepafterMin)
+			$sleepafter = Int($sleepafter / $g_hDivider)
 		EndIf
 		If $sleepafter > 0 And IsKeepClicksActive() = False Then
 			debugAttackCSV(">> delay after drop all troops: " & $sleepafter)

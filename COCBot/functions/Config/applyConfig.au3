@@ -1147,6 +1147,7 @@ Func ApplyConfig_600_29_DB_Scripted($TypeReadSave)
 			_GUICtrlComboBox_SetCurSel($g_hCmbScriptNameDB, $tempindex)
 			cmbScriptNameDB()
 			cmbScriptRedlineImplDB()
+			_GUICtrlComboBox_SetCurSel($g_hCmbCSVSpeed[$DB], $g_iCmbCSVSpeed[$DB])
 		Case "Save"
 			$g_aiAttackScrRedlineRoutine[$DB] = _GUICtrlComboBox_GetCurSel($g_hCmbScriptRedlineImplDB)
 			$g_aiAttackScrDroplineEdge[$DB] = _GUICtrlComboBox_GetCurSel($g_hCmbScriptDroplineDB)
@@ -1155,6 +1156,7 @@ Func ApplyConfig_600_29_DB_Scripted($TypeReadSave)
 			_GUICtrlComboBox_GetLBText($g_hCmbScriptNameDB, $indexofscript, $scriptname)
 			$g_sAttackScrScriptName[$DB] = $scriptname
 			IniWriteS($g_sProfileConfigPath, "attack", "ScriptDB", $g_sAttackScrScriptName[$LB])
+			$g_iCmbCSVSpeed[$DB] = _GUICtrlComboBox_GetCurSel($g_hCmbCSVSpeed[$DB])
 	EndSwitch
 EndFunc
 
@@ -1393,6 +1395,7 @@ Func ApplyConfig_600_29_LB_Scripted($TypeReadSave)
 			_GUICtrlComboBox_SetCurSel($g_hCmbScriptNameAB, $tempindex)
 			cmbScriptNameAB()
 			cmbScriptRedlineImplAB()
+			_GUICtrlComboBox_SetCurSel($g_hCmbCSVSpeed[$LB], $g_iCmbCSVSpeed[$LB])
 		Case "Save"
 			$g_aiAttackScrRedlineRoutine[$LB] = _GUICtrlComboBox_GetCurSel($g_hCmbScriptRedlineImplAB)
 			$g_aiAttackScrDroplineEdge[$LB] = _GUICtrlComboBox_GetCurSel($g_hCmbScriptDroplineAB)
@@ -1401,6 +1404,7 @@ Func ApplyConfig_600_29_LB_Scripted($TypeReadSave)
 			_GUICtrlComboBox_GetLBText($g_hCmbScriptNameAB, $indexofscript, $scriptname)
 			$g_sAttackScrScriptName[$LB] = $scriptname
 			IniWriteS($g_sProfileConfigPath, "attack", "ScriptAB", $g_sAttackScrScriptName[$LB])
+			$g_iCmbCSVSpeed[$LB] = _GUICtrlComboBox_GetCurSel($g_hCmbCSVSpeed[$LB])
 	EndSwitch
 EndFunc
 
