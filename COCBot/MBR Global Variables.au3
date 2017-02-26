@@ -733,7 +733,7 @@ Global $g_abNotifyScheduleWeekDays[7] = [False,False,False,False,False,False,Fal
 
 ; <><><><> Attack Plan / Train Army / Troops/Spells <><><><>
 Global $g_bQuickTrainEnable = False
-Global $g_iQuickTrainArmyNum = 1
+Global $g_bQuickTrainArmy[3] = [True, False, False]			; QuickTrainCombo (Checkbox) - Demen
 Global $g_aiArmyCompTroops[$eTroopCount] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 Global $g_aiArmyCompSpells[$eSpellCount] = [0,0,0,0,0,0,0,0,0,0]
 Global $g_aiTrainArmyTroopLevel[$eTroopCount] = [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0]

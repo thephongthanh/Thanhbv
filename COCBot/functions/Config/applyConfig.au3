@@ -1704,18 +1704,14 @@ Func ApplyConfig_600_52_1($TypeReadSave)
 	Switch $TypeReadSave
 		Case "Read"
 			GUICtrlSetState($g_hChkUseQuickTrain, $g_bQuickTrainEnable ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_hRdoArmy1, $g_iQuickTrainArmyNum = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_hRdoArmy2, $g_iQuickTrainArmyNum = 2 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_hRdoArmy3, $g_iQuickTrainArmyNum = 3 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			GUICtrlSetState($g_ahChkArmy[0], $g_bQuickTrainArmy[0] ? $GUI_CHECKED : $GUI_UNCHECKED)			; 	QuickTrainCombo (Checkbox)- Demen
+			GUICtrlSetState($g_ahChkArmy[1], $g_bQuickTrainArmy[1] ? $GUI_CHECKED : $GUI_UNCHECKED)
+			GUICtrlSetState($g_ahChkArmy[2], $g_bQuickTrainArmy[2] ? $GUI_CHECKED : $GUI_UNCHECKED)
 		Case "Save"
 			$g_bQuickTrainEnable = (GUICtrlRead($g_hChkUseQuickTrain) = $GUI_CHECKED)
-			If GUICtrlRead($g_hRdoArmy1) = $GUI_CHECKED Then
-			   $g_iQuickTrainArmyNum = 1
-			ElseIf GUICtrlRead($g_hRdoArmy2) = $GUI_CHECKED Then
-			   $g_iQuickTrainArmyNum = 2
-			ElseIf GUICtrlRead($g_hRdoArmy3) = $GUI_CHECKED Then
-			   $g_iQuickTrainArmyNum = 3
-			EndIf
+			$g_bQuickTrainArmy[0] = (GUICtrlRead($g_ahChkArmy[0]) = $GUI_CHECKED)							; 	QuickTrainCombo (Checkbox)- Demen
+			$g_bQuickTrainArmy[1] = (GUICtrlRead($g_ahChkArmy[1]) = $GUI_CHECKED)							; 	QuickTrainCombo (Checkbox)- Demen
+			$g_bQuickTrainArmy[2] = (GUICtrlRead($g_ahChkArmy[2]) = $GUI_CHECKED)							; 	QuickTrainCombo (Checkbox)- Demen
 	EndSwitch
 EndFunc
 

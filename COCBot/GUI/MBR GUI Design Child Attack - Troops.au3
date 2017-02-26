@@ -18,7 +18,7 @@ Global $g_hGUI_TRAINARMY = 0
 Global $g_hGUI_TRAINARMY_TAB = 0, $g_hGUI_TRAINARMY_TAB_ITEM1 = 0, $g_hGUI_TRAINARMY_TAB_ITEM2 = 0, $g_hGUI_TRAINARMY_TAB_ITEM3 = 0, $g_hGUI_TRAINARMY_TAB_ITEM4 = 0
 
 ; Troops/Spells sub-tab
-Global $g_hChkUseQuickTrain = 0, $g_hRdoArmy1 = 0, $g_hRdoArmy2 = 0, $g_hRdoArmy3 = 0
+Global $g_hChkUseQuickTrain = 0, $g_ahChkArmy[3]			; QuickTrainCombo (check box) - Demen
 Global $g_ahTxtTrainArmyTroopCount[$eTroopCount] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 Global $g_ahLblTrainArmyTroopLevel[$eTroopCount] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 Global $g_ahTxtTrainArmySpellCount[$eSpellCount] = [0,0,0,0,0,0,0,0,0,0]
@@ -79,13 +79,12 @@ Func CreateTroopsSpellsSubTab()
 	   $g_hChkUseQuickTrain = GUICtrlCreateCheckbox(GetTranslated(621, 34, "Use Quick Train"), $x + 15, $y + 19, -1, 15)
 	   GUICtrlSetState(-1, $GUI_UNCHECKED)
 	   GUICtrlSetOnEvent(-1, "chkUseQTrain")
-	   $g_hRdoArmy1 = GUICtrlCreateRadio(GetTranslated(621, 37, "Army 1"), $x + 120, $y + 20, 50, 15)
-	   GUICtrlSetState(-1, $GUI_DISABLE)
-	   GUICtrlSetState(-1, $GUI_CHECKED)
-	   $g_hRdoArmy2 = GUICtrlCreateRadio(GetTranslated(621, 38, "Army 2"), $x + 180, $y + 20, 50, 15)
-	   GUICtrlSetState(-1, $GUI_DISABLE)
-	   $g_hRdoArmy3 = GUICtrlCreateRadio(GetTranslated(621, 39, "Army 3"), $x + 240, $y + 20, 50, 15)
-	   GUICtrlSetState(-1, $GUI_DISABLE)
+	   For $i = 0 To 2												; QuickTrainCombo (check box) - Demen
+		   $g_ahChkArmy[$i] = GUICtrlCreateCheckbox(GetTranslated(621, 37 + $i, "Army " & $i+1), $x + 120 + $i*60, $y + 20, 50, 15)
+		   GUICtrlSetState(-1, $GUI_DISABLE)
+		   If $i = 0 Then GUICtrlSetState(-1, $GUI_CHECKED)
+		   GUICtrlSetOnEvent(-1, "chkQuickTrainCombo")
+	   Next															; QuickTrainCombo (check box) - Demen
 	   GUICtrlCreateLabel(GetTranslated(621, 41, "Remove Army"), $x + 335, $y + 20, -1, 15, $SS_LEFT)
 	   GUICtrlCreateIcon($g_sLibIconPath, $eIcnResetButton, $x + 405, $y + 17, 24, 24)
 	   GUICtrlSetOnEvent(-1, "Removecamp")

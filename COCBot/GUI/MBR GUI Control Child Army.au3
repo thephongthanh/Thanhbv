@@ -18,7 +18,8 @@ Global $g_avTroopGroup[19][7]  ; Actual training order values determined dynamic
 
 Func chkUseQTrain()
 	If GUICtrlRead($g_hChkUseQuickTrain) = $GUI_CHECKED Then
-		_GUI_Value_STATE("ENABLE", $g_hRdoArmy1 & "#" & $g_hRdoArmy2 & "#" & $g_hRdoArmy3)
+		_GUI_Value_STATE("ENABLE", $g_ahChkArmy[0] & "#" & $g_ahChkArmy[1] & "#" & $g_ahChkArmy[2])		; QuickTrainCombo (checkbox) - Demen
+		chkQuickTrainCombo()																			; QuickTrainCombo (checkbox) - Demen
 		_GUI_Value_STATE("DISABLE", $grpTrainTroops)
 		_GUI_Value_STATE("DISABLE", $grpCookSpell)
 		GUICtrlSetData($g_hLblTotalTimeCamp, " 0s")
@@ -35,6 +36,15 @@ Func chkUseQTrain()
 		TotalSpellCountClick()
 	EndIf
 EndFunc   ;==>chkUseQTrain
+
+Func chkQuickTrainCombo()	; QuickTrainCombo (checkbox) - Demen
+	If GUICtrlRead($g_ahChkArmy[0]) = $GUI_UNCHECKED And GUICtrlRead($g_ahChkArmy[1]) = $GUI_UNCHECKED And GUICtrlRead($g_ahChkArmy[2]) = $GUI_UNCHECKED Then
+		GUICtrlSetState($g_ahChkArmy[0],$GUI_CHECKED)
+		ToolTip("QuickTrainCombo: " & @CRLF & "At least 1 Army Check is required! Default Army1.")
+		Sleep(2000)
+		ToolTip('')
+	EndIf
+EndFunc	;==> QuickTrainCombo
 
 Func SetComboTroopComp()
 	Local $bWasRedraw = SetRedrawBotWindow(False, Default, Default, Default, "SetComboTroopComp")

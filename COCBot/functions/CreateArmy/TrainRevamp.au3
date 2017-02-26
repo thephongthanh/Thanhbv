@@ -99,7 +99,7 @@ Func CheckCamp($NeedOpenArmy = False, $CloseCheckCamp = False)
 	If $ReturnCamp = 1 Then
 		OpenTrainTabNumber($QuickTrainTAB, "CheckCamp()")
 		If _Sleep(1000) Then Return
-		TrainArmyNumber($g_iQuickTrainArmyNum)
+		TrainArmyNumber($g_bQuickTrainArmy)	; QuickTrainCombo (check box) - Demen
 		If _Sleep(700) Then Return
 	EndIf
 	If $ReturnCamp = 0 Then
@@ -2029,24 +2029,27 @@ Func OpenTrainTabNumber($Num, $WhereFrom)
 	EndIf
 EndFunc   ;==>OpenTrainTabNumber
 
-Func TrainArmyNumber($Num)
+Func TrainArmyNumber($Army)	; QuickTrainCombo (Checkbox) - Demen
 
-	$Num = $Num - 1
 	Local $a_TrainArmy[3][4] = [[817, 366, 0x6bb720, 10], [817, 484, 0x6bb720, 10], [817, 601, 0x6bb720, 10]]
 	Setlog("Using Quick Train Tab.")
 	If $g_bRunState = False Then Return
 
 	If ISArmyWindow(False, $QuickTrainTAB) Then
-		; _ColorCheck($nColor1, $nColor2, $sVari = 5, $Ignore = "")
-		If _ColorCheck(_GetPixelColor($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], True), Hex($a_TrainArmy[$Num][2], 6), $a_TrainArmy[$Num][3]) Then
-			Click($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], 1)
-			SetLog("Making the Army " & $Num + 1, $COLOR_INFO)
-			If _Sleep(1000) Then Return
-		Else
-			Setlog(" - Error Clicking On Army: " & $Num + 1 & "| Pixel was :" & _GetPixelColor($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], True), $COLOR_ORANGE)
-			Setlog(" - Please 'edit' the Army " & $Num + 1 & " before start the BOT!!!", $COLOR_RED)
-			;BotStop()
-		EndIf
+		For $Num = 0 to 2
+			If $Army[$i] = True Then
+				; _ColorCheck($nColor1, $nColor2, $sVari = 5, $Ignore = "")
+				If _ColorCheck(_GetPixelColor($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], True), Hex($a_TrainArmy[$Num][2], 6), $a_TrainArmy[$Num][3]) Then
+					Click($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], 1)
+					SetLog("Making the Army " & $Num + 1, $COLOR_INFO)
+					If _Sleep(1000) Then Return
+				Else
+					Setlog(" - Error Clicking On Army: " & $Num + 1 & "| Pixel was :" & _GetPixelColor($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], True), $COLOR_ORANGE)
+					Setlog(" - Please 'edit' the Army " & $Num + 1 & " before start the BOT!!!", $COLOR_RED)
+					;BotStop()
+				EndIf
+			EndIf
+		Next
 	Else
 		Setlog(" - Error Clicking On Army! You are not on Quick Train Window", $COLOR_RED)
 	EndIf
