@@ -19,8 +19,8 @@ Global $g_avTroopGroup[19][7]  ; Actual training order values determined dynamic
 Func chkUseQTrain()
 	If GUICtrlRead($g_hChkUseQuickTrain) = $GUI_CHECKED Then
 		_GUI_Value_STATE("ENABLE", $g_hRdoArmy1 & "#" & $g_hRdoArmy2 & "#" & $g_hRdoArmy3)
-		_GUI_Value_STATE("DISABLE", $g_hGrpTrainTroops)
-		_GUI_Value_STATE("DISABLE", $g_hGrpCookSpell)
+		_GUI_Value_STATE("DISABLE", $grpTrainTroops)
+		_GUI_Value_STATE("DISABLE", $grpCookSpell)
 		GUICtrlSetData($g_hLblTotalTimeCamp, " 0s")
 		GUICtrlSetData($g_hLblTotalTimeSpell, " 0s")
 		GUICtrlSetData($g_hLblElixirCostCamp, "0")

@@ -1145,6 +1145,7 @@ Func ApplyConfig_600_29_DB_Scripted($TypeReadSave)
 			EndIf
 			_GUICtrlComboBox_SetCurSel($g_hCmbScriptNameDB, $tempindex)
 			cmbScriptNameDB()
+			cmbScriptRedlineImplDB()
 		Case "Save"
 			$g_aiAttackScrRedlineRoutine[$DB] = _GUICtrlComboBox_GetCurSel($g_hCmbScriptRedlineImplDB)
 			$g_aiAttackScrDroplineEdge[$DB] = _GUICtrlComboBox_GetCurSel($g_hCmbScriptDroplineDB)
@@ -1389,6 +1390,7 @@ Func ApplyConfig_600_29_LB_Scripted($TypeReadSave)
 			EndIf
 			_GUICtrlComboBox_SetCurSel($g_hCmbScriptNameAB, $tempindex)
 			cmbScriptNameAB()
+			cmbScriptRedlineImplAB()
 		Case "Save"
 			$g_aiAttackScrRedlineRoutine[$LB] = _GUICtrlComboBox_GetCurSel($g_hCmbScriptRedlineImplAB)
 			$g_aiAttackScrDroplineEdge[$LB] = _GUICtrlComboBox_GetCurSel($g_hCmbScriptDroplineAB)
