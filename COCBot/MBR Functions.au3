@@ -184,7 +184,7 @@
 #include "functions\Other\CheckPrerequisites.au3"
 #include "functions\Other\CheckDisplay.au3"
 #include "functions\Other\AutoStart.au3"
-#include "functions\Other\AutoHide.au3"
+#include "functions\Other\AutoHide.au3" ; Auto Hide - Added By NguyenAnhHD
 #include "functions\Other\WindowsArrange.au3"
 #include "functions\Other\MakeScreenshot.au3"
 #include "functions\Other\ClickDrag.au3"
@@ -273,6 +273,7 @@
 #include "functions\Village\ConvertOCRTime.au3"
 #include "functions\Other\ClickZoneR.au3"
 #include "functions\Village\CheckNeedOpenTrain.au3"
+#include "functions\Village\AreCollectorsOutside.au3" ; Check Collector Outside - Added By NguyenAnhHD
 
 #include "functions\Other\Api.au3"
 #include "functions\Other\ApiClient.au3"

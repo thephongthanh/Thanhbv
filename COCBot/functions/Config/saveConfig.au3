@@ -891,6 +891,8 @@ Func SaveConfig_600_31()
 	IniWriteS($g_sProfileConfigPath, "search", "chkDisableCollectorsFilter", $g_bCollectorFilterDisable ? 1 : 0)
 	IniWriteS($g_sProfileConfigPath, "collectors", "minmatches", $g_iCollectorMatchesMin)
 	IniWriteS($g_sProfileConfigPath, "collectors", "tolerance", $g_iCollectorToleranceOffset)
+	IniWriteS($g_sProfileConfigPath, "search", "DBMeetCollOutside", $ichkDBMeetCollOutside ? 1 : 0)
+	IniWriteS($g_sProfileConfigPath, "search", "DBMinCollOutsidePercent", $iDBMinCollOutsidePercent)
 EndFunc
 
 Func SaveConfig_600_32()
