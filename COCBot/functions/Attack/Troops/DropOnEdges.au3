@@ -34,11 +34,34 @@ Func DropOnEdges($troop, $nbSides, $number, $slotsPerEdge = 0)
 		Next
 		Return
 	EndIf
+
+	; Classic Four Fingers attack
+	If $nbSides = 5 Then
+		If $slotsPerEdge = 2 Then
+			For $i = 0 To $nbSides - 4 ; Four Fingers Deployment Giants
+				KeepClicks()
+				Local $nbTroopsPerEdge = Round($nbTroopsLeft / (($nbSides-1) - $i * 2))
+				DropOnEdge($troop, $Edges[$i], $nbTroopsPerEdge, $slotsPerEdge, $Edges[$i + 2], $i)
+				$nbTroopsLeft -= $nbTroopsPerEdge * 2
+				ReleaseClicks()
+			Next
+		Else
+			For $i = 0 To $nbSides - 5 ; Four Fingers Deployment Troops
+				KeepClicks()
+				Local $nbTroopsPerEdge = Round($nbTroopsLeft / (($nbSides-1) - $i * 2))
+				DropOnEdge($troop, $Edges[$i], $nbTroopsPerEdge, $slotsPerEdge, $Edges[$i + 2], $i, $nbSides)
+				$nbTroopsLeft -= $nbTroopsPerEdge * 2
+				ReleaseClicks()
+			Next
+		EndIf
+		Return
+	EndIf
+
 	For $i = 0 To $nbSides - 1
 		KeepClicks()
 		If $nbSides = 1 Or ($nbSides = 3 And $i = 2) Then
 			Local $nbTroopsPerEdge = Round($nbTroopsLeft / ($nbSides - $i))
-			If $g_iMatchMode = $LB And $g_aiAttackStdDropSides[$LB] >= 4 Then ; Used for DE or TH side attack
+			If $g_iMatchMode = $LB And $g_aiAttackStdDropSides[$LB] >= 5 Then ; Used for DE or TH side attack
 				DropOnEdge($troop, $Edges[$BuildingEdge], $nbTroopsPerEdge, $slotsPerEdge)
 			Else
 				DropOnEdge($troop, $Edges[$i], $nbTroopsPerEdge, $slotsPerEdge)

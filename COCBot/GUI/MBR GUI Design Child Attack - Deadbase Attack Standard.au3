@@ -43,11 +43,13 @@ Func CreateAttackSearchDeadBaseStandard()
 		   $g_hCmbStandardDropSidesDB = GUICtrlCreateCombo("", $x + 55, $y, 120, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			   _GUICtrlSetTip(-1, GetTranslated(608,4, "Attack on a single side, penetrates through base") & @CRLF & _
 								  GetTranslated(608,5, "Attack on two sides, penetrates through base") & @CRLF & _
-								  GetTranslated(608,6, "Attack on three sides, gets outer and some inside of base"), _
+								  GetTranslated(608,6, "Attack on three sides, gets outer and some inside of base") & @CRLF & _
+								  GetTranslated(608,41, "Attack on Classic Four Fingers"), _
 								  GetTranslated(608,7,"Select the No. of sides to attack on."))
 			   GUICtrlSetData(-1, GetTranslated(608,8, "one side") & "|" & GetTranslated(608,9, "two sides") & "|" & _
-								  GetTranslated(608,10, "three sides") &"|" & GetTranslated(608,11,"all sides equally" ), _
+								  GetTranslated(608,10, "three sides") &"|" & GetTranslated(608,11,"all sides equally" ) & "|" & GetTranslated(608,40, "Classic Four Fingers"), _
 								  GetTranslated(608,11, -1))
+			   GUICtrlSetOnEvent(-1,"cmbStandardDropSidesDB") ; Uncheck SmartAttack Red Area when enable FourFinger to avoid conflict
 
 		   $y += 25
 		   GUICtrlCreateLabel(GetTranslated(608,12, "Delay Unit") & ":", $x, $y + 5, -1, -1)
