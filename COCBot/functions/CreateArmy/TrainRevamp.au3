@@ -99,7 +99,7 @@ Func CheckCamp($NeedOpenArmy = False, $CloseCheckCamp = False)
 	If $ReturnCamp = 1 Then
 		OpenTrainTabNumber($QuickTrainTAB, "CheckCamp()")
 		If _Sleep(1000) Then Return
-		TrainArmyNumber($g_bQuickTrainArmy[0], $g_bQuickTrainArmy[1], $g_bQuickTrainArmy[2])	; QuickTrainCombo (check box) - Demen
+		TrainArmyNumber($g_bQuickTrainArmy)	; QuickTrainCombo (check box) - Demen
 		If _Sleep(700) Then Return
 	EndIf
 	If $ReturnCamp = 0 Then
@@ -2029,16 +2029,15 @@ Func OpenTrainTabNumber($Num, $WhereFrom)
 	EndIf
 EndFunc   ;==>OpenTrainTabNumber
 
-Func TrainArmyNumber($Army1, $Army2, $Army3)	; QuickTrainCombo (Checkbox) - Demen
+Func TrainArmyNumber($Army)	; QuickTrainCombo (Checkbox) - Demen
 
-	Local $Army[3] = [$Army1, $Army2, $Army3]
 	Local $a_TrainArmy[3][4] = [[817, 366, 0x6bb720, 10], [817, 484, 0x6bb720, 10], [817, 601, 0x6bb720, 10]]
 	Setlog("Using Quick Train Tab.")
 	If $g_bRunState = False Then Return
 
 	If ISArmyWindow(False, $QuickTrainTAB) Then
 		For $Num = 0 to 2
-			If $Army[$i] = True Then
+			If $Army[$Num] = True Then
 				; _ColorCheck($nColor1, $nColor2, $sVari = 5, $Ignore = "")
 				If _ColorCheck(_GetPixelColor($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], True), Hex($a_TrainArmy[$Num][2], 6), $a_TrainArmy[$Num][3]) Then
 					Click($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], 1)
